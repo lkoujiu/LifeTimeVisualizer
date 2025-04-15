@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Tracker - Visualize Your Time</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Color Variables --- */
+        :root {
+            /* --- Light (Calm) Theme (Default) --- */
+            --bg-color: #f9fafb; /* gray-50 */
+            --text-color: #1f2937; /* gray-800 */
+            --text-muted-color: #6b7280; /* gray-500 */
+            --heading-color: #111827; /* gray-900 */
+            --tile-bg: #ffffff; /* white */
+            --tile-border: #e5e7eb; /* gray-200 */
+            --tile-shadow: rgba(0,0,0,0.05);
+            --tile-hover-shadow: rgba(0,0,0,0.1);
+            --tile-label-color: #64748b; /* slate-500 */
+            --tile-value-color: #1e90ff; /* dodgerblue */
+            --tile-past-bg: #4b5563; /* gray-600 */
+            --tile-past-text: #ffffff;
+            --tile-past-border: #374151; /* gray-700 */
+            --tile-current-bg: #1e90ff; /* dodgerblue */
+            --tile-current-text: #ffffff;
+            --tile-current-border: #1c86ee; /* darker dodgerblue */
+            --tile-upcoming-bg: #fef9c3; /* yellow-100 */
+            --tile-upcoming-text: #a16207; /* yellow-800 */
+            --tile-upcoming-border: #fde047; /* yellow-300 */
+            --tile-future-bg: #e0f2fe; /* sky-100 */
+            --tile-future-text: #075985; /* sky-800 */
+            --tile-future-border: #bae6fd; /* sky-200 */
+            --tile-birth-bg: #e5e7eb; /* gray-200 */
+            --tile-birth-text: #374151; /* gray-700 */
+            --tile-birth-border: #d1d5db; /* gray-300 */
+            --tile-selected-outline: #4f46e5; /* indigo-600 */
+            --prime-glow-border-1: #FFD700; /* Gold */
+            --prime-glow-border-2: #B8860B; /* DarkGoldenrod */
+            --progress-bar-bg: #e5e7eb; /* gray-200 */
+            --progress-bar-lifespan-fill: #3b82f6; /* blue-500 */
+            --progress-bar-prime-fill: #10b981; /* emerald-500 */
+            --progress-text-lifespan: #1d4ed8; /* blue-700 */
+            --progress-text-prime: #047857; /* emerald-700 */
+            --button-bg: #2563eb; /* blue-600 */
+            --button-text: #ffffff;
+            --button-hover-bg: #1d4ed8; /* blue-700 */
+            --button-cancel-bg: #e5e7eb; /* gray-200 */
+            --button-cancel-text: #374151; /* gray-700 */
+            --button-cancel-hover-bg: #d1d5db; /* gray-300 */
+            --input-border: #d1d5db; /* gray-300 */
+            --input-focus-ring: #3b82f6; /* blue-500 */
+            --input-text: #1f2937; /* gray-800 */
+            --input-bg: #ffffff;
+            --icon-color: #2563eb; /* blue-600 */
+            --section-bg: #ffffff;
+            --section-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); /* shadow-md */
+            --theme-button-bg: #e5e7eb; /* gray-200 */
+            --theme-button-icon-color: #374151; /* gray-700 */
+            --theme-button-hover-bg: #d1d5db; /* gray-300 */
+            --theme-button-active-bg: #9ca3af; /* gray-400 */
+            --theme-button-active-icon-color: #ffffff;
+            --theme-button-active-outline: var(--tile-selected-outline); /* Use consistent outline color */
+            --icon-tick-color: #10b981; /* emerald-500 */
+            --icon-cross-color: #ef4444; /* red-500 */
+            --modal-bg: #ffffff;
+            --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+            --modal-border: #d1d5db; /* gray-300 */
+            --modal-close-icon-color: #6b7280; /* gray-500 */
+            --modal-close-icon-hover-bg: #e5e7eb; /* gray-200 */
+            --settings-icon-color: #6b7280; /* gray-500 */
+            --settings-icon-hover-bg: #f3f4f6; /* gray-100 */
+        }
+
+        body.dark-mode {
+            /* --- Dark Theme Variables --- */
+            --bg-color: #111827; /* gray-900 */
+            --text-color: #d1d5db; /* gray-300 */
+            --text-muted-color: #9ca3af; /* gray-400 */
+            --heading-color: #f9fafb; /* gray-50 */
+            --tile-bg: #1f2937; /* gray-800 */
+            --tile-border: #374151; /* gray-700 */
+            --tile-shadow: rgba(0,0,0,0.2);
+            --tile-hover-shadow: rgba(0,0,0,0.3);
+            --tile-label-color: #9ca3af; /* gray-400 */
+            --tile-value-color: #60a5fa; /* blue-400 */
+            --tile-past-bg: #4b5563; /* gray-600 */
+            --tile-past-text: #f3f4f6; /* gray-100 */
+            --tile-past-border: #374151; /* gray-700 */
+            --tile-current-bg: #2563eb; /* blue-600 */
+            --tile-current-text: #ffffff;
+            --tile-current-border: #1d4ed8; /* blue-700 */
+            --tile-upcoming-bg: #451a03; /* amber-950 */
+            --tile-upcoming-text: #fef3c7; /* amber-100 */
+            --tile-upcoming-border: #78350f; /* amber-800 */
+            --tile-future-bg: #1e3a8a; /* blue-900 */
+            --tile-future-text: #dbeafe; /* blue-100 */
+            --tile-future-border: #1e40af; /* blue-800 */
+            --tile-birth-bg: #374151; /* gray-700 */
+            --tile-birth-text: #d1d5db; /* gray-300 */
+            --tile-birth-border: #4b5563; /* gray-600 */
+            --tile-selected-outline: #818cf8; /* indigo-400 */
+            --prime-glow-border-1: #ca8a04; /* yellow-600 */
+            --prime-glow-border-2: #713f12; /* yellow-800 */
+            --progress-bar-bg: #374151; /* gray-700 */
+            --progress-bar-lifespan-fill: #60a5fa; /* blue-400 */
+            --progress-bar-prime-fill: #34d399; /* emerald-400 */
+            --progress-text-lifespan: #93c5fd; /* blue-300 */
+            --progress-text-prime: #6ee7b7; /* emerald-300 */
+            --button-bg: #3b82f6; /* blue-500 */
+            --button-text: #ffffff;
+            --button-hover-bg: #60a5fa; /* blue-400 */
+            --button-cancel-bg: #374151; /* gray-700 */
+            --button-cancel-text: #d1d5db; /* gray-300 */
+            --button-cancel-hover-bg: #4b5563; /* gray-600 */
+            --input-border: #4b5563; /* gray-600 */
+            --input-focus-ring: #60a5fa; /* blue-400 */
+            --input-text: #f3f4f6; /* gray-100 */
+            --input-bg: #1f2937; /* gray-800 */
+            --icon-color: #60a5fa; /* blue-400 */
+            --section-bg: #1f2937; /* gray-800 */
+            --section-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
+            --theme-button-bg: #374151; /* gray-700 */
+            --theme-button-icon-color: #d1d5db; /* gray-300 */
+            --theme-button-hover-bg: #4b5563; /* gray-600 */
+            --theme-button-active-bg: #6b7280; /* gray-500 */
+            --theme-button-active-icon-color: #ffffff;
+            --theme-button-active-outline: var(--tile-selected-outline);
+            --icon-tick-color: #34d399; /* emerald-400 */
+            --icon-cross-color: #f87171; /* red-400 */
+            --modal-bg: #1f2937; /* gray-800 */
+            --modal-overlay-bg: rgba(0, 0, 0, 0.7);
+            --modal-border: #374151; /* gray-700 */
+            --modal-close-icon-color: #9ca3af; /* gray-400 */
+            --modal-close-icon-hover-bg: #374151; /* gray-700 */
+            --settings-icon-color: #9ca3af; /* gray-400 */
+            --settings-icon-hover-bg: #374151; /* gray-700 */
+        }
+
+        body.colorful-mode {
+            /* --- Kid-friendly colorful theme --- */
+            --bg-color: #f0fdfa; /* cyan-50 - Lighter base */
+            --text-color: #115e59; /* cyan-900 */
+            --text-muted-color: #0e7490; /* cyan-700 */
+            --heading-color: #155e75; /* cyan-800 */
+            --tile-bg: #ffffff;
+            --tile-border: #67e8f9; /* cyan-300 */
+            --tile-shadow: rgba(6, 182, 212, 0.15); /* cyan-500 with alpha */
+            --tile-hover-shadow: rgba(6, 182, 212, 0.25);
+            --tile-label-color: #0e7490; /* cyan-700 */
+            --tile-value-color: #5b21b6; /* violet-700 */
+            --tile-past-bg: #fda4af; /* rose-300 */
+            --tile-past-text: #881337; /* rose-900 */
+            --tile-past-border: #fb7185; /* rose-400 */
+            --tile-current-bg: #fde047; /* yellow-300 */
+            --tile-current-text: #854d0e; /* yellow-800 */
+            --tile-current-border: #facc15; /* yellow-400 */
+            --tile-upcoming-bg: #a7f3d0; /* emerald-200 */
+            --tile-upcoming-text: #065f46; /* emerald-800 */
+            --tile-upcoming-border: #6ee7b7; /* emerald-300 */
+            --tile-future-bg: #c4b5fd; /* violet-300 */
+            --tile-future-text: #4c1d95; /* violet-900 */
+            --tile-future-border: #a78bfa; /* violet-400 */
+            --tile-birth-bg: #f9a8d4; /* pink-300 */
+            --tile-birth-text: #831843; /* pink-900 */
+            --tile-birth-border: #f472b6; /* pink-400 */
+            --tile-selected-outline: #fb923c; /* orange-400 */
+            --prime-glow-border-1: #fde047; /* yellow-300 */
+            --prime-glow-border-2: #facc15; /* yellow-400 */
+            --progress-bar-bg: #bfdbfe; /* blue-200 */
+            --progress-bar-lifespan-fill: #60a5fa; /* blue-400 */
+            --progress-bar-prime-fill: #f472b6; /* pink-400 */
+            --progress-text-lifespan: #1d4ed8; /* blue-700 */
+            --progress-text-prime: #9d174d; /* pink-700 */
+            --button-bg: #34d399; /* emerald-400 */
+            --button-text: #064e3b; /* emerald-900 */
+            --button-hover-bg: #6ee7b7; /* emerald-300 */
+            --button-cancel-bg: #fda4af; /* rose-300 */
+            --button-cancel-text: #881337; /* rose-900 */
+            --button-cancel-hover-bg: #fb7185; /* rose-400 */
+            --input-border: #a5b4fc; /* indigo-300 */
+            --input-focus-ring: #818cf8; /* indigo-400 */
+            --input-text: #312e81; /* indigo-900 */
+            --input-bg: #ffffff;
+            --icon-color: #6d28d9; /* violet-700 */
+            --section-bg: #ffffff;
+            --section-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-lg */
+            --theme-button-bg: #fde047; /* yellow-300 */
+            --theme-button-icon-color: #854d0e; /* yellow-800 */
+            --theme-button-hover-bg: #facc15; /* yellow-400 */
+            --theme-button-active-bg: #fb923c; /* orange-400 */
+            --theme-button-active-icon-color: #ffffff;
+            --theme-button-active-outline: #16a34a; /* green-600 */
+            --icon-tick-color: #059669; /* emerald-600 */
+            --icon-cross-color: #e11d48; /* rose-600 */
+            --modal-bg: #ecfdf5; /* emerald-50 */
+            --modal-overlay-bg: rgba(6, 78, 59, 0.6); /* emerald-900 with alpha */
+            --modal-border: #6ee7b7; /* emerald-300 */
+            --modal-close-icon-color: #065f46; /* emerald-800 */
+            --modal-close-icon-hover-bg: #a7f3d0; /* emerald-200 */
+            --settings-icon-color: #0e7490; /* cyan-700 */
+            --settings-icon-hover-bg: #a5f3fc; /* cyan-200 */
+            /* Subtle background pattern */
+            background-image: radial-gradient(var(--text-muted-color, #0e7490) 0.5px, transparent 0.5px);
+            background-size: 10px 10px;
+            background-position: 0 0, 5px 5px;
+        }
+
+        /* --- Base Styles using Variables --- */
+        body {
+            font-family: 'Inter', sans-serif; /* Default font */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease, background-image 0.3s ease;
+        }
+
+        /* Apply Fredoka One font in colorful mode */
+        body.colorful-mode h1,
+        body.colorful-mode h2,
+        body.colorful-mode h3,
+        body.colorful-mode .tile .age,
+        body.colorful-mode .tile .year,
+        body.colorful-mode .tile .value,
+        body.colorful-mode button:not(.theme-button),
+        body.colorful-mode #settingsModal h2 /* Apply to modal title */
+        {
+            font-family: 'Fredoka One', cursive; /* Changed font */
+            letter-spacing: 0.02em;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+         body.colorful-mode .tile .label,
+         body.colorful-mode p,
+         body.colorful-mode span:not(.value):not(.age):not(.year),
+         body.colorful-mode input,
+         body.colorful-mode textarea,
+         body.colorful-mode .birthdate-status,
+         body.colorful-mode .progress-percent-text,
+         body.colorful-mode label /* Apply to settings labels */
+         {
+             font-family: 'Inter', sans-serif;
+             letter-spacing: normal;
+             user-select: text;
+             -webkit-user-select: text;
+             -moz-user-select: text;
+             -ms-user-select: text;
+         }
+
+
+        h1 {
+            color: var(--heading-color);
+        }
+
+        h2 {
+            color: var(--heading-color);
+            @apply text-xl font-semibold;
+        }
+        /* Style for the time-left group labels */
+        h3.time-group-label {
+             color: var(--text-muted-color);
+             @apply text-center text-sm font-semibold mb-2 tracking-wide uppercase;
+             min-height: 1.25rem; /* Prevent layout shift when text changes */
+        }
+
+
+        /* --- Theme Switcher Styles --- */
+        .theme-switcher {
+            @apply flex justify-center gap-2 mb-6;
+        }
+        .theme-button {
+            @apply p-2 rounded-md border border-transparent flex items-center justify-center;
+            background-color: var(--theme-button-bg);
+            border-color: var(--tile-border);
+            transition: background-color 0.2s ease, transform 0.2s ease, outline 0.2s ease;
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+        }
+        .theme-button:hover {
+            background-color: var(--theme-button-hover-bg);
+            transform: translateY(-2px);
+        }
+        .theme-button.active {
+            background-color: var(--theme-button-active-bg);
+            outline-color: var(--theme-button-active-outline);
+            transform: scale(1.05);
+        }
+        .theme-icon {
+             width: 1.25rem;
+             height: 1.25rem;
+             stroke: var(--theme-button-icon-color);
+             fill: none;
+             transition: stroke 0.2s ease, fill 0.2s ease;
+        }
+         .theme-button.active .theme-icon {
+             stroke: var(--theme-button-active-icon-color);
+         }
+         #themeBtnDark .theme-icon {
+             fill: var(--theme-button-icon-color);
+             stroke: none;
+         }
+         #themeBtnDark.active .theme-icon {
+             fill: var(--theme-button-active-icon-color);
+             stroke: none;
+         }
+
+
+        /* --- Tile Styles using Variables --- */
+        .tile {
+          border-radius: 8px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 0 1px 3px var(--tile-shadow);
+          padding: 0.75rem;
+          transition: all 0.2s ease-in-out;
+          cursor: default;
+          min-height: 90px; /* Ensure consistent height for info tiles */
+          border: 1px solid var(--tile-border);
+          background-color: var(--tile-bg);
+          position: relative;
+          overflow: hidden;
+        }
+        .tile.clickable:hover {
+          transform: scale(1.03);
+          box-shadow: 0 3px 6px var(--tile-hover-shadow);
+          cursor: pointer;
+        }
+        .lifespan-tile {
+            min-height: 60px; /* Smaller height for year grid tiles */
+            padding: 0.5rem;
+            cursor: pointer;
+         }
+        /* Apply fade-in animation only in colorful mode */
+        body.colorful-mode .lifespan-tile {
+             opacity: 0; /* Start tiles as transparent for animation */
+             animation: tileFadeIn 0.4s ease-out forwards;
+        }
+        /* Stagger animation for year tiles */
+        body.colorful-mode .years-grid .lifespan-tile:nth-child(1) { animation-delay: 0.02s; }
+        body.colorful-mode .years-grid .lifespan-tile:nth-child(2) { animation-delay: 0.04s; }
+        body.colorful-mode .years-grid .lifespan-tile:nth-child(3) { animation-delay: 0.06s; }
+        body.colorful-mode .years-grid .lifespan-tile:nth-child(4) { animation-delay: 0.08s; }
+        body.colorful-mode .years-grid .lifespan-tile:nth-child(5) { animation-delay: 0.10s; }
+        /* Add more if needed, or use JS for dynamic delay */
+
+        .tile.past { background-color: var(--tile-past-bg); color: var(--tile-past-text); border-color: var(--tile-past-border); }
+        .tile.current { background-color: var(--tile-current-bg); color: var(--tile-current-text); border-color: var(--tile-current-border); transform: scale(1.05); box-shadow: 0 4px 8px var(--tile-hover-shadow); z-index: 10; opacity: 1 !important; animation: none !important; } /* Ensure current tile is always visible */
+        .tile.upcoming { background-color: var(--tile-upcoming-bg); color: var(--tile-upcoming-text); border-color: var(--tile-upcoming-border); }
+        .tile.future { background-color: var(--tile-future-bg); color: var(--tile-future-text); border-color: var(--tile-future-border); }
+        .selected-tile { outline: 3px solid var(--tile-selected-outline); outline-offset: 2px; z-index: 20;}
+        .tile.birth-tile { background-color: var(--tile-birth-bg); color: var(--tile-birth-text); border-color: var(--tile-birth-border); cursor: default; opacity: 1 !important; animation: none !important; } /* Ensure birth tile is always visible */
+        .tile.birth-tile:hover { transform: none; box-shadow: 0 1px 3px var(--tile-shadow); }
+        .tile.birth-tile .age { font-size: 0.875rem; font-weight: 600; }
+        .age { font-size: 1.125rem; font-weight: 700; line-height: 1.3; }
+        .year { font-size: 0.75rem; line-height: 1.3; margin-top: 2px; }
+
+        .emoji-icon {
+            position: absolute;
+            top: 2px;
+            right: 3px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* --- Prime Year Glow Effect using Variables --- */
+        .prime-year-glow {
+           border-color: var(--prime-glow-border-1);
+           animation: pulseGoldenBorder 2s infinite ease-in-out;
+        }
+        @keyframes pulseGoldenBorder {
+          0% { border-width: 1px; border-color: var(--prime-glow-border-1); }
+          50% { border-width: 2px; border-color: var(--prime-glow-border-2); }
+          100% { border-width: 1px; border-color: var(--prime-glow-border-1); }
+        }
+        /* Tile fade-in animation */
+        @keyframes tileFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(5px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+
+        /* --- Info Tile & Progress Tile Content Styles using Variables --- */
+        .tile .label { font-size: 0.75rem; color: var(--tile-label-color); margin-bottom: 4px; line-height: 1.2; white-space: nowrap; }
+        .tile .value { font-size: 1.25rem; font-weight: 700; color: var(--tile-value-color); line-height: 1.2; }
+
+         /* --- Progress Bar Styles using Variables --- */
+         .progress-container { display: flex; align-items: center; width: 100%; margin-top: 0.25rem; }
+         .progress-bar-bg { flex-grow: 1; height: 16px; background-color: var(--progress-bar-bg); border-radius: 8px; overflow: hidden; margin-right: 0.5rem; }
+         .progress-bar-fill { height: 100%; border-radius: 8px; transition: width 0.5s ease-out; }
+         #lifespanPercentBar { background-color: var(--progress-bar-lifespan-fill); }
+         #primePercentBar { background-color: var(--progress-bar-prime-fill); }
+         .progress-percent-text { font-size: 0.875rem; font-weight: 500; flex-shrink: 0; }
+         #lifespanPercentText { color: var(--progress-text-lifespan); }
+         #primePercentText { color: var(--progress-text-prime); }
+
+        /* --- Input and Button Styles using Variables --- */
+        input[type="date"], input[type="number"], button, textarea { /* Added number input */
+            @apply rounded-md px-3 py-2 shadow-sm text-sm sm:text-base transition-colors duration-200;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--input-text);
+        }
+        input[type="date"]:focus, input[type="number"]:focus, button:focus, textarea:focus { /* Added number input */
+             @apply outline-none ring-2;
+             border-color: var(--input-focus-ring);
+             box-shadow: 0 0 0 2px var(--input-focus-ring); /* Simulate ring */
+        }
+        button {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border-color: transparent;
+            cursor: pointer; /* Ensure buttons have pointer cursor */
+        }
+        button:not(.theme-button):hover {
+            background-color: var(--button-hover-bg);
+        }
+        button.cancel-btn {
+             background-color: var(--button-cancel-bg);
+             color: var(--button-cancel-text);
+             border-color: var(--input-border);
+        }
+        button.cancel-btn:hover {
+            background-color: var(--button-cancel-hover-bg);
+        }
+        textarea {
+             @apply w-full p-2 min-h-[100px];
+        }
+        input[type="number"] {
+            @apply w-20 text-center; /* Style number inputs */
+        }
+
+        /* --- Grid and Layout --- */
+        .dynamic-grid { display: grid; gap: 0.75rem; }
+        .years-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
+        @media (min-width: 640px) { .years-grid { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); } }
+        @media (min-width: 1024px) { .years-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); } }
+        @media (min-width: 1280px) { .years-grid { grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); } }
+
+        /* --- Info Tile Content Styles using Variables --- */
+        .info-tile-content label { @apply font-medium whitespace-nowrap text-sm mb-1 block; color: var(--text-color); }
+        .info-tile-content p { @apply text-sm; color: var(--text-muted-color); }
+        .info-tile-content span { @apply font-semibold; color: var(--text-color); }
+        .birthdate-status { @apply text-sm mb-2 inline-flex items-center; color: var(--text-muted-color); } /* Modified for inline icon */
+        #birthDateError { @apply text-red-500 text-xs mt-1 h-4; }
+        #saveStatus { @apply text-sm mt-2; color: var(--progress-text-prime); }
+        #settingsStatus { @apply text-sm mt-2 h-4; } /* Height for settings status */
+
+        /* --- Icons using Variables --- */
+        .info-tile-content svg { color: var(--icon-color); }
+        /* Style for the status icon */
+        #birthDateStatusIcon svg {
+            width: 1.1rem; /* Slightly larger */
+            height: 1.1rem;
+            margin-left: 0.3rem; /* Space between text and icon */
+            vertical-align: middle; /* Align icon with text */
+        }
+        .icon-tick { color: var(--icon-tick-color); }
+        .icon-cross { color: var(--icon-cross-color); }
+
+        /* --- Section Styles using Variables --- */
+        .section-container {
+            background-color: var(--section-bg);
+            box-shadow: var(--section-shadow);
+            @apply p-4 sm:p-6 rounded-lg;
+        }
+
+        /* --- Settings Icon Button (New) --- */
+        #settingsIconBtn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem;
+            border-radius: 50%; /* Make it circular */
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            z-index: 40; /* Ensure it's above most content */
+        }
+        #settingsIconBtn:hover {
+            background-color: var(--settings-icon-hover-bg);
+        }
+        #settingsIconBtn svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--settings-icon-color);
+        }
+
+        /* --- Settings Modal Styles (New) --- */
+        #modalOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-overlay-bg);
+            z-index: 45; /* Below modal, above content */
+            transition: opacity 0.3s ease-in-out;
+        }
+        #modalOverlay.hidden {
+            opacity: 0;
+            pointer-events: none; /* Prevent interaction when hidden */
+        }
+        #settingsModal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--modal-bg);
+            border: 1px solid var(--modal-border);
+            border-radius: 0.75rem; /* lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); /* lg */
+            padding: 1.5rem; /* p-6 */
+            width: 90%;
+            max-width: 500px; /* Limit max width */
+            z-index: 50; /* Highest */
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+         #settingsModal.hidden {
+             opacity: 0;
+             transform: translate(-50%, -45%); /* Slight move up when hiding */
+             pointer-events: none; /* Prevent interaction when hidden */
+         }
+        #settingsModal h2 {
+            @apply text-xl font-semibold mb-4 text-center;
+             color: var(--heading-color);
+        }
+        #closeSettingsModalBtn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: transparent;
+            border: none;
+            padding: 0.25rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        #closeSettingsModalBtn:hover {
+            background-color: var(--modal-close-icon-hover-bg);
+        }
+        #closeSettingsModalBtn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--modal-close-icon-color);
+        }
+        .modal-content {
+             @apply space-y-4;
+        }
+        .modal-content label {
+             @apply font-medium text-sm;
+             color: var(--text-color);
+        }
+        .modal-grid {
+             @apply grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 items-center;
+        }
+
+    </style>
+</head>
+<body class="p-4 md:p-8 relative"> <button id="settingsIconBtn" title="Open Settings">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+    </button>
+
+    <div class="max-w-7xl mx-auto space-y-8">
+        <h1 class="text-3xl font-bold text-center mb-4" title="Visualize your life's journey, track progress, and stay motivated towards your goals.">Life Tracker</h1>
+
+        <div class="theme-switcher" title="Choose your preferred visual theme.">
+            <button id="themeBtnLight" class="theme-button" data-theme="light" aria-label="Switch to Light Theme" title="Calm Light Theme">
+                <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                </svg>
+            </button>
+            <button id="themeBtnDark" class="theme-button" data-theme="dark" aria-label="Switch to Dark Theme" title="Cool Dark Theme">
+                <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd" />
+                </svg>
+            </button>
+            <button id="themeBtnColorful" class="theme-button" data-theme="colorful" aria-label="Switch to Colorful Theme" title="Fun Colorful Theme">
+                <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+            <div class="tile p-4" title="Set your birth date here to personalize the tracker and enable all calculations.">
+                 <div class="info-tile-content w-full flex flex-col items-center">
+                     <div id="birthDateDisplay" class="text-center">
+                         <p id="birthDateStatus" class="birthdate-status">
+                             Birth Date Not Set
+                             <span id="birthDateStatusIcon" class="inline-block"></span> </p>
+                         <button id="changeBirthDateBtn" class="w-full sm:w-auto px-4 mt-2">Set Birth Date</button> </div>
+                     <div id="birthDateInputGroup" class="hidden w-full mt-2">
+                         <label for="birthDate" class="sr-only">Your Birth Date:</label>
+                         <input type="date" id="birthDate" class="w-full mb-2">
+                         <div class="flex flex-col sm:flex-row items-center justify-center gap-2">
+                            <button id="saveBirthDateBtn" class="w-full sm:w-auto px-4 flex-grow">Save</button>
+                            <button id="cancelBirthDateBtn" class="w-full sm:w-auto px-4 cancel-btn flex-grow">Cancel</button>
+                        </div>
+                         <p id="birthDateError" class="text-red-500 text-xs mt-1 h-4"></p>
+                     </div>
+                 </div>
+            </div>
+            <div class="tile p-4" title="Displays the current calendar year and your calculated age based on the birth date set.">
+                <div id="userInfo" class="info-tile-content flex flex-col justify-center items-center w-full h-full">
+                     <p>Current Year: <span id="displayCurrentYear">----</span></p>
+                     <p>Your Age: <span id="currentAge">--</span></p>
+                </div>
+            </div>
+            <div class="tile p-4" title="Shows the current date and time, updated every second.">
+                 <div class="info-tile-content flex flex-col justify-center items-center w-full h-full gap-3">
+                     <div class="flex items-center gap-2">
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6">
+                           <path fill-rule="evenodd" d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z" clip-rule="evenodd" />
+                         </svg>
+                         <span id="displayCurrentDate" class="text-lg font-semibold">-- --- ----</span>
+                     </div>
+                     <div class="flex items-center gap-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6">
+                           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z" clip-rule="evenodd" />
+                         </svg>
+                         <span id="displayCurrentTime" class="text-lg font-semibold">--:--:-- --</span>
+                     </div>
+                 </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-6 justify-between items-start mt-4">
+            <div class="w-full lg:w-auto flex-1 min-w-0">
+                <h3 id="yearCountdownTitle" class="time-group-label" title="Time remaining in the current calendar year.">This Year Countdown</h3>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="tile clickable" title="Days remaining in this year. A reminder to make progress on annual goals!"> <div class="label">Days Left</div> <div id="daysLeftYear" class="value">--</div> </div>
+                    <div class="tile clickable" title="Weeks remaining in this year. Plan your weeks effectively!"> <div class="label">Weeks Left</div> <div id="weeksLeftYear" class="value">--</div> </div>
+                    <div class="tile clickable" title="Full months remaining in this year. Good for long-term planning."> <div class="label">Months Left</div> <div id="monthsLeftYear" class="value">--</div> </div>
+                </div>
+            </div>
+            <div class="w-full lg:w-auto flex-1 min-w-0">
+                 <h3 id="todayCountdownTitle" class="time-group-label" title="Time remaining today. Make every moment count!">Today Countdown</h3>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="tile clickable" title="Hours left today. Focus on your immediate tasks and goals!"> <div class="label">Hours Left</div> <div id="hoursLeftDay" class="value">--</div> </div>
+                    <div class="tile clickable" title="Minutes left today. Use short bursts of time productively."> <div class="label">Minutes Left</div> <div id="minutesLeftDay" class="value">--</div> </div>
+                    <div class="tile clickable" title="Seconds ticking away today. A constant reminder that time is passing."> <div class="label">Seconds Left</div> <div id="secondsLeftDay" class="value">--</div> </div>
+                </div>
+            </div>
+            <div class="w-full lg:w-auto flex-1 min-w-0">
+                 <h3 class="time-group-label" title="Time remaining in your prime working years (defined in settings).">Prime Time Left Countdown</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="tile clickable" title="Full years remaining until you reach the end of the prime period (defined in settings)."> <div class="label">Prime Years</div> <div id="primeYearsLeft" class="value">--</div> </div>
+                    <div class="tile clickable" title="Total days remaining until the end of your prime period. Maximize this crucial time!"> <div class="label">Prime Days</div> <div id="primeDaysLeft" class="value">--</div> </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-center text-xl font-semibold mt-8 mb-2">Life Progress</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div id="lifespanProgressContainer" class="section-container" title="Shows your progress through your defined lifespan based on your current age.">
+                <div class="tile p-4">
+                    <div id="lifespanProgressLabel" class="label">Overall Completion (0-80 yrs)</div>
+                    <div class="progress-container">
+                        <div class="progress-bar-bg">
+                            <div id="lifespanPercentBar" class="progress-bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span id="lifespanPercentText" class="progress-percent-text">--%</span>
+                    </div>
+                </div>
+            </div>
+            <div id="primeProgressContainer" class="section-container" title="Shows how much of your prime working years (defined in settings) you have completed.">
+                <div class="tile p-4">
+                    <div id="primeProgressLabel" class="label">Prime Years Completion (0-45 yrs)</div>
+                    <div class="progress-container">
+                        <div class="progress-bar-bg">
+                            <div id="primePercentBar" class="progress-bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span id="primePercentText" class="progress-percent-text">--%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-center text-xl font-semibold mt-8 mb-2">Life in Years</h2>
+        <div class="section-container" title="Visualize your life year by year. Each tile represents one year up to your defined max lifespan. Click a tile to add notes.">
+             <div id="lifespanGrid" class="dynamic-grid years-grid">
+                 </div>
+        </div>
+
+        <div id="achievementsSection" class="section-container hidden" title="Record highlights, achievements, goals, or memories for the selected year. Notes are saved locally in your browser.">
+            <h2 id="achievementTitle">Notes for Year --</h2>
+            <textarea id="achievementText" placeholder="Record your highlights, achievements, or notes for this year..."></textarea>
+            <button id="saveAchievementBtn" class="mt-3">Save Note</button>
+            <p id="saveStatus" class="text-sm mt-2"></p>
+        </div>
+
+    </div>
+
+    <div id="modalOverlay" class="hidden"></div>
+    <div id="settingsModal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+        <h2 id="settingsModalTitle">Settings</h2>
+        <button id="closeSettingsModalBtn" title="Close Settings" aria-label="Close Settings">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div class="modal-content">
+            <div class="modal-grid">
+                <div>
+                    <label for="maxLifespanInput">Max Lifespan (Years):</label>
+                    <input type="number" id="maxLifespanInput" min="1" step="1" class="ml-2">
+                </div>
+                <div>
+                    <label for="primeEndAgeInput">Prime Years End Age:</label>
+                    <input type="number" id="primeEndAgeInput" min="1" step="1" class="ml-2">
+                </div>
+            </div>
+            <button id="saveSettingsBtn" class="mt-4 w-full">Save Settings</button>
+            <p id="settingsStatus" class="text-sm mt-2 h-4 text-center"></p> </div>
+    </div>
+
+
+    <script>
+        // --- DOM Elements ---
+        const bodyElement = document.body;
+        const birthDateDisplay = document.getElementById('birthDateDisplay');
+        const birthDateStatus = document.getElementById('birthDateStatus');
+        const birthDateStatusIcon = document.getElementById('birthDateStatusIcon');
+        const changeBirthDateBtn = document.getElementById('changeBirthDateBtn');
+        const birthDateInputGroup = document.getElementById('birthDateInputGroup');
+        const birthDateInput = document.getElementById('birthDate');
+        const saveBirthDateBtn = document.getElementById('saveBirthDateBtn');
+        const cancelBirthDateBtn = document.getElementById('cancelBirthDateBtn');
+        const birthDateError = document.getElementById('birthDateError');
+        const displayCurrentDateSpan = document.getElementById('displayCurrentDate');
+        const displayCurrentTimeSpan = document.getElementById('displayCurrentTime');
+        const displayCurrentYearSpan = document.getElementById('displayCurrentYear');
+        const currentAgeSpan = document.getElementById('currentAge');
+        // Countdown Title Elements
+        const yearCountdownTitle = document.getElementById('yearCountdownTitle');
+        const todayCountdownTitle = document.getElementById('todayCountdownTitle');
+        // Countdown Value Elements
+        const daysLeftYearSpan = document.getElementById('daysLeftYear');
+        const weeksLeftYearSpan = document.getElementById('weeksLeftYear');
+        const monthsLeftYearSpan = document.getElementById('monthsLeftYear');
+        const hoursLeftDaySpan = document.getElementById('hoursLeftDay');
+        const minutesLeftDaySpan = document.getElementById('minutesLeftDay');
+        const secondsLeftDaySpan = document.getElementById('secondsLeftDay');
+        const primeYearsLeftSpan = document.getElementById('primeYearsLeft');
+        const primeDaysLeftSpan = document.getElementById('primeDaysLeft');
+        // Progress Bar Elements
+        const lifespanProgressContainer = document.getElementById('lifespanProgressContainer');
+        const lifespanProgressLabel = document.getElementById('lifespanProgressLabel');
+        const lifespanPercentBar = document.getElementById('lifespanPercentBar');
+        const lifespanPercentText = document.getElementById('lifespanPercentText');
+        const primeProgressContainer = document.getElementById('primeProgressContainer');
+        const primeProgressLabel = document.getElementById('primeProgressLabel');
+        const primePercentBar = document.getElementById('primePercentBar');
+        const primePercentText = document.getElementById('primePercentText');
+        // Grid and Notes Elements
+        const lifespanGrid = document.getElementById('lifespanGrid');
+        const achievementsSection = document.getElementById('achievementsSection');
+        const achievementTitle = document.getElementById('achievementTitle');
+        const achievementText = document.getElementById('achievementText');
+        const saveAchievementBtn = document.getElementById('saveAchievementBtn');
+        const saveStatus = document.getElementById('saveStatus');
+        // Theme switcher buttons
+        const themeButtons = document.querySelectorAll('.theme-button');
+        // Settings Elements (references moved to modal elements)
+        const settingsIconBtn = document.getElementById('settingsIconBtn'); // New
+        const settingsModal = document.getElementById('settingsModal');     // New
+        const modalOverlay = document.getElementById('modalOverlay');       // New
+        const closeSettingsModalBtn = document.getElementById('closeSettingsModalBtn'); // New
+        const maxLifespanInput = document.getElementById('maxLifespanInput'); // Now inside modal
+        const primeEndAgeInput = document.getElementById('primeEndAgeInput'); // Now inside modal
+        const saveSettingsBtn = document.getElementById('saveSettingsBtn');   // Now inside modal
+        const settingsStatus = document.getElementById('settingsStatus');     // Now inside modal
+
+
+        // --- State Variables ---
+        let birthDate = null;
+        let currentAge = null;
+        let targetBirthday = null; // For prime years calculation
+        let selectedYearForAchievement = null;
+        let previouslySelectedTile = null; // To track the currently selected year tile
+        let currentTheme = 'light'; // Default theme
+
+        // --- Configurable Settings (with defaults) ---
+        let maxLifeYears = 80; // Default max lifespan
+        let primeYearsStart = 0; // Start of prime years (can be made configurable too if needed)
+        let primeYearsEnd = 45; // Default end of prime years
+        let primeAgeTarget = 45; // Default target age for prime calculations
+
+        // --- Constants ---
+        const DEFAULT_BIRTH_DATE = "2000-01-01"; // Default if none is saved
+        const THEME_STORAGE_KEY = 'lifeTrackerTheme';
+        const SETTINGS_STORAGE_KEY = 'lifeTrackerSettings'; // Key for localStorage settings
+        // SVG Icons for status
+        const TICK_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" class="icon-tick" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>';
+        const CROSS_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" class="icon-cross" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>';
+
+        // --- Utility Functions ---
+        function isLeapYear(year) { return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0); }
+        function daysInYear(year) { return isLeapYear(year) ? 366 : 365; }
+        function calculateAge(dob) {
+            if (!(dob instanceof Date) || isNaN(dob.getTime())) return null;
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const m = today.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            return age;
+        }
+        function formatDateForInput(date) {
+            if (!(date instanceof Date) || isNaN(date.getTime())) { return ''; }
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // --- Settings Modal Functions (New) ---
+        function openSettingsModal() {
+            // Populate inputs with current values before showing
+            maxLifespanInput.value = maxLifeYears;
+            primeEndAgeInput.value = primeYearsEnd;
+            settingsStatus.textContent = ''; // Clear any previous status messages
+            settingsModal.classList.remove('hidden');
+            modalOverlay.classList.remove('hidden');
+            // Add transitions for opacity/transform if desired via CSS
+        }
+
+        function closeSettingsModal() {
+            settingsModal.classList.add('hidden');
+            modalOverlay.classList.add('hidden');
+            settingsStatus.textContent = ''; // Clear status on close
+        }
+
+
+        // --- Settings Handling ---
+        /**
+         * Loads settings from localStorage or uses defaults.
+         */
+        function loadSettings() {
+            let savedSettings = {};
+            try {
+                const settingsString = localStorage.getItem(SETTINGS_STORAGE_KEY);
+                if (settingsString) {
+                    savedSettings = JSON.parse(settingsString);
+                }
+            } catch (e) {
+                console.error("Error loading settings from local storage:", e);
+                localStorage.removeItem(SETTINGS_STORAGE_KEY); // Clear potentially corrupted data
+            }
+
+            // Use saved value or default, ensuring it's a valid number
+            maxLifeYears = parseInt(savedSettings.maxLifeYears, 10) || 80;
+            primeYearsEnd = parseInt(savedSettings.primeYearsEnd, 10) || 45;
+            primeAgeTarget = primeYearsEnd; // Target age matches the end of prime
+
+             // Ensure values are reasonable
+            if (maxLifeYears <= 0) maxLifeYears = 80;
+            if (primeYearsEnd <= 0) primeYearsEnd = 45;
+            if (primeYearsEnd > maxLifeYears) primeYearsEnd = Math.min(45, maxLifeYears); // Adjust if prime end exceeds max life
+             primeAgeTarget = primeYearsEnd;
+
+
+            // Update input fields inside the modal (even though it's hidden initially)
+            maxLifespanInput.value = maxLifeYears;
+            primeEndAgeInput.value = primeYearsEnd;
+
+            // Update labels and tooltips that depend on settings
+            updateSettingsDependentUI();
+        }
+
+        /**
+         * Saves current settings from modal inputs to localStorage.
+         */
+        function saveSettings() {
+            settingsStatus.textContent = ''; // Clear previous status
+            const newMaxLife = parseInt(maxLifespanInput.value, 10);
+            const newPrimeEnd = parseInt(primeEndAgeInput.value, 10);
+
+            // Validation
+            if (isNaN(newMaxLife) || newMaxLife <= 0) {
+                settingsStatus.textContent = 'Error: Max Lifespan must be a positive number.';
+                settingsStatus.style.color = 'var(--icon-cross-color)';
+                return; // Don't close modal on error
+            }
+            if (isNaN(newPrimeEnd) || newPrimeEnd <= 0) {
+                settingsStatus.textContent = 'Error: Prime End Age must be a positive number.';
+                 settingsStatus.style.color = 'var(--icon-cross-color)';
+                return; // Don't close modal on error
+            }
+            if (newPrimeEnd > newMaxLife) {
+                settingsStatus.textContent = 'Error: Prime End Age cannot exceed Max Lifespan.';
+                 settingsStatus.style.color = 'var(--icon-cross-color)';
+                return; // Don't close modal on error
+            }
+             if (newPrimeEnd < primeYearsStart) {
+                 settingsStatus.textContent = `Error: Prime End Age must be ${primeYearsStart} or greater.`;
+                 settingsStatus.style.color = 'var(--icon-cross-color)';
+                 return; // Don't close modal on error
+             }
+
+
+            // Update state variables
+            maxLifeYears = newMaxLife;
+            primeYearsEnd = newPrimeEnd;
+            primeAgeTarget = newPrimeEnd;
+
+            const settingsToSave = {
+                maxLifeYears: maxLifeYears,
+                primeYearsEnd: primeYearsEnd
+            };
+
+            try {
+                localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settingsToSave));
+                settingsStatus.textContent = 'Settings saved!';
+                settingsStatus.style.color = 'var(--progress-text-prime)';
+
+                // Update UI immediately
+                updateSettingsDependentUI();
+                updateUserInfo(); // Recalculate age-dependent info and re-render grid
+
+                // Close modal after a short delay to show success message
+                setTimeout(() => {
+                    closeSettingsModal();
+                }, 1500);
+
+
+            } catch (e) {
+                console.error("Error saving settings to local storage:", e);
+                settingsStatus.textContent = 'Error saving settings.';
+                settingsStatus.style.color = 'var(--icon-cross-color)';
+                // Don't close modal on error
+            }
+        }
+
+         /**
+          * Updates UI elements that depend on the maxLifeYears and primeYearsEnd settings.
+          */
+         function updateSettingsDependentUI() {
+             // Update progress bar labels
+             if (lifespanProgressLabel) lifespanProgressLabel.textContent = `Overall Completion (0-${maxLifeYears} yrs)`;
+             if (primeProgressLabel) primeProgressLabel.textContent = `Prime Years Completion (${primeYearsStart}-${primeYearsEnd} yrs)`;
+
+             // Update progress bar container tooltips
+             if (lifespanProgressContainer) lifespanProgressContainer.title = `Shows your progress through your defined ${maxLifeYears}-year lifespan based on your current age.`;
+             if (primeProgressContainer) primeProgressContainer.title = `Shows how much of your prime working years (defined as ${primeYearsStart}-${primeYearsEnd}) you have completed.`;
+
+             // Update other relevant tooltips if necessary (e.g., prime countdowns)
+             const primeYearsTile = primeYearsLeftSpan?.closest('.tile');
+             if (primeYearsTile) primeYearsTile.title = `Full years remaining until you reach the end of the prime period (age ${primeYearsEnd}).`;
+             const primeDaysTile = primeDaysLeftSpan?.closest('.tile');
+             if (primeDaysTile) primeDaysTile.title = `Total days remaining until the end of your prime period (age ${primeYearsEnd}). Maximize this crucial time!`;
+             const primeCountdownHeader = primeYearsTile?.closest('.flex-1')?.querySelector('.time-group-label');
+             if(primeCountdownHeader) primeCountdownHeader.title = `Time remaining in your prime working years (defined as ${primeYearsStart}-${primeYearsEnd}).`;
+
+         }
+
+
+        // --- UI Update Functions for Birth Date Tile ---
+        /**
+         * Updates the birth date display section (status text, icon, and button visibility).
+         */
+        function showBirthDateDisplay() {
+            birthDateInputGroup.classList.add('hidden');
+            birthDateDisplay.classList.remove('hidden');
+            birthDateError.textContent = '';
+
+            // Update status text and icon
+            if (birthDate) {
+                birthDateStatus.firstChild.textContent = 'Birth Date Set '; // Update text node
+                birthDateStatusIcon.innerHTML = TICK_ICON_SVG; // Set tick icon
+                changeBirthDateBtn.textContent = 'Change Birth Date';
+            } else {
+                birthDateStatus.firstChild.textContent = 'Birth Date Not Set '; // Update text node
+                birthDateStatusIcon.innerHTML = CROSS_ICON_SVG; // Set cross icon
+                changeBirthDateBtn.textContent = 'Set Birth Date';
+            }
+        }
+        function showBirthDateInput() {
+            birthDateDisplay.classList.add('hidden');
+            birthDateInputGroup.classList.remove('hidden');
+            birthDateInput.value = formatDateForInput(birthDate);
+            birthDateError.textContent = '';
+        }
+
+        // --- Core Update Functions ---
+        /**
+         * Updates the display of current date, time (with seconds), dynamic titles, and various time-left counters.
+         * Runs periodically via setInterval.
+         */
+        function updateTimers() {
+            const now = new Date();
+            const currentActualYear = now.getFullYear();
+            const currentMonth = now.getMonth(); // 0-11
+
+            // Format date and time for display
+            const dateString = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+            // Calculate time left in the year
+            const endOfYear = new Date(currentActualYear, 11, 31, 23, 59, 59, 999);
+            const msLeftYear = endOfYear - now;
+            const daysLeftY = Math.max(0, Math.ceil(msLeftYear / (1000 * 60 * 60 * 24)));
+            const weeksLeftY = Math.max(0, Math.floor(daysLeftY / 7));
+            const monthsLeftY = 11 - currentMonth; // Months remaining (0-11)
+
+            // Calculate time left in the day
+            const endOfDay = new Date(now);
+            endOfDay.setHours(23, 59, 59, 999);
+            const msLeftToday = endOfDay - now;
+            const hoursLeft = Math.max(0, Math.floor(msLeftToday / (1000 * 60 * 60)));
+            const minutesLeft = Math.max(0, Math.floor(msLeftToday / (1000 * 60)));
+            const secondsLeft = Math.max(0, Math.floor(msLeftToday / 1000));
+
+            // Calculate prime years/days left (if birth date is set)
+            let primeYearsLeftVal = '--';
+            let primeDaysLeftVal = '--';
+            // Use the primeAgeTarget variable (updated by settings)
+            if (currentAge !== null && birthDate instanceof Date && !isNaN(birthDate.getTime())) {
+                primeYearsLeftVal = Math.max(0, primeAgeTarget - currentAge);
+                // Calculate target birthday for "prime days left" using primeAgeTarget
+                try {
+                     const birthYear = birthDate.getFullYear();
+                     const birthMonth = birthDate.getMonth();
+                     const birthDay = birthDate.getDate();
+                     const targetPrimeBirthday = new Date(birthYear + primeAgeTarget, birthMonth, birthDay);
+
+                     if (!isNaN(targetPrimeBirthday.getTime())) {
+                         if (now < targetPrimeBirthday) {
+                             const msLeftPrime = targetPrimeBirthday - now;
+                             primeDaysLeftVal = Math.max(0, Math.ceil(msLeftPrime / (1000 * 60 * 60 * 24)));
+                         } else {
+                             primeDaysLeftVal = 0; // Target prime birthday has passed
+                         }
+                     } else {
+                         console.error("Could not calculate target prime birthday (invalid date).");
+                         primeDaysLeftVal = '--';
+                     }
+                 } catch (e) {
+                     console.error("Error calculating target prime birthday:", e);
+                     primeDaysLeftVal = '--';
+                 }
+            } else {
+                 primeYearsLeftVal = '--';
+                 primeDaysLeftVal = '--';
+            }
+
+
+            // Update DOM elements
+            if (displayCurrentDateSpan) displayCurrentDateSpan.textContent = dateString;
+            if (displayCurrentTimeSpan) displayCurrentTimeSpan.textContent = timeString;
+            if (displayCurrentYearSpan) displayCurrentYearSpan.textContent = currentActualYear;
+
+            // Update Dynamic Titles
+            if (yearCountdownTitle) yearCountdownTitle.textContent = `Year ${currentActualYear} Countdown`;
+            if (todayCountdownTitle) todayCountdownTitle.textContent = `Today (${dateString}) Countdown`;
+
+            // Update Countdown Values
+            if (daysLeftYearSpan) daysLeftYearSpan.textContent = daysLeftY;
+            if (weeksLeftYearSpan) weeksLeftYearSpan.textContent = weeksLeftY;
+            if (monthsLeftYearSpan) monthsLeftYearSpan.textContent = monthsLeftY;
+            if (hoursLeftDaySpan) hoursLeftDaySpan.textContent = hoursLeft;
+            if (minutesLeftDaySpan) minutesLeftDaySpan.textContent = minutesLeft.toLocaleString();
+            if (secondsLeftDaySpan) secondsLeftDaySpan.textContent = secondsLeft.toLocaleString();
+            if (primeYearsLeftSpan) primeYearsLeftSpan.textContent = primeYearsLeftVal;
+            if (primeDaysLeftSpan) primeDaysLeftSpan.textContent = primeDaysLeftVal !== '--' ? primeDaysLeftVal.toLocaleString() : '--';
+        }
+
+        /**
+         * Updates user info (age, progress bars) based on the birth date and current settings.
+         */
+        function updateUserInfo() {
+            let percentLifespan = 0;
+            let percentPrime = 0;
+
+            if (birthDate instanceof Date && !isNaN(birthDate.getTime())) {
+                currentAge = calculateAge(birthDate);
+                currentAgeSpan.textContent = currentAge !== null ? `${currentAge} years old` : '--';
+
+                if (currentAge !== null) {
+                    // Calculate lifespan percentage using maxLifeYears variable
+                    percentLifespan = maxLifeYears > 0 ? Math.max(0, Math.min(100, Math.round((currentAge / maxLifeYears) * 100))) : 0;
+
+                    // Calculate prime years percentage using primeYearsStart and primeYearsEnd variables
+                    const primeDuration = primeYearsEnd - primeYearsStart;
+                    const completedPrimeYears = Math.max(0, Math.min(primeDuration, currentAge - primeYearsStart));
+                    percentPrime = primeDuration > 0 ? Math.max(0, Math.min(100, Math.round((completedPrimeYears / primeDuration) * 100))) : 0;
+
+                } else {
+                    // Reset percentages if age calculation fails
+                    percentLifespan = 0;
+                    percentPrime = 0;
+                }
+            } else {
+                // Reset if no valid birth date
+                currentAgeSpan.textContent = '--';
+                currentAge = null;
+                percentLifespan = 0;
+                percentPrime = 0;
+            }
+
+            // Update progress bars and text
+            if (lifespanPercentBar) { lifespanPercentBar.style.width = percentLifespan + '%'; }
+            if (lifespanPercentText) { lifespanPercentText.textContent = `${percentLifespan}%`; }
+            if (primePercentBar) { primePercentBar.style.width = percentPrime + '%'; }
+            if (primePercentText) { primePercentText.textContent = `${percentPrime}%`; }
+
+            // Re-render the grid and reset selection
+            renderLifespanGrid(); // Grid rendering depends on maxLifeYears
+            if (previouslySelectedTile) {
+                previouslySelectedTile.classList.remove('selected-tile');
+                previouslySelectedTile = null;
+            }
+            selectedYearForAchievement = null;
+            achievementsSection.classList.add('hidden');
+
+            // Update timers (which depend on age/target birthday and update dynamic titles)
+            updateTimers();
+        }
+
+        // --- Rendering Functions ---
+        /**
+         * Renders the grid of year tiles based on birth date and current settings (maxLifeYears, primeYearsEnd).
+         */
+        function renderLifespanGrid() {
+            if (!lifespanGrid) {
+                console.error("lifespanGrid DOM element not found");
+                return;
+            }
+            lifespanGrid.innerHTML = ''; // Clear existing grid
+            const birthYear = birthDate ? birthDate.getFullYear() : null;
+            const currentActualYear = new Date().getFullYear();
+
+            // Add Birth Tile if birth date is set
+            if (birthYear !== null) {
+                const birthTile = document.createElement('div');
+                birthTile.classList.add('tile', 'birth-tile', 'lifespan-tile');
+                birthTile.setAttribute('title', `Birth Year: ${birthYear}`);
+                birthTile.innerHTML = `<div class="age">Birth</div><div class="year">${birthYear}</div>`;
+                if (bodyElement.classList.contains('colorful-mode')) {
+                    const emojiSpan = document.createElement('span');
+                    emojiSpan.classList.add('emoji-icon');
+                    emojiSpan.textContent = '🎂';
+                    birthTile.appendChild(emojiSpan);
+                }
+                lifespanGrid.appendChild(birthTile);
+            }
+
+            // Add Year Tiles (1 to maxLifeYears variable)
+            for (let age = 1; age <= maxLifeYears; age++) {
+                const tile = document.createElement('div');
+                tile.classList.add('tile', 'lifespan-tile');
+                const yearForCell = birthYear ? birthYear + age : null;
+                let timeClass = '';
+                let hoverTitle = `Age: ${age}`; // Base title
+
+                if (birthYear !== null && yearForCell !== null) {
+                    // Determine time class
+                    if (yearForCell < currentActualYear) { timeClass = 'past'; hoverTitle += `, Year: ${yearForCell} (Past)`; }
+                    else if (yearForCell === currentActualYear) { timeClass = 'current'; hoverTitle += `, Year: ${yearForCell} (Current)`; }
+                    else if (yearForCell > currentActualYear && yearForCell <= currentActualYear + 3) { timeClass = 'upcoming'; hoverTitle += `, Year: ${yearForCell} (Upcoming)`; }
+                    else { timeClass = 'future'; hoverTitle += `, Year: ${yearForCell} (Future)`; }
+
+                    tile.classList.add('clickable');
+                    tile.addEventListener('click', () => handleYearClick(yearForCell, tile));
+                } else {
+                    // Style for tiles when birth date is not set
+                    tile.classList.add('bg-gray-100', 'text-gray-400', 'border-gray-200');
+                    tile.style.cursor = 'default';
+                    hoverTitle += ` (Set birth date to see year)`;
+                }
+
+                // Add prime year info to title using primeYearsStart and primeYearsEnd variables
+                if (age >= primeYearsStart && age <= primeYearsEnd) {
+                    hoverTitle += ' - Prime Year';
+                }
+
+                tile.setAttribute('title', hoverTitle); // Set the combined title
+
+                if (timeClass) { tile.classList.add(timeClass); }
+
+                // Apply prime year glow effect using primeYearsEnd variable
+                if (age <= primeYearsEnd && timeClass !== 'past' && timeClass !== 'current') {
+                    tile.classList.add('prime-year-glow');
+                }
+
+                tile.dataset.year = yearForCell;
+                tile.dataset.age = age;
+                tile.innerHTML = `<div class="age">${age}</div><div class="year">${yearForCell !== null ? yearForCell : '----'}</div>`;
+
+                // Append emoji span if in colorful mode and year is set
+                if (bodyElement.classList.contains('colorful-mode') && yearForCell !== null) {
+                    const emojiSpan = document.createElement('span');
+                    emojiSpan.classList.add('emoji-icon');
+                    let emoji = '🎈'; // Default future
+                    if (timeClass === 'current') emoji = '⭐';
+                    else if (timeClass === 'past') emoji = '✅';
+                    // Use primeYearsEnd for emoji logic
+                    else if (age <= primeYearsEnd && (timeClass === 'upcoming' || timeClass === 'future')) emoji = '🚀';
+                    emojiSpan.textContent = emoji;
+                    tile.appendChild(emojiSpan);
+                }
+
+                lifespanGrid.appendChild(tile);
+            }
+
+            // Re-select the tile if one was previously selected
+            if(selectedYearForAchievement && previouslySelectedTile) {
+                 const newSelectedTile = lifespanGrid.querySelector(`.tile[data-year="${selectedYearForAchievement}"]`);
+                 if (newSelectedTile && !newSelectedTile.classList.contains('birth-tile')) {
+                     newSelectedTile.classList.add('selected-tile');
+                     previouslySelectedTile = newSelectedTile;
+                 } else {
+                     previouslySelectedTile = null;
+                     selectedYearForAchievement = null;
+                     achievementsSection.classList.add('hidden');
+                 }
+            }
+        }
+
+        // --- Achievement/Notes Handling ---
+        function handleYearClick(year, tileElement) {
+            if (year === null || tileElement.classList.contains('birth-tile')) return;
+
+            selectedYearForAchievement = year;
+
+            if (previouslySelectedTile) {
+                previouslySelectedTile.classList.remove('selected-tile');
+            }
+
+            tileElement.classList.add('selected-tile');
+            previouslySelectedTile = tileElement;
+
+            achievementTitle.textContent = `Notes for Year ${year}`;
+            const savedNote = localStorage.getItem(`achievement_${year}`);
+            achievementText.value = savedNote || '';
+            achievementsSection.classList.remove('hidden');
+            saveStatus.textContent = '';
+            achievementText.focus();
+        }
+
+        function saveAchievement() {
+            if (selectedYearForAchievement !== null) {
+                const note = achievementText.value.trim();
+                try {
+                    localStorage.setItem(`achievement_${selectedYearForAchievement}`, note);
+                    saveStatus.textContent = 'Note saved!';
+                    setTimeout(() => { saveStatus.textContent = ''; }, 3000);
+                } catch (e) {
+                    console.error("Error saving note to local storage:", e);
+                    saveStatus.textContent = 'Error saving note.';
+                    setTimeout(() => { saveStatus.textContent = ''; }, 5000);
+                }
+            } else {
+                console.error("Save button clicked but no year is selected.");
+                saveStatus.textContent = 'Error: No year selected.';
+                setTimeout(() => { saveStatus.textContent = ''; }, 3000);
+            }
+        }
+
+        // --- Theme Switching Logic ---
+        function applyTheme(themeName) {
+            bodyElement.classList.remove('dark-mode', 'colorful-mode');
+            if (themeName === 'dark') {
+                bodyElement.classList.add('dark-mode');
+            } else if (themeName === 'colorful') {
+                bodyElement.classList.add('colorful-mode');
+            }
+
+            themeButtons.forEach(button => {
+                button.classList.toggle('active', button.dataset.theme === themeName);
+            });
+
+            currentTheme = themeName;
+            try {
+                localStorage.setItem(THEME_STORAGE_KEY, themeName);
+            } catch (e) {
+                console.error("Could not save theme preference to local storage:", e);
+            }
+            // Re-render grid to apply/remove emojis and trigger animations when theme changes
+            renderLifespanGrid();
+        }
+
+        function loadThemePreference() {
+            let savedTheme = 'light';
+            try {
+                savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'light';
+            } catch (e) {
+                console.error("Could not load theme preference from local storage:", e);
+                savedTheme = 'light';
+            }
+            if (!['light', 'dark', 'colorful'].includes(savedTheme)) {
+                savedTheme = 'light';
+            }
+            applyTheme(savedTheme);
+        }
+
+        // --- Event Listeners ---
+        changeBirthDateBtn.addEventListener('click', showBirthDateInput);
+        saveBirthDateBtn.addEventListener('click', () => {
+            const dateValue = birthDateInput.value;
+            birthDateError.textContent = '';
+
+            if (dateValue) {
+                const potentialBirthDate = new Date(dateValue + 'T00:00:00');
+                if (!isNaN(potentialBirthDate.getTime()) && potentialBirthDate <= new Date()) {
+                    birthDate = potentialBirthDate;
+                    localStorage.setItem('birthDate', dateValue);
+                    updateUserInfo();
+                    showBirthDateDisplay(); // Update display including icon
+                } else if (potentialBirthDate > new Date()) {
+                    birthDateError.textContent = 'Birth date cannot be in the future.';
+                } else {
+                    console.error("Invalid date selected:", dateValue);
+                    birthDateError.textContent = 'Please select a valid date.';
+                }
+            } else {
+                // If input is cleared, treat as removing the birth date
+                birthDate = null;
+                localStorage.removeItem('birthDate');
+                updateUserInfo();
+                showBirthDateDisplay(); // Update display including icon
+            }
+        });
+        cancelBirthDateBtn.addEventListener('click', showBirthDateDisplay);
+
+        if (saveAchievementBtn) {
+            saveAchievementBtn.addEventListener('click', saveAchievement);
+        } else {
+            console.error("saveAchievementBtn DOM element not found");
+        }
+
+        themeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                applyTheme(button.dataset.theme);
+            });
+        });
+
+        // Settings Modal Listeners (New)
+        if (settingsIconBtn) {
+            settingsIconBtn.addEventListener('click', openSettingsModal);
+        } else {
+             console.error("settingsIconBtn DOM element not found");
+        }
+        if (closeSettingsModalBtn) {
+             closeSettingsModalBtn.addEventListener('click', closeSettingsModal);
+        } else {
+             console.error("closeSettingsModalBtn DOM element not found");
+        }
+         if (modalOverlay) {
+             modalOverlay.addEventListener('click', closeSettingsModal);
+         } else {
+              console.error("modalOverlay DOM element not found");
+         }
+        if (saveSettingsBtn) { // Listener now attached to button inside modal
+            saveSettingsBtn.addEventListener('click', saveSettings);
+        } else {
+            console.error("saveSettingsBtn DOM element not found");
+        }
+
+
+        // --- Initialization ---
+        function initialize() {
+            // 1. Load Settings (must happen before calculations)
+            loadSettings();
+
+            // 2. Load saved birth date or use default
+            const savedBirthDate = localStorage.getItem('birthDate');
+            const initialDateValue = savedBirthDate || DEFAULT_BIRTH_DATE;
+            birthDate = new Date(initialDateValue + 'T00:00:00');
+
+            if (isNaN(birthDate.getTime())) {
+                console.error("Invalid initial date found/used:", initialDateValue);
+                birthDate = null; // Ensure birthDate is null if invalid
+                localStorage.removeItem('birthDate');
+            } else if (!savedBirthDate) {
+                // Only set default in localStorage if none existed
+                localStorage.setItem('birthDate', initialDateValue);
+            }
+
+            // 3. Load Theme (calls renderLifespanGrid)
+            loadThemePreference();
+
+            // 4. Update UI based on loaded data
+            showBirthDateDisplay(); // Show initial birth date status and icon
+            updateUserInfo();     // Calculate age, progress etc. (calls renderLifespanGrid again, which is fine)
+
+            // 5. Start Timers
+            updateTimers(); // Initial call to set timers and dynamic titles immediately
+            setInterval(updateTimers, 1000); // Set interval to update timers every second
+        }
+
+        document.addEventListener('DOMContentLoaded', initialize);
+
+    </script>
+
+</body>
+</html>
