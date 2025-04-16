@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Grid - Visualize Your Time</title>
+    <title>Life Grid - Visualize Your Time (Stacked)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <style>
         /* --- CSS Color Variables --- */
         :root {
@@ -25,30 +24,24 @@
             --tile-hover-shadow: rgba(0,0,0,0.1);
             --tile-label-color: #64748b; /* slate-500 */
             --tile-value-color: #1e90ff; /* dodgerblue */
-            --tile-past-bg: #4b5563; /* gray-600 */
+            --tile-past-bg: #4b5563; /* gray-600 */ /* Used for past hours */
             --tile-past-text: #ffffff;
             --tile-past-border: #374151; /* gray-700 */
-            --tile-current-bg: #1e90ff; /* dodgerblue */
+            --tile-current-bg: #1e90ff; /* dodgerblue */ /* Used for current year/hour tile */
             --tile-current-text: #ffffff;
             --tile-current-border: #1c86ee; /* darker dodgerblue */
-            --tile-upcoming-bg: #fef9c3; /* yellow-100 */
+            --tile-upcoming-bg: #fef9c3; /* yellow-100 */ /* Used for upcoming year tiles (no longer used in this version) */
             --tile-upcoming-text: #a16207; /* yellow-800 */
             --tile-upcoming-border: #fde047; /* yellow-300 */
-            --tile-future-bg: #e0f2fe; /* sky-100 */
+            --tile-future-bg: #e0f2fe; /* sky-100 */ /* Used for future year tiles (no longer used in this version) */
             --tile-future-text: #075985; /* sky-800 */
             --tile-future-border: #bae6fd; /* sky-200 */
-            --tile-birth-bg: #e5e7eb; /* gray-200 */
-            --tile-birth-text: #374151; /* gray-700 */
-            --tile-birth-border: #d1d5db; /* gray-300 */
-            --tile-selected-outline: #4f46e5; /* indigo-600 */
             /* --- Prime Colors --- */
-            --prime-glow-border-1: #FFD700; /* Gold */
-            --prime-glow-border-2: #B8860B; /* DarkGoldenrod */
             --progress-text-prime: #9a3412; /* orange-800 - Matches prime gradient */
             /* --- --- */
             --contrib-square-bg: #e5e7eb; /* gray-200 */
             --contrib-square-border: #d1d5db; /* gray-300 */
-            --contrib-current-border: #1e90ff; /* dodgerblue */
+            --contrib-current-border: #1e90ff; /* dodgerblue */ /* Outline for current month in progress grids */
             --progress-text-lifespan: #4338ca; /* indigo-700 - Matches lifespan gradient */
             --button-bg: #2563eb; /* blue-600 */
             --button-text: #ffffff;
@@ -68,7 +61,7 @@
             --theme-button-hover-bg: #d1d5db; /* gray-300 */
             --theme-button-active-bg: #9ca3af; /* gray-400 */
             --theme-button-active-icon-color: #ffffff;
-            --theme-button-active-outline: var(--tile-selected-outline);
+            --theme-button-active-outline: var(--tile-selected-outline); /* Re-using selected tile outline color */
             --icon-tick-color: #10b981; /* emerald-500 */
             --icon-cross-color: #ef4444; /* red-500 */
             --modal-bg: #ffffff;
@@ -78,15 +71,6 @@
             --modal-close-icon-hover-bg: #e5e7eb; /* gray-200 */
             --settings-icon-color: #6b7280; /* gray-500 */
             --settings-icon-hover-bg: #f3f4f6; /* gray-100 */
-            /* Quill Editor Colors */
-            --ql-toolbar-bg: #f3f4f6; /* gray-100 */
-            --ql-editor-bg: var(--input-bg);
-            --ql-editor-text: var(--input-text);
-            --ql-border-color: var(--input-border);
-            --ql-button-color: var(--text-muted-color);
-            --ql-button-hover-bg: #e5e7eb; /* gray-200 */
-            --ql-button-active-bg: #d1d5db; /* gray-300 */
-            --ql-button-active-color: var(--text-color);
 
             /* --- GRADIENTS --- */
             /* Gradient Fill Colors - Lifespan (Blues -> Purples -> Pinks -> Oranges) 20 steps */
@@ -101,22 +85,20 @@
             --unit-hour-fill-1: #fff7ed; --unit-hour-fill-2: #ffedd5; --unit-hour-fill-3: #fed7aa; --unit-hour-fill-4: #fdbb74; --unit-hour-fill-5: #fb923c; --unit-hour-fill-6: #f97316; --unit-hour-fill-7: #ea580c; --unit-hour-fill-8: #c2410c; --unit-hour-fill-9: #9a3412; --unit-hour-fill-10: #7c2d12; --unit-hour-fill-11: #451a03; --unit-hour-fill-12: #451a03; --unit-hour-fill-13: #451a03; --unit-hour-fill-14: #451a03; --unit-hour-fill-15: #451a03;
             /* Unit Grid Gradient Fill - Prime Years (Purples) 15 steps */
             --unit-primeYear-fill-1: #f5f3ff; --unit-primeYear-fill-2: #ede9fe; --unit-primeYear-fill-3: #ddd6fe; --unit-primeYear-fill-4: #c4b5fd; --unit-primeYear-fill-5: #a78bfa; --unit-primeYear-fill-6: #8b5cf6; --unit-primeYear-fill-7: #7c3aed; --unit-primeYear-fill-8: #6d28d9; --unit-primeYear-fill-9: #5b21b6; --unit-primeYear-fill-10: #4c1d95; --unit-primeYear-fill-11: #2e1065; --unit-primeYear-fill-12: #2e1065; --unit-primeYear-fill-13: #2e1065; --unit-primeYear-fill-14: #2e1065; --unit-primeYear-fill-15: #2e1065;
+            /* Unit Grid Gradient Fill - Awake Slots (Greens) 15 steps */
+            --unit-awakeSlot-fill-1: #f0fdf4; --unit-awakeSlot-fill-2: #dcfce7; --unit-awakeSlot-fill-3: #bbf7d0; --unit-awakeSlot-fill-4: #86efac; --unit-awakeSlot-fill-5: #4ade80; --unit-awakeSlot-fill-6: #22c55e; --unit-awakeSlot-fill-7: #16a34a; --unit-awakeSlot-fill-8: #15803d; --unit-awakeSlot-fill-9: #166534; --unit-awakeSlot-fill-10: #14532d; --unit-awakeSlot-fill-11: #052e16; --unit-awakeSlot-fill-12: #052e16; --unit-awakeSlot-fill-13: #052e16; --unit-awakeSlot-fill-14: #052e16; --unit-awakeSlot-fill-15: #052e16;
             /* Unit Grid Current Hour/Upcoming Unit Highlight */
             --unit-current-bg: var(--tile-current-bg);
             --unit-current-border: var(--tile-current-border);
-            /* Unit Grid Next Upcoming Highlight (Outline - No longer used by JS for highlight, but kept for potential future use) */
-            --unit-next-upcoming-outline: var(--tile-upcoming-border);
         }
 
         body.dark-mode {
             /* --- Dark Theme Variables --- */
-            --bg-color: #111827; --text-color: #d1d5db; --text-muted-color: #9ca3af; --heading-color: #f9fafb; --link-color: #60a5fa; --link-hover-color: #93c5fd; --tile-bg: #1f2937; --tile-border: #374151; --tile-shadow: rgba(0,0,0,0.2); --tile-hover-shadow: rgba(0,0,0,0.3); --tile-label-color: #9ca3af; --tile-value-color: #60a5fa; --tile-past-bg: #4b5563; --tile-past-text: #f3f4f6; --tile-past-border: #374151; --tile-current-bg: #2563eb; --tile-current-text: #ffffff; --tile-current-border: #1d4ed8; --tile-upcoming-bg: #451a03; --tile-upcoming-text: #fef3c7; --tile-upcoming-border: #78350f; --tile-future-bg: #1e3a8a; --tile-future-text: #dbeafe; --tile-future-border: #1e40af; --tile-birth-bg: #374151; --tile-birth-text: #d1d5db; --tile-birth-border: #4b5563; --tile-selected-outline: #818cf8;
+            --bg-color: #111827; --text-color: #d1d5db; --text-muted-color: #9ca3af; --heading-color: #f9fafb; --link-color: #60a5fa; --link-hover-color: #93c5fd; --tile-bg: #1f2937; --tile-border: #374151; --tile-shadow: rgba(0,0,0,0.2); --tile-hover-shadow: rgba(0,0,0,0.3); --tile-label-color: #9ca3af; --tile-value-color: #60a5fa; --tile-past-bg: #4b5563; --tile-past-text: #f3f4f6; --tile-past-border: #374151; --tile-current-bg: #2563eb; --tile-current-text: #ffffff; --tile-current-border: #1d4ed8; --tile-upcoming-bg: #451a03; --tile-upcoming-text: #fef3c7; --tile-upcoming-border: #78350f; --tile-future-bg: #1e3a8a; --tile-future-text: #dbeafe; --tile-future-border: #1e40af;
             /* --- Prime Colors --- */
-            --prime-glow-border-1: #ca8a04; --prime-glow-border-2: #713f12; --progress-text-prime: #fca5a5;
+            --progress-text-prime: #fca5a5;
             /* --- --- */
-            --contrib-square-bg: #374151; --contrib-square-border: #4b5563; --contrib-current-border: #60a5fa; --progress-text-lifespan: #a5b4fc; --button-bg: #3b82f6; --button-text: #ffffff; --button-hover-bg: #60a5fa; --button-cancel-bg: #374151; --button-cancel-text: #d1d5db; --button-cancel-hover-bg: #4b5563; --input-border: #4b5563; --input-focus-ring: #60a5fa; --input-text: #f3f4f6; --input-bg: #1f2937; --icon-color: #60a5fa; --section-bg: #1f2937; --section-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2); --theme-button-bg: #374151; --theme-button-icon-color: #d1d5db; --theme-button-hover-bg: #4b5563; --theme-button-active-bg: #6b7280; --theme-button-active-icon-color: #ffffff; --theme-button-active-outline: var(--tile-selected-outline); --icon-tick-color: #34d399; --icon-cross-color: #f87171; --modal-bg: #1f2937; --modal-overlay-bg: rgba(0, 0, 0, 0.7); --modal-border: #374151; --modal-close-icon-color: #9ca3af; --modal-close-icon-hover-bg: #374151; --settings-icon-color: #9ca3af; --settings-icon-hover-bg: #374151;
-             /* Quill Editor Colors */
-            --ql-toolbar-bg: #374151; --ql-editor-bg: var(--input-bg); --ql-editor-text: var(--input-text); --ql-border-color: var(--input-border); --ql-button-color: var(--text-muted-color); --ql-button-hover-bg: #4b5563; --ql-button-active-bg: #52525b; --ql-button-active-color: var(--text-color);
+            --contrib-square-bg: #374151; --contrib-square-border: #4b5563; --contrib-current-border: #60a5fa; --progress-text-lifespan: #a5b4fc; --button-bg: #3b82f6; --button-text: #ffffff; --button-hover-bg: #60a5fa; --button-cancel-bg: #374151; --button-cancel-text: #d1d5db; --button-cancel-hover-bg: #4b5563; --input-border: #4b5563; --input-focus-ring: #60a5fa; --input-text: #f3f4f6; --input-bg: #1f2937; --icon-color: #60a5fa; --section-bg: #1f2937; --section-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2); --theme-button-bg: #374151; --theme-button-icon-color: #d1d5db; --theme-button-hover-bg: #4b5563; --theme-button-active-bg: #6b7280; --theme-button-active-icon-color: #ffffff; --theme-button-active-outline: #818cf8; --icon-tick-color: #34d399; --icon-cross-color: #f87171; --modal-bg: #1f2937; --modal-overlay-bg: rgba(0, 0, 0, 0.7); --modal-border: #374151; --modal-close-icon-color: #9ca3af; --modal-close-icon-hover-bg: #374151; --settings-icon-color: #9ca3af; --settings-icon-hover-bg: #374151;
 
             /* --- GRADIENTS --- */
             /* Gradient Fill Colors - Lifespan (Blues -> Purples -> Pinks -> Roses) 20 steps */
@@ -131,22 +113,20 @@
             --unit-hour-fill-1: #78350f; --unit-hour-fill-2: #92400e; --unit-hour-fill-3: #a16207; --unit-hour-fill-4: #b45309; --unit-hour-fill-5: #ca8a04; --unit-hour-fill-6: #d97706; --unit-hour-fill-7: #eab308; --unit-hour-fill-8: #f59e0b; --unit-hour-fill-9: #facc15; --unit-hour-fill-10: #fbbf24; --unit-hour-fill-11: #fcd34d; --unit-hour-fill-12: #fde68a; --unit-hour-fill-13: #fef3c7; --unit-hour-fill-14: #fef9c3; --unit-hour-fill-15: #fffbeb;
             /* Unit Grid Gradient Fill - Prime Years (Indigos) 15 steps */
             --unit-primeYear-fill-1: #312e81; --unit-primeYear-fill-2: #3730a3; --unit-primeYear-fill-3: #4338ca; --unit-primeYear-fill-4: #4f46e5; --unit-primeYear-fill-5: #6366f1; --unit-primeYear-fill-6: #818cf8; --unit-primeYear-fill-7: #a5b4fc; --unit-primeYear-fill-8: #c7d2fe; --unit-primeYear-fill-9: #e0e7ff; --unit-primeYear-fill-10: #eef2ff; --unit-primeYear-fill-11: #eef2ff; --unit-primeYear-fill-12: #eef2ff; --unit-primeYear-fill-13: #eef2ff; --unit-primeYear-fill-14: #eef2ff; --unit-primeYear-fill-15: #eef2ff;
+            /* Unit Grid Gradient Fill - Awake Slots (Emeralds) 15 steps */
+            --unit-awakeSlot-fill-1: #064e3b; --unit-awakeSlot-fill-2: #065f46; --unit-awakeSlot-fill-3: #047857; --unit-awakeSlot-fill-4: #059669; --unit-awakeSlot-fill-5: #10b981; --unit-awakeSlot-fill-6: #34d399; --unit-awakeSlot-fill-7: #6ee7b7; --unit-awakeSlot-fill-8: #a7f3d0; --unit-awakeSlot-fill-9: #d1fae5; --unit-awakeSlot-fill-10: #ecfdf5; --unit-awakeSlot-fill-11: #ecfdf5; --unit-awakeSlot-fill-12: #ecfdf5; --unit-awakeSlot-fill-13: #ecfdf5; --unit-awakeSlot-fill-14: #ecfdf5; --unit-awakeSlot-fill-15: #ecfdf5;
             /* Unit Grid Current Hour/Upcoming Unit Highlight */
             --unit-current-bg: var(--tile-current-bg);
             --unit-current-border: var(--tile-current-border);
-            /* Unit Grid Next Upcoming Highlight (Outline) */
-            --unit-next-upcoming-outline: var(--tile-upcoming-border);
         }
 
         body.colorful-mode {
             /* --- Kid-friendly colorful theme --- */
-            --bg-color: #f0fdfa; --text-color: #115e59; --text-muted-color: #0e7490; --heading-color: #155e75; --link-color: #5b21b6; --link-hover-color: #6d28d9; --tile-bg: #ffffff; --tile-border: #67e8f9; --tile-shadow: rgba(6, 182, 212, 0.15); --tile-hover-shadow: rgba(6, 182, 212, 0.25); --tile-label-color: #0e7490; --tile-value-color: #5b21b6; --tile-past-bg: #fda4af; --tile-past-text: #881337; --tile-past-border: #fb7185; --tile-current-bg: #fde047; --tile-current-text: #854d0e; --tile-current-border: #facc15; --tile-upcoming-bg: #a7f3d0; --tile-upcoming-text: #065f46; --tile-upcoming-border: #6ee7b7; --tile-future-bg: #c4b5fd; --tile-future-text: #4c1d95; --tile-future-border: #a78bfa; --tile-birth-bg: #f9a8d4; --tile-birth-text: #831843; --tile-birth-border: #f472b6; --tile-selected-outline: #fb923c;
-             /* --- Prime Colors --- */
-            --prime-glow-border-1: #fde047; --prime-glow-border-2: #facc15; --progress-text-prime: #ef4444;
+            --bg-color: #f0fdfa; --text-color: #115e59; --text-muted-color: #0e7490; --heading-color: #155e75; --link-color: #5b21b6; --link-hover-color: #6d28d9; --tile-bg: #ffffff; --tile-border: #67e8f9; --tile-shadow: rgba(6, 182, 212, 0.15); --tile-hover-shadow: rgba(6, 182, 212, 0.25); --tile-label-color: #0e7490; --tile-value-color: #5b21b6; --tile-past-bg: #fda4af; --tile-past-text: #881337; --tile-past-border: #fb7185; --tile-current-bg: #fde047; --tile-current-text: #854d0e; --tile-current-border: #facc15; --tile-upcoming-bg: #a7f3d0; --tile-upcoming-text: #065f46; --tile-upcoming-border: #6ee7b7; --tile-future-bg: #c4b5fd; --tile-future-text: #4c1d95; --tile-future-border: #a78bfa;
+            /* --- Prime Colors --- */
+            --progress-text-prime: #ef4444;
             /* --- --- */
             --contrib-square-bg: #e0f2fe; --contrib-square-border: #bae6fd; --contrib-current-border: #fde047; --progress-text-lifespan: #d946ef; --button-bg: #34d399; --button-text: #064e3b; --button-hover-bg: #6ee7b7; --button-cancel-bg: #fda4af; --button-cancel-text: #881337; --button-cancel-hover-bg: #fb7185; --input-border: #a5b4fc; --input-focus-ring: #818cf8; --input-text: #312e81; --input-bg: #ffffff; --icon-color: #6d28d9; --section-bg: #ffffff; --section-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); --theme-button-bg: #fde047; --theme-button-icon-color: #854d0e; --theme-button-hover-bg: #facc15; --theme-button-active-bg: #fb923c; --theme-button-active-icon-color: #ffffff; --theme-button-active-outline: #16a34a; --icon-tick-color: #059669; --icon-cross-color: #e11d48; --modal-bg: #ecfdf5; --modal-overlay-bg: rgba(6, 78, 59, 0.6); --modal-border: #6ee7b7; --modal-close-icon-color: #065f46; --modal-close-icon-hover-bg: #a7f3d0; --settings-icon-color: #0e7490; --settings-icon-hover-bg: #a5f3fc;
-             /* Quill Editor Colors */
-            --ql-toolbar-bg: #cffafe; --ql-editor-bg: var(--input-bg); --ql-editor-text: var(--input-text); --ql-border-color: var(--input-border); --ql-button-color: #155e75; --ql-button-hover-bg: #a5f3fc; --ql-button-active-bg: #67e8f9; --ql-button-active-color: #115e59;
             /* Subtle background pattern */
             background-color: var(--bg-color); background-image: radial-gradient(var(--dot-color) 1px, transparent 1px); background-size: 15px 15px; --dot-color: rgba(6, 182, 212, 0.1);
 
@@ -163,11 +143,11 @@
             --unit-hour-fill-1: #fdf2f8; --unit-hour-fill-2: #fce7f3; --unit-hour-fill-3: #fbcfe8; --unit-hour-fill-4: #f9a8d4; --unit-hour-fill-5: #f472b6; --unit-hour-fill-6: #ec4899; --unit-hour-fill-7: #db2777; --unit-hour-fill-8: #be185d; --unit-hour-fill-9: #9d174d; --unit-hour-fill-10: #831843; --unit-hour-fill-11: #500724; --unit-hour-fill-12: #500724; --unit-hour-fill-13: #500724; --unit-hour-fill-14: #500724; --unit-hour-fill-15: #500724;
             /* Unit Grid Gradient Fill - Prime Years (Violets) 15 steps */
             --unit-primeYear-fill-1: #f5f3ff; --unit-primeYear-fill-2: #ede9fe; --unit-primeYear-fill-3: #ddd6fe; --unit-primeYear-fill-4: #c4b5fd; --unit-primeYear-fill-5: #a78bfa; --unit-primeYear-fill-6: #8b5cf6; --unit-primeYear-fill-7: #7c3aed; --unit-primeYear-fill-8: #6d28d9; --unit-primeYear-fill-9: #5b21b6; --unit-primeYear-fill-10: #4c1d95; --unit-primeYear-fill-11: #2e1065; --unit-primeYear-fill-12: #2e1065; --unit-primeYear-fill-13: #2e1065; --unit-primeYear-fill-14: #2e1065; --unit-primeYear-fill-15: #2e1065;
+            /* Unit Grid Gradient Fill - Awake Slots (Blues) 15 steps */
+            --unit-awakeSlot-fill-1: #eff6ff; --unit-awakeSlot-fill-2: #dbeafe; --unit-awakeSlot-fill-3: #bfdbfe; --unit-awakeSlot-fill-4: #93c5fd; --unit-awakeSlot-fill-5: #60a5fa; --unit-awakeSlot-fill-6: #3b82f6; --unit-awakeSlot-fill-7: #2563eb; --unit-awakeSlot-fill-8: #1d4ed8; --unit-awakeSlot-fill-9: #1e40af; --unit-awakeSlot-fill-10: #1e3a8a; --unit-awakeSlot-fill-11: #172554; --unit-awakeSlot-fill-12: #172554; --unit-awakeSlot-fill-13: #172554; --unit-awakeSlot-fill-14: #172554; --unit-awakeSlot-fill-15: #172554;
             /* Unit Grid Current Hour/Upcoming Unit Highlight */
             --unit-current-bg: var(--tile-current-bg);
             --unit-current-border: var(--tile-current-border);
-            /* Unit Grid Next Upcoming Highlight (Outline) */
-            --unit-next-upcoming-outline: var(--tile-upcoming-border);
         }
         body.dark-mode { --dot-color: rgba(255, 255, 255, 0.04); } /* Dark dot color */
 
@@ -184,12 +164,9 @@
         body.colorful-mode h1,
         body.colorful-mode h2,
         body.colorful-mode h3,
-        body.colorful-mode .tile .age,
-        body.colorful-mode .tile .year,
-        body.colorful-mode .tile .value,
+        body.colorful-mode .tile .value, /* Apply to value spans in tiles */
         body.colorful-mode button:not(.theme-button),
-        body.colorful-mode #settingsModal h2, /* Apply to modal title */
-        body.colorful-mode #notesSection h2 /* Apply to notes title */
+        body.colorful-mode #settingsModal h2 /* Apply to modal title */
         {
             font-family: 'Fredoka One', cursive; /* Changed font */
             letter-spacing: 0.02em;
@@ -200,12 +177,10 @@
         }
          body.colorful-mode .tile .label,
          body.colorful-mode p,
-         body.colorful-mode span:not(.value):not(.age):not(.year):not(.progress-percent-text), /* Exclude percentage */
+         body.colorful-mode span:not(.value):not(.progress-percent-text), /* Exclude value and percentage spans */
          body.colorful-mode input,
-         /* body.colorful-mode textarea, */ /* Let Quill handle textarea font */
          body.colorful-mode .birthdate-status,
-         body.colorful-mode label, /* Apply to settings & notes labels */
-         body.colorful-mode #notesSection label /* Ensure notes labels use Inter */
+         body.colorful-mode label /* Apply to settings labels */
          {
              font-family: 'Inter', sans-serif;
              letter-spacing: normal;
@@ -222,6 +197,11 @@
              -webkit-user-select: text;
              -moz-user-select: text;
              -ms-user-select: text;
+         }
+         /* Specific style for the slot countdown value */
+         #slotCountdown {
+             font-family: 'Inter', sans-serif; /* Ensure countdown uses Inter */
+             letter-spacing: normal;
          }
 
 
@@ -305,71 +285,7 @@
          box-shadow: 0 3px 6px var(--tile-hover-shadow);
          cursor: pointer;
         }
-        .lifespan-tile {
-             min-height: 60px; /* Smaller height for year grid tiles */
-             padding: 0.5rem;
-             cursor: pointer;
-         }
-        /* Apply fade-in animation only in colorful mode */
-        body.colorful-mode .lifespan-tile {
-             opacity: 0; /* Start tiles as transparent for animation */
-             animation: tileFadeIn 0.4s ease-out forwards;
-        }
-        /* Stagger animation for year tiles */
-        body.colorful-mode .years-grid .lifespan-tile:nth-child(1) { animation-delay: 0.02s; }
-        body.colorful-mode .years-grid .lifespan-tile:nth-child(2) { animation-delay: 0.04s; }
-        body.colorful-mode .years-grid .lifespan-tile:nth-child(3) { animation-delay: 0.06s; }
-        body.colorful-mode .years-grid .lifespan-tile:nth-child(4) { animation-delay: 0.08s; }
-        body.colorful-mode .years-grid .lifespan-tile:nth-child(5) { animation-delay: 0.10s; }
-        /* Add more if needed, or use JS for dynamic delay */
-
-        .tile.past { background-color: var(--tile-past-bg); color: var(--tile-past-text); border-color: var(--tile-past-border); }
-        .tile.current { background-color: var(--tile-current-bg); color: var(--tile-current-text); border-color: var(--tile-current-border); transform: scale(1.05); box-shadow: 0 4px 8px var(--tile-hover-shadow); z-index: 10; opacity: 1 !important; animation: none !important; } /* Ensure current tile is always visible */
-        .tile.upcoming { background-color: var(--tile-upcoming-bg); color: var(--tile-upcoming-text); border-color: var(--tile-upcoming-border); }
-        .tile.future { background-color: var(--tile-future-bg); color: var(--tile-future-text); border-color: var(--tile-future-border); }
-        .selected-tile { outline: 3px solid var(--tile-selected-outline); outline-offset: 2px; z-index: 20;}
-        .tile.birth-tile { background-color: var(--tile-birth-bg); color: var(--tile-birth-text); border-color: var(--tile-birth-border); cursor: default; opacity: 1 !important; animation: none !important; } /* Ensure birth tile is always visible */
-        .tile.birth-tile:hover { transform: none; box-shadow: 0 1px 3px var(--tile-shadow); }
-        .tile.birth-tile .age { font-size: 0.875rem; font-weight: 600; }
-        .age { font-size: 1.125rem; font-weight: 700; line-height: 1.3; }
-        .year { font-size: 0.75rem; line-height: 1.3; margin-top: 2px; }
-
-        .emoji-icon {
-             position: absolute;
-             top: 2px;
-             right: 3px;
-             font-size: 0.8rem;
-             opacity: 0.7;
-             pointer-events: none;
-             user-select: none;
-             -webkit-user-select: none;
-             -moz-user-select: none;
-             -ms-user-select: none;
-        }
-
-        /* --- Prime Year Glow Effect using Variables --- */
-        .prime-year-glow {
-            border-color: var(--prime-glow-border-1); /* Use reverted gold/yellow */
-            animation: pulseOrangeBorder 2s infinite ease-in-out; /* Keep animation name */
-        }
-        /* Updated animation name and colors */
-        @keyframes pulseOrangeBorder { /* Keep animation name consistent */
-         0% { border-width: 1px; border-color: var(--prime-glow-border-1); }
-         50% { border-width: 2px; border-color: var(--prime-glow-border-2); }
-         100% { border-width: 1px; border-color: var(--prime-glow-border-1); }
-        }
-        /* Tile fade-in animation */
-        @keyframes tileFadeIn {
-             from {
-                 opacity: 0;
-                 transform: scale(0.95) translateY(5px);
-             }
-             to {
-                 opacity: 1;
-                 transform: scale(1) translateY(0);
-             }
-        }
-
+        /* Removed lifespan-tile specific styles */
 
         /* --- Info Tile & Progress Tile Content Styles using Variables --- */
         .tile .label { font-size: 0.75rem; color: var(--tile-label-color); margin-bottom: 4px; line-height: 1.2; white-space: nowrap; }
@@ -379,6 +295,7 @@
         .contrib-grid-wrapper { /* New wrapper for label+grid */
             display: flex;
             flex-direction: column;
+            margin-bottom: 1rem; /* Add margin between grid wrappers */
         }
         .contrib-grid-header { /* New header for label+percentage OR label+count */
             display: flex;
@@ -397,7 +314,7 @@
              color: var(--text-muted-color); /* Default count color */
         }
          /* Apply specific text colors for each progress bar percentage */
-         #lifespanPercentText { color: var(--progress-text-lifespan); }
+         #lifespanPercentText, #lifespanYearPercentText { color: var(--progress-text-lifespan); } /* Apply lifespan color to both */
          #primePercentText { color: var(--progress-text-prime); }
 
         .contrib-grid {
@@ -408,13 +325,13 @@
             border-radius: 4px;
             background-color: var(--tile-bg);
             border: 1px solid var(--tile-border);
-            max-height: 180px; /* Default max height */
-            overflow-y: auto;
+            /* Removed max-height and overflow-y to show all squares */
             box-shadow: var(--section-shadow);
         }
-         /* Specific max-height for unit grids */
+         /* Specific max-height for unit grids (kept for smaller grids) */
          .unit-grid {
-             max-height: 80px; /* Smaller max height for unit grids */
+             max-height: 80px;
+             overflow-y: auto; /* Keep scroll for unit grids if needed */
          }
         .contrib-square {
             width: 12px; /* Slightly larger squares */
@@ -537,6 +454,24 @@
         .contrib-square.unit-primeYear-fill-14 { background-color: var(--unit-primeYear-fill-14); border-color: var(--unit-primeYear-fill-14); }
         .contrib-square.unit-primeYear-fill-15 { background-color: var(--unit-primeYear-fill-15); border-color: var(--unit-primeYear-fill-15); }
 
+        /* Unit Grid Gradient Fill Styles (Awake Slots - 15 Levels) */
+        .contrib-square.unit-awakeSlot-fill-1 { background-color: var(--unit-awakeSlot-fill-1); border-color: var(--unit-awakeSlot-fill-1); }
+        .contrib-square.unit-awakeSlot-fill-2 { background-color: var(--unit-awakeSlot-fill-2); border-color: var(--unit-awakeSlot-fill-2); }
+        .contrib-square.unit-awakeSlot-fill-3 { background-color: var(--unit-awakeSlot-fill-3); border-color: var(--unit-awakeSlot-fill-3); }
+        .contrib-square.unit-awakeSlot-fill-4 { background-color: var(--unit-awakeSlot-fill-4); border-color: var(--unit-awakeSlot-fill-4); }
+        .contrib-square.unit-awakeSlot-fill-5 { background-color: var(--unit-awakeSlot-fill-5); border-color: var(--unit-awakeSlot-fill-5); }
+        .contrib-square.unit-awakeSlot-fill-6 { background-color: var(--unit-awakeSlot-fill-6); border-color: var(--unit-awakeSlot-fill-6); }
+        .contrib-square.unit-awakeSlot-fill-7 { background-color: var(--unit-awakeSlot-fill-7); border-color: var(--unit-awakeSlot-fill-7); }
+        .contrib-square.unit-awakeSlot-fill-8 { background-color: var(--unit-awakeSlot-fill-8); border-color: var(--unit-awakeSlot-fill-8); }
+        .contrib-square.unit-awakeSlot-fill-9 { background-color: var(--unit-awakeSlot-fill-9); border-color: var(--unit-awakeSlot-fill-9); }
+        .contrib-square.unit-awakeSlot-fill-10 { background-color: var(--unit-awakeSlot-fill-10); border-color: var(--unit-awakeSlot-fill-10); }
+        .contrib-square.unit-awakeSlot-fill-11 { background-color: var(--unit-awakeSlot-fill-11); border-color: var(--unit-awakeSlot-fill-11); }
+        .contrib-square.unit-awakeSlot-fill-12 { background-color: var(--unit-awakeSlot-fill-12); border-color: var(--unit-awakeSlot-fill-12); }
+        .contrib-square.unit-awakeSlot-fill-13 { background-color: var(--unit-awakeSlot-fill-13); border-color: var(--unit-awakeSlot-fill-13); }
+        .contrib-square.unit-awakeSlot-fill-14 { background-color: var(--unit-awakeSlot-fill-14); border-color: var(--unit-awakeSlot-fill-14); }
+        .contrib-square.unit-awakeSlot-fill-15 { background-color: var(--unit-awakeSlot-fill-15); border-color: var(--unit-awakeSlot-fill-15); }
+
+
         /* Current month/hour/unit square style */
         .contrib-square.current {
             outline: 1.5px solid var(--contrib-current-border); /* Thinner outline */
@@ -546,7 +481,7 @@
             border-color: var(--tile-current-border) !important;
             z-index: 5; /* Bring current square slightly forward */
         }
-        /* Highlight for the current hour OR upcoming unit (using the same style) */
+        /* Highlight for the current hour OR upcoming unit OR current awake slot (using the same style) */
         .contrib-square.unit-current {
             outline: 1.5px solid var(--unit-current-border);
             outline-offset: 1px;
@@ -554,22 +489,15 @@
             border-color: var(--unit-current-border) !important;
             z-index: 5;
         }
-        /* Style for the next upcoming unit (outline - no longer used by JS for highlight) */
-        .contrib-square.unit-next-upcoming {
-            outline: 2px solid var(--unit-next-upcoming-outline);
-            outline-offset: 1px;
-            z-index: 5;
-        }
-
 
         /* --- Input and Button Styles using Variables --- */
-        input[type="date"], input[type="number"], button, textarea { /* Added number input */
+        input[type="date"], input[type="number"], button {
             @apply rounded-md px-3 py-2 shadow-sm text-sm sm:text-base transition-colors duration-200;
             border: 1px solid var(--input-border);
             background-color: var(--input-bg);
             color: var(--input-text);
         }
-        input[type="date"]:focus, input[type="number"]:focus, button:focus, textarea:focus { /* Added number input */
+        input[type="date"]:focus, input[type="number"]:focus, button:focus {
              @apply outline-none ring-2;
              border-color: var(--input-focus-ring);
              box-shadow: 0 0 0 2px var(--input-focus-ring); /* Simulate ring */
@@ -591,21 +519,9 @@
         button.cancel-btn:hover {
             background-color: var(--button-cancel-hover-bg);
         }
-        /* Notes Textarea Styling - Now handled by Quill */
-        #notesSection label {
-            @apply block text-sm font-medium mb-1; /* Style labels */
-            color: var(--text-color);
-        }
         input[type="number"] {
             @apply w-20 text-center; /* Style number inputs */
         }
-
-        /* --- Grid and Layout --- */
-        .dynamic-grid { display: grid; gap: 0.75rem; }
-        .years-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); }
-        @media (min-width: 640px) { .years-grid { grid-template-columns: repeat(auto-fill, minmax(65px, 1fr)); } }
-        @media (min-width: 1024px) { .years-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); } }
-        @media (min-width: 1280px) { .years-grid { grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); } }
 
         /* --- Info Tile Content Styles using Variables --- */
         .info-tile-content label { @apply font-medium whitespace-nowrap text-sm mb-1 block; color: var(--text-color); }
@@ -613,7 +529,6 @@
         .info-tile-content span { @apply font-semibold; color: var(--text-color); }
         .birthdate-status { @apply text-sm mb-2 inline-flex items-center; color: var(--text-muted-color); } /* Modified for inline icon */
         #birthDateError { @apply text-red-500 text-xs mt-1 h-4; }
-        #saveStatus { @apply text-sm mt-2 h-4; } /* Height for save status */
         #settingsStatus { @apply text-sm mt-2 h-4; } /* Height for settings status */
 
         /* --- Icons using Variables --- */
@@ -638,96 +553,6 @@
         .progress-grid-container {
              @apply p-2 sm:p-3 rounded-lg; /* Reduced padding */
         }
-
-        /* --- Quill Editor Styles --- */
-        #notesEditorContainer {
-            min-height: 250px; /* Set a minimum height */
-            height: auto; /* Allow it to grow */
-            width: 100%; /* Ensure it uses full width */
-            border-radius: 0.375rem; /* md */
-            overflow: hidden; /* Hide overflow */
-            display: flex; /* Use flexbox for vertical layout */
-            flex-direction: column; /* Stack toolbar and editor */
-        }
-        .ql-toolbar.ql-snow {
-            border: 1px solid var(--ql-border-color);
-            border-top-left-radius: 0.375rem; /* md */
-            border-top-right-radius: 0.375rem; /* md */
-            background-color: var(--ql-toolbar-bg);
-            padding: 8px;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif !important; /* Ensure toolbar uses Inter */
-        }
-        .ql-container.ql-snow {
-            border: 1px solid var(--ql-border-color);
-            border-top: none; /* Remove top border as toolbar has bottom border */
-            border-bottom-left-radius: 0.375rem; /* md */
-            border-bottom-right-radius: 0.375rem; /* md */
-            flex-grow: 1; /* Allow editor to take remaining space */
-            background-color: var(--ql-editor-bg);
-            font-family: 'Inter', sans-serif !important; /* Ensure editor uses Inter */
-            font-size: 1rem; /* Adjust base font size if needed */
-            line-height: 1.6;
-        }
-        .ql-editor {
-            min-height: 200px; /* Minimum height for the typing area */
-            height: auto;
-            color: var(--ql-editor-text);
-            padding: 12px 15px;
-            box-sizing: border-box;
-            overflow-y: auto; /* Add scroll if content exceeds min-height */
-        }
-        .ql-editor.ql-blank::before {
-            color: var(--text-muted-color);
-            font-style: normal;
-            left: 15px;
-        }
-        /* Style Quill toolbar buttons */
-        .ql-snow .ql-picker-label,
-        .ql-snow .ql-stroke {
-            stroke: var(--ql-button-color);
-            color: var(--ql-button-color);
-        }
-        .ql-snow .ql-fill {
-             fill: var(--ql-button-color);
-        }
-        .ql-snow .ql-picker-options {
-             background-color: var(--ql-editor-bg);
-             border-color: var(--ql-border-color) !important;
-             color: var(--ql-editor-text);
-        }
-         .ql-snow .ql-picker-item:hover,
-         .ql-snow .ql-picker-item.ql-selected {
-              background-color: var(--ql-button-hover-bg);
-              color: var(--ql-button-active-color);
-         }
-
-        .ql-snow button:hover .ql-stroke,
-        .ql-snow button:focus .ql-stroke,
-        .ql-snow button.ql-active .ql-stroke,
-        .ql-snow .ql-picker-label:hover .ql-stroke,
-        .ql-snow .ql-picker-label.ql-active .ql-stroke,
-        .ql-snow .ql-picker-item:hover .ql-stroke,
-        .ql-snow .ql-picker-item.ql-selected .ql-stroke {
-            stroke: var(--ql-button-active-color);
-        }
-        .ql-snow button:hover .ql-fill,
-        .ql-snow button:focus .ql-fill,
-        .ql-snow button.ql-active .ql-fill,
-        .ql-snow .ql-picker-label:hover .ql-fill,
-        .ql-snow .ql-picker-label.ql-active .ql-fill,
-        .ql-snow .ql-picker-item:hover .ql-fill,
-        .ql-snow .ql-picker-item.ql-selected .ql-fill {
-            fill: var(--ql-button-active-color);
-        }
-         .ql-snow button:hover,
-         .ql-snow button:focus {
-              background-color: var(--ql-button-hover-bg);
-         }
-         .ql-snow button.ql-active {
-              background-color: var(--ql-button-active-bg);
-         }
-
 
         /* --- Settings Icon Button --- */
         #settingsIconBtn {
@@ -817,12 +642,24 @@
              color: var(--text-color);
         }
         .modal-grid {
-             @apply grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 items-center;
+            /* Keep 2 columns on small screens and up */
+             @apply grid grid-cols-2 gap-x-6 gap-y-4 items-center;
         }
+        /* Ensure labels and inputs align nicely */
+        .modal-grid > div {
+            @apply flex flex-col; /* Stack label above input */
+        }
+         .modal-grid > div > label {
+             @apply mb-1; /* Add space below label */
+         }
+         .modal-grid > div > input {
+             @apply w-full; /* Make input take full width */
+         }
 
     </style>
 </head>
-<body class="p-4 md:p-8 relative"> <button id="settingsIconBtn" title="Open Settings">
+<body class="p-4 md:p-8 relative">
+    <button id="settingsIconBtn" title="Open Settings">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -832,11 +669,11 @@
     <div class="max-w-7xl mx-auto space-y-8">
         <h1 class="text-3xl font-bold text-center mb-4" title="Visualize your life's journey, track progress, and stay motivated towards your goals.">Life Grid</h1>
          <p class="text-lg text-center mb-1" style="color: var(--text-muted-color);">
-         Life Grid is a minimalist web app that helps you visualize your life as a grid. By inputting your age and desired lifespan, it shows how much time has passed and what's left, encouraging reflection and intentional living. Start visualizing your time today.
-     </p>
-     <p class="text-xs text-center mb-4" style="color: var(--text-muted-color);">
-         by <a href="https://www.linkedin.com/in/karthicobla/" target="_blank" rel="noopener noreferrer" title="Visit Karthic Obla's LinkedIn profile" style="color: var(--link-color);" class="hover:underline" onmouseover="this.style.color='var(--link-hover-color)'" onmouseout="this.style.color='var(--link-color)'">Karthic Obla</a>
-     </p>
+         Life Grid is a minimalist web app that helps you visualize your time. By inputting your age and desired lifespan, it shows how much time has passed and what's left, encouraging reflection and intentional living. Start visualizing your time today.
+         </p>
+         <p class="text-xs text-center mb-4" style="color: var(--text-muted-color);">
+             by <a href="https://www.linkedin.com/in/karthicobla/" target="_blank" rel="noopener noreferrer" title="Visit Karthic Obla's LinkedIn profile" style="color: var(--link-color);" class="hover:underline" onmouseover="this.style.color='var(--link-hover-color)'" onmouseout="this.style.color='var(--link-color)'">Karthic Obla</a>
+         </p>
 
         <div class="theme-switcher" title="Choose your preferred visual theme.">
             <button id="themeBtnLight" class="theme-button" data-theme="light" aria-label="Switch to Light Theme" title="Calm Light Theme">
@@ -856,14 +693,16 @@
             </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
             <div class="tile p-4" title="Set your birth date here to personalize the tracker and enable all calculations.">
                  <div class="info-tile-content w-full flex flex-col items-center">
                      <div id="birthDateDisplay" class="text-center">
                          <p id="birthDateStatus" class="birthdate-status">
                              Birth Date Not Set
-                             <span id="birthDateStatusIcon" class="inline-block"></span> </p>
-                         <button id="changeBirthDateBtn" class="w-full sm:w-auto px-4 mt-2">Set Birth Date</button> </div>
+                             <span id="birthDateStatusIcon" class="inline-block"></span>
+                         </p>
+                         <button id="changeBirthDateBtn" class="w-full sm:w-auto px-4 mt-2">Set Birth Date</button>
+                     </div>
                      <div id="birthDateInputGroup" class="hidden w-full mt-2">
                          <label for="birthDate" class="sr-only">Your Birth Date:</label>
                          <input type="date" id="birthDate" class="w-full mb-2">
@@ -879,6 +718,13 @@
                  <div id="userInfo" class="info-tile-content flex flex-col justify-center items-center w-full h-full">
                      <p>Current Year: <span id="displayCurrentYear">----</span></p>
                      <p>Your Age: <span id="currentAge">--</span></p>
+                 </div>
+            </div>
+            <div class="tile p-4" title="Shows the countdown for the current 30-minute slot and the number of slots passed today.">
+                 <div class="info-tile-content flex flex-col justify-center items-center w-full h-full gap-2">
+                     <div class="label">Current 30-Min Slot</div>
+                     <div id="slotCountdown" class="value text-2xl">--:--</div>
+                     <p id="slotsPassedToday" class="text-xs" style="color: var(--text-muted-color);">-- slots passed today</p>
                  </div>
             </div>
             <div class="tile p-4" title="Shows the current date and time, updated every second.">
@@ -936,7 +782,14 @@
                     </div>
                     <div id="todayHoursContribGrid" class="contrib-grid unit-grid"></div>
                 </div>
-            </div>
+                <div id="awakeSlotsGridWrapper" class="contrib-grid-wrapper" title="Visual representation of 30-minute slots from {awakeStartHour}:00 to {awakeEndHour}:00. Past slots are dim, current slot is highlighted, future slots use a gradient.">
+                     <div class="contrib-grid-header">
+                        <h4 id="awakeSlotsGridLabel" class="contrib-grid-label text-xs">Awake Time Slots (-- AM - -- PM)</h4>
+                         <span id="awakeSlotsCount" class="progress-percent-text text-xs">(--/--)</span>
+                    </div>
+                    <div id="awakeSlotsContribGrid" class="contrib-grid unit-grid"></div>
+                </div>
+                </div>
             <div class="w-full lg:w-auto flex-1 min-w-0 space-y-2">
                  <h3 class="time-group-label" title="Time remaining in your prime working years (defined as 0-{primeYearsEnd}).">Remaining Prime Time</h3>
                 <div class="grid grid-cols-3 gap-2">
@@ -951,19 +804,20 @@
                     </div>
                     <div id="primeYearsContribGrid" class="contrib-grid unit-grid"></div>
                  </div>
-                 </div>
+            </div>
         </div>
 
         <h2 class="text-center text-xl font-semibold mt-8 mb-2">Life Progress</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="contrib-grid-wrapper" title="Shows your progress through your defined lifespan ({maxLifeYears * 12} months). Each square is a month. Darker squares are more recent. The outlined square is the current month.">
+        <div class="grid grid-cols-1 gap-4">
+            <div class="contrib-grid-wrapper" title="Shows your progress through your defined lifespan ({maxLifeYears} years). Each square is a year. Darker squares are more recent. The outlined square is the current year.">
                 <div class="contrib-grid-header">
-                    <h3 id="lifespanProgressLabel" class="contrib-grid-label">Overall Life Progress (Months)</h3>
-                    <span id="lifespanPercentText" class="progress-percent-text">--%</span>
+                    <h3 id="lifespanYearProgressLabel" class="contrib-grid-label">Overall Life Progress (Years)</h3>
+                    <span id="lifespanYearPercentText" class="progress-percent-text">--%</span>
                 </div>
-                <div id="lifespanContribGrid" class="contrib-grid progress-grid-container">
+                <div id="lifespanYearContribGrid" class="contrib-grid progress-grid-container">
                     </div>
             </div>
+
             <div class="contrib-grid-wrapper" title="Shows how much of your prime working years (0-{primeYearsEnd * 12} months) you have completed. Each square is a prime month. Darker squares are more recent. The outlined square is the current month.">
                  <div class="contrib-grid-header">
                     <h3 id="primeProgressLabel" class="contrib-grid-label">Prime Years Progress (Months)</h3>
@@ -972,21 +826,17 @@
                 <div id="primeContribGrid" class="contrib-grid progress-grid-container">
                     </div>
             </div>
-        </div>
 
-        <h2 class="text-center text-xl font-semibold mt-8 mb-2">Your Life Map</h2>
-        <div class="section-container" title="See your entire life visualized as a grid of years. Each tile represents one year, showing past, present, and future at a glance. Click a year to add notes.">
-             <div id="lifespanGrid" class="dynamic-grid years-grid">
-                 </div>
-        </div>
-
-        <div id="notesSection" class="section-container hidden" title="Record notes and reflections for the selected year using the rich text editor. Notes are saved locally in your browser.">
-            <h2 id="notesTitle" class="text-lg font-semibold mb-4">Notes for Year --</h2>
-            <div id="notesEditorContainer">
+            <div class="contrib-grid-wrapper" title="Shows your progress through your defined lifespan ({maxLifeYears * 12} months). Each square is a month. Darker squares are more recent. The outlined square is the current month.">
+                <div class="contrib-grid-header">
+                    <h3 id="lifespanProgressLabel" class="contrib-grid-label">Overall Life Progress (Months)</h3>
+                    <span id="lifespanPercentText" class="progress-percent-text">--%</span>
                 </div>
-            <button id="saveNotesBtn" class="mt-4">Save Notes for Year <span id="saveNotesYear">--</span></button>
-            <p id="saveStatus" class="text-sm mt-2 h-4"></p>
-         </div>
+                <div id="lifespanContribGrid" class="contrib-grid progress-grid-container">
+                    </div>
+            </div>
+
+        </div>
 
     </div> <div id="modalOverlay" class="hidden"></div>
     <div id="settingsModal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
@@ -999,12 +849,20 @@
         <div class="modal-content">
             <div class="modal-grid">
                 <div>
-                    <label for="maxLifespanInput">Max Lifespan (Years):</label>
-                    <input type="number" id="maxLifespanInput" min="1" step="1" class="ml-2">
+                    <label for="maxLifespanInput">Max Lifespan (Yrs):</label>
+                    <input type="number" id="maxLifespanInput" min="1" step="1">
                 </div>
                 <div>
-                    <label for="primeEndAgeInput">Prime Years End Age:</label>
-                    <input type="number" id="primeEndAgeInput" min="1" step="1" class="ml-2">
+                    <label for="primeEndAgeInput">Prime End Age:</label>
+                    <input type="number" id="primeEndAgeInput" min="1" step="1">
+                </div>
+                <div>
+                    <label for="awakeStartHourInput">Awake Start (Hr):</label>
+                    <input type="number" id="awakeStartHourInput" min="0" max="23" step="1">
+                </div>
+                 <div>
+                    <label for="awakeEndHourInput">Awake End (Hr):</label>
+                    <input type="number" id="awakeEndHourInput" min="0" max="23" step="1">
                 </div>
             </div>
             <button id="saveSettingsBtn" class="mt-4 w-full">Save Settings</button>
@@ -1012,9 +870,8 @@
         </div>
     </div>
 
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script>
-        // --- DOM Elements ---
+        // --- DOM Elements (Cached) ---
         const bodyElement = document.body;
         const birthDateDisplay = document.getElementById('birthDateDisplay');
         const birthDateStatus = document.getElementById('birthDateStatus');
@@ -1029,6 +886,9 @@
         const displayCurrentTimeSpan = document.getElementById('displayCurrentTime');
         const displayCurrentYearSpan = document.getElementById('displayCurrentYear');
         const currentAgeSpan = document.getElementById('currentAge');
+        // Slot Countdown Elements
+        const slotCountdownSpan = document.getElementById('slotCountdown');
+        const slotsPassedTodaySpan = document.getElementById('slotsPassedToday');
         // Countdown Title Elements
         const yearCountdownTitle = document.getElementById('yearCountdownTitle');
         const todayCountdownTitle = document.getElementById('todayCountdownTitle');
@@ -1050,15 +910,10 @@
         const primeProgressLabel = document.getElementById('primeProgressLabel');
         const primePercentText = document.getElementById('primePercentText');
         const primeContribGrid = document.getElementById('primeContribGrid');
-        // Life Map Grid
-        const lifespanGrid = document.getElementById('lifespanGrid');
-        // Notes Section Elements
-        const notesSection = document.getElementById('notesSection');
-        const notesTitle = document.getElementById('notesTitle');
-        const notesEditorContainer = document.getElementById('notesEditorContainer'); // Quill container
-        const saveNotesBtn = document.getElementById('saveNotesBtn');
-        const saveNotesYear = document.getElementById('saveNotesYear'); // Span inside save button
-        const saveStatus = document.getElementById('saveStatus');
+        // NEW: Lifespan Year Progress Elements
+        const lifespanYearProgressLabel = document.getElementById('lifespanYearProgressLabel');
+        const lifespanYearPercentText = document.getElementById('lifespanYearPercentText');
+        const lifespanYearContribGrid = document.getElementById('lifespanYearContribGrid');
         // Theme switcher buttons
         const themeButtons = document.querySelectorAll('.theme-button');
         // Settings Elements
@@ -1068,6 +923,8 @@
         const closeSettingsModalBtn = document.getElementById('closeSettingsModalBtn');
         const maxLifespanInput = document.getElementById('maxLifespanInput');
         const primeEndAgeInput = document.getElementById('primeEndAgeInput');
+        const awakeStartHourInput = document.getElementById('awakeStartHourInput'); // New
+        const awakeEndHourInput = document.getElementById('awakeEndHourInput'); // New
         const saveSettingsBtn = document.getElementById('saveSettingsBtn');
         const settingsStatus = document.getElementById('settingsStatus');
          // Unit Contribution Grid Elements
@@ -1075,39 +932,52 @@
          const yearMonthsContribGrid = document.getElementById('yearMonthsContribGrid');
          const todayHoursContribGrid = document.getElementById('todayHoursContribGrid');
          const primeYearsContribGrid = document.getElementById('primeYearsContribGrid');
+         const awakeSlotsContribGrid = document.getElementById('awakeSlotsContribGrid');
          // Unit Contribution Count Spans
          const yearWeeksCountSpan = document.getElementById('yearWeeksCount');
          const yearMonthsCountSpan = document.getElementById('yearMonthsCount');
          const todayHoursCountSpan = document.getElementById('todayHoursCount');
          const primeYearsCountSpan = document.getElementById('primeYearsCount');
+         const awakeSlotsCountSpan = document.getElementById('awakeSlotsCount');
+         // Awake Grid Label/Wrapper (for updating text/title)
+         const awakeSlotsGridWrapper = document.getElementById('awakeSlotsGridWrapper');
+         const awakeSlotsGridLabel = document.getElementById('awakeSlotsGridLabel');
 
 
         // --- State Variables ---
         let birthDate = null;
         let currentAge = null; // Age in years
         let monthsPassed = 0; // Total full months passed since birth
-        let targetBirthday = null; // For prime years calculation
-        let selectedYearForNotes = null;
-        let previouslySelectedTile = null;
+        let targetBirthday = null; // For prime years calculation (not directly used now)
         let currentTheme = 'light';
-        let quillEditor = null; // Variable to hold the Quill instance
+        let timerIntervalId = null; // To store the interval ID
 
         // --- Configurable Settings (with defaults) ---
         let maxLifeYears = 80;
         let primeYearsStart = 0; // Prime years now start from 0
         let primeYearsEnd = 45;
-        let primeAgeTarget = 45;
+        let awakeStartHour = 6; // Default 6 AM (now configurable)
+        let awakeEndHour = 21; // Default 9 PM (now configurable)
+        let primeAgeTarget = 45; // Redundant, use primeYearsEnd
 
         // --- Constants ---
         const MONTHS_IN_YEAR = 12;
         const WEEKS_IN_YEAR_APPROX = 52; // Approximation
         const HOURS_IN_DAY = 24;
-        const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
+        const SLOTS_PER_DAY = 48; // 24 hours * 2 slots/hour
+        const MINUTES_PER_SLOT = 30;
+        const MS_PER_SECOND = 1000;
+        const MS_PER_MINUTE = MS_PER_SECOND * 60;
+        const MS_PER_HOUR = MS_PER_MINUTE * 60;
+        const MS_PER_DAY = MS_PER_HOUR * 24;
+        const MS_PER_WEEK = MS_PER_DAY * 7;
         const DEFAULT_BIRTH_DATE = "2000-01-01";
         const THEME_STORAGE_KEY = 'lifeTrackerTheme';
         const SETTINGS_STORAGE_KEY = 'lifeTrackerSettings';
-        const NOTES_STORAGE_PREFIX = 'lifeGridNotes_HTML_'; // Changed prefix for HTML notes
         const NUM_GRADIENT_STEPS = 15; // Number of steps in unit gradients
+        // const AWAKE_START_HOUR = 6; // Replaced by variable
+        // const AWAKE_END_HOUR = 21; // Replaced by variable
+        // const TOTAL_AWAKE_SLOTS = (AWAKE_END_HOUR - AWAKE_START_HOUR) * 2; // Calculated dynamically now
         // SVG Icons for status
         const TICK_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" class="icon-tick" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>';
         const CROSS_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" class="icon-cross" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>';
@@ -1116,6 +986,12 @@
         // --- Utility Functions ---
         function isLeapYear(year) { return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0); }
         function daysInYear(year) { return isLeapYear(year) ? 366 : 365; }
+
+        /**
+         * Calculates age in full years based on a Date object.
+         * @param {Date} dob - The date of birth.
+         * @returns {number|null} The calculated age or null if dob is invalid.
+         */
         function calculateAge(dob) {
             if (!(dob instanceof Date) || isNaN(dob.getTime())) return null;
             const today = new Date();
@@ -1124,9 +1000,14 @@
             if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
                 age--;
             }
-            return Math.max(0, age);
+            return Math.max(0, age); // Ensure age is not negative
         }
-        // Calculate total full months passed since birth date
+
+        /**
+         * Calculates the total number of full months passed since the birth date.
+         * @param {Date} dob - The date of birth.
+         * @returns {number} The number of full months passed (minimum 0).
+         */
         function calculateMonthsPassed(dob) {
              if (!(dob instanceof Date) || isNaN(dob.getTime())) return 0;
              const today = new Date();
@@ -1135,13 +1016,18 @@
              months -= birth.getMonth();
              months += today.getMonth();
 
-             // Adjust if the current day is before the birth day
+             // Adjust if the current day of the month is before the birth day of the month
              if (today.getDate() < birth.getDate()) {
                  months--;
              }
-             return months <= 0 ? 0 : months; // Return 0 if negative or zero
+             return Math.max(0, months); // Return 0 if negative
         }
 
+        /**
+         * Formats a Date object into YYYY-MM-DD string for input fields.
+         * @param {Date} date - The date to format.
+         * @returns {string} The formatted date string or empty string if invalid.
+         */
         function formatDateForInput(date) {
             if (!(date instanceof Date) || isNaN(date.getTime())) { return ''; }
             const year = date.getFullYear();
@@ -1150,25 +1036,50 @@
             return `${year}-${month}-${day}`;
         }
 
+        /**
+         * Formats an hour (0-23) into AM/PM format.
+         * @param {number} hour - The hour (0-23).
+         * @returns {string} Formatted hour (e.g., "6 AM", "12 PM", "9 PM").
+         */
+        function formatHourAMPM(hour) {
+            const h = hour % 12 === 0 ? 12 : hour % 12;
+            const ampm = hour < 12 || hour === 24 ? 'AM' : 'PM'; // Handle midnight if needed
+            return `${h} ${ampm}`;
+        }
+
         // --- Settings Modal Functions ---
         function openSettingsModal() {
+            // Populate modal with current settings values
             maxLifespanInput.value = maxLifeYears;
             primeEndAgeInput.value = primeYearsEnd;
-            settingsStatus.textContent = '';
+            awakeStartHourInput.value = awakeStartHour;
+            awakeEndHourInput.value = awakeEndHour;
+
+            settingsStatus.textContent = ''; // Clear previous status messages
             settingsModal.classList.remove('hidden');
             modalOverlay.classList.remove('hidden');
+            settingsModal.setAttribute('aria-hidden', 'false');
+            modalOverlay.setAttribute('aria-hidden', 'false');
         }
 
         function closeSettingsModal() {
             settingsModal.classList.add('hidden');
             modalOverlay.classList.add('hidden');
-            settingsStatus.textContent = '';
+            settingsModal.setAttribute('aria-hidden', 'true');
+            modalOverlay.setAttribute('aria-hidden', 'true');
+            settingsStatus.textContent = ''; // Clear status on close
         }
 
 
         // --- Settings Handling ---
         function loadSettings() {
             let savedSettings = {};
+            const defaultSettings = {
+                maxLifeYears: 80,
+                primeYearsEnd: 45,
+                awakeStartHour: 6,
+                awakeEndHour: 21
+            };
             try {
                 const settingsString = localStorage.getItem(SETTINGS_STORAGE_KEY);
                 if (settingsString) {
@@ -1176,61 +1087,90 @@
                 }
             } catch (e) {
                 console.error("Error loading settings from local storage:", e);
-                localStorage.removeItem(SETTINGS_STORAGE_KEY);
+                localStorage.removeItem(SETTINGS_STORAGE_KEY); // Clear potentially corrupted data
+                savedSettings = {}; // Reset to empty to use defaults
             }
 
-            maxLifeYears = parseInt(savedSettings.maxLifeYears, 10) || 80;
-            primeYearsEnd = parseInt(savedSettings.primeYearsEnd, 10) || 45;
+            // Parse and validate loaded settings, falling back to defaults
+            maxLifeYears = parseInt(savedSettings.maxLifeYears, 10) || defaultSettings.maxLifeYears;
+            primeYearsEnd = parseInt(savedSettings.primeYearsEnd, 10) || defaultSettings.primeYearsEnd;
+            awakeStartHour = parseInt(savedSettings.awakeStartHour, 10);
+            awakeEndHour = parseInt(savedSettings.awakeEndHour, 10);
+
+            // Validate awake hours (handle NaN, range, order)
+            if (isNaN(awakeStartHour) || awakeStartHour < 0 || awakeStartHour > 23) {
+                awakeStartHour = defaultSettings.awakeStartHour;
+            }
+            if (isNaN(awakeEndHour) || awakeEndHour < 0 || awakeEndHour > 23) {
+                awakeEndHour = defaultSettings.awakeEndHour;
+            }
+            if (awakeStartHour >= awakeEndHour) { // Ensure start is before end
+                awakeStartHour = defaultSettings.awakeStartHour;
+                awakeEndHour = defaultSettings.awakeEndHour;
+            }
+
             primeYearsStart = 0; // Always start prime years at 0
-            primeAgeTarget = primeYearsEnd;
 
-             // Ensure values are reasonable
-            if (maxLifeYears <= 0) maxLifeYears = 80;
-            if (primeYearsEnd <= 0) primeYearsEnd = 45; // Prime end must be > 0
-            if (primeYearsEnd > maxLifeYears) primeYearsEnd = Math.min(45, maxLifeYears);
-            primeAgeTarget = primeYearsEnd;
+            // Ensure other values are reasonable
+            if (maxLifeYears <= 0) maxLifeYears = defaultSettings.maxLifeYears;
+            if (primeYearsEnd <= 0) primeYearsEnd = defaultSettings.primeYearsEnd; // Prime end must be > 0
+            if (primeYearsEnd > maxLifeYears) primeYearsEnd = Math.min(defaultSettings.primeYearsEnd, maxLifeYears);
 
-
+            // Update input fields in the modal (will be done again in openSettingsModal, but good practice)
             maxLifespanInput.value = maxLifeYears;
             primeEndAgeInput.value = primeYearsEnd;
+            awakeStartHourInput.value = awakeStartHour;
+            awakeEndHourInput.value = awakeEndHour;
 
+            // Update UI elements that depend on these settings
             updateSettingsDependentUI();
         }
 
         function saveSettings() {
-            settingsStatus.textContent = '';
+            settingsStatus.textContent = ''; // Clear previous status
             const newMaxLife = parseInt(maxLifespanInput.value, 10);
             const newPrimeEnd = parseInt(primeEndAgeInput.value, 10);
+            const newAwakeStart = parseInt(awakeStartHourInput.value, 10);
+            const newAwakeEnd = parseInt(awakeEndHourInput.value, 10);
 
-            // Validation
+            // --- Validation ---
+            let errorMessage = '';
             if (isNaN(newMaxLife) || newMaxLife <= 0) {
-                settingsStatus.textContent = 'Error: Max Lifespan must be a positive number.';
+                errorMessage = 'Max Lifespan must be a positive number.';
+            } else if (isNaN(newPrimeEnd) || newPrimeEnd <= 0) {
+                errorMessage = 'Prime End Age must be greater than 0.';
+            } else if (newPrimeEnd > newMaxLife) {
+                errorMessage = 'Prime End Age cannot exceed Max Lifespan.';
+            } else if (isNaN(newAwakeStart) || newAwakeStart < 0 || newAwakeStart > 23) {
+                errorMessage = 'Awake Start Hour must be between 0 and 23.';
+            } else if (isNaN(newAwakeEnd) || newAwakeEnd < 0 || newAwakeEnd > 23) {
+                errorMessage = 'Awake End Hour must be between 0 and 23.';
+            } else if (newAwakeStart >= newAwakeEnd) {
+                errorMessage = 'Awake Start Hour must be before Awake End Hour.';
+            }
+
+            if (errorMessage) {
+                settingsStatus.textContent = `Error: ${errorMessage}`;
                 settingsStatus.style.color = 'var(--icon-cross-color)';
                 return;
             }
-            if (isNaN(newPrimeEnd) || newPrimeEnd <= 0) { // Prime End must be > 0
-                settingsStatus.textContent = 'Error: Prime End Age must be greater than 0.';
-                 settingsStatus.style.color = 'var(--icon-cross-color)';
-                return;
-            }
-            if (newPrimeEnd > newMaxLife) {
-                settingsStatus.textContent = 'Error: Prime End Age cannot exceed Max Lifespan.';
-                 settingsStatus.style.color = 'var(--icon-cross-color)';
-                return;
-            }
-
+            // --- End Validation ---
 
             // Update state variables
             maxLifeYears = newMaxLife;
             primeYearsEnd = newPrimeEnd;
+            awakeStartHour = newAwakeStart;
+            awakeEndHour = newAwakeEnd;
             primeYearsStart = 0; // Ensure start is always 0
-            primeAgeTarget = newPrimeEnd; // Update target age as well
 
             const settingsToSave = {
                 maxLifeYears: maxLifeYears,
-                primeYearsEnd: primeYearsEnd
+                primeYearsEnd: primeYearsEnd,
+                awakeStartHour: awakeStartHour,
+                awakeEndHour: awakeEndHour
             };
 
+            // Save to localStorage
             try {
                 localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settingsToSave));
                 settingsStatus.textContent = 'Settings saved!';
@@ -1240,10 +1180,8 @@
                 updateSettingsDependentUI();
                 updateUserInfo(); // Recalculate age-dependent info and re-render grids
 
-                // Close modal after a short delay
-                setTimeout(() => {
-                    closeSettingsModal();
-                }, 1500);
+                // Close modal after a short delay to show success message
+                setTimeout(closeSettingsModal, 1500);
 
             } catch (e) {
                 console.error("Error saving settings to local storage:", e);
@@ -1253,23 +1191,29 @@
         }
 
          /**
-          * Updates UI elements that depend on the maxLifeYears and primeYearsEnd settings.
+          * Updates UI elements (labels, tooltips) that depend on the settings.
+          * This is called after loading or saving settings.
           */
          function updateSettingsDependentUI() {
-             // Update progress grid labels to mention months
+             // Update progress grid labels
              if (lifespanProgressLabel) lifespanProgressLabel.textContent = `Overall Life Progress (Months)`;
+             if (lifespanYearProgressLabel) lifespanYearProgressLabel.textContent = `Overall Life Progress (Years)`; // NEW
              if (primeProgressLabel) primeProgressLabel.textContent = `Prime Years Progress (Months)`;
 
-             // Update progress grid container tooltips to mention months and current square
+             // Update progress grid container tooltips
              const lifespanTooltip = `Shows your progress through your defined lifespan (${maxLifeYears * MONTHS_IN_YEAR} months). Each square is a month. Darker squares are more recent. The outlined square is the current month.`;
+             const lifespanYearTooltip = `Shows your progress through your defined lifespan (${maxLifeYears} years). Each square is a year. Darker squares are more recent. The outlined square is the current year.`; // NEW
              const primeTooltip = `Shows how much of your prime working years (0-${primeYearsEnd * MONTHS_IN_YEAR} months) you have completed. Each square is a prime month. Darker squares are more recent. The outlined square is the current month.`;
+
              const lifespanWrapper = lifespanContribGrid?.closest('.contrib-grid-wrapper');
+             const lifespanYearWrapper = lifespanYearContribGrid?.closest('.contrib-grid-wrapper'); // NEW
              const primeWrapper = primeContribGrid?.closest('.contrib-grid-wrapper');
-             if (lifespanWrapper) lifespanWrapper.title = lifespanTooltip.replace("{maxLifeYears * 12}", maxLifeYears * MONTHS_IN_YEAR); // Update tooltip values
-             if (primeWrapper) primeWrapper.title = primeTooltip.replace("{primeYearsEnd * 12}", primeYearsEnd * MONTHS_IN_YEAR); // Update tooltip values
 
+             if (lifespanWrapper) lifespanWrapper.title = lifespanTooltip;
+             if (lifespanYearWrapper) lifespanYearWrapper.title = lifespanYearTooltip; // NEW
+             if (primeWrapper) primeWrapper.title = primeTooltip;
 
-             // Update prime countdown tiles and header titles
+             // Update prime countdown tiles and header tooltips
              const primeYearsTile = primeYearsLeftSpan?.closest('.tile');
              const primeWeeksTile = primeWeeksLeftSpan?.closest('.tile');
              const primeMonthsTile = primeMonthsLeftSpan?.closest('.tile');
@@ -1280,13 +1224,19 @@
              const primeCountdownHeader = primeYearsTile?.closest('.flex-1')?.querySelector('.time-group-label');
              if(primeCountdownHeader) primeCountdownHeader.title = `Time remaining in your prime working years (defined as 0-${primeYearsEnd}).`;
 
-             // Update tooltips for the unit grids
+             // Update tooltips for the unit grids (ensure they reflect current settings)
              const yearWeeksWrapper = yearWeeksContribGrid?.closest('.contrib-grid-wrapper');
-             if (yearWeeksWrapper) yearWeeksWrapper.title = `Visual representation of weeks remaining this year. Each square is a week. Brighter squares are further in the future. The highlighted square is the upcoming week.`; // Updated tooltip
+             if (yearWeeksWrapper) yearWeeksWrapper.title = `Visual representation of weeks remaining this year. Each square is a week. Brighter squares are further in the future. The highlighted square is the upcoming week.`;
              const yearMonthsWrapper = yearMonthsContribGrid?.closest('.contrib-grid-wrapper');
-             if (yearMonthsWrapper) yearMonthsWrapper.title = `Visual representation of months remaining this year. Each square is a month. Brighter squares are further in the future. The highlighted square is the upcoming month.`; // Updated tooltip
+             if (yearMonthsWrapper) yearMonthsWrapper.title = `Visual representation of months remaining this year. Each square is a month. Brighter squares are further in the future. The highlighted square is the upcoming month.`;
              const primeYearsGridWrapper = primeYearsContribGrid?.closest('.contrib-grid-wrapper');
-             if (primeYearsGridWrapper) primeYearsGridWrapper.title = `Visual representation of years remaining in your prime period (0-${primeYearsEnd}). Each square is a year. Brighter squares are further in the future. The highlighted square is the upcoming prime year.`; // Updated tooltip
+             if (primeYearsGridWrapper) primeYearsGridWrapper.title = `Visual representation of years remaining in your prime period (0-${primeYearsEnd}). Each square is a year. Brighter squares are further in the future. The highlighted square is the upcoming prime year.`;
+
+             // Update Awake Slots label and tooltip
+             const awakeStartAMPM = formatHourAMPM(awakeStartHour);
+             const awakeEndAMPM = formatHourAMPM(awakeEndHour);
+             if (awakeSlotsGridLabel) awakeSlotsGridLabel.textContent = `Awake Time Slots (${awakeStartAMPM} - ${awakeEndAMPM})`;
+             if (awakeSlotsGridWrapper) awakeSlotsGridWrapper.title = `Visual representation of 30-minute slots from ${awakeStartAMPM} to ${awakeEndAMPM}. Past slots are dim, current slot is highlighted, future slots use a gradient.`;
          }
 
 
@@ -1294,71 +1244,83 @@
         function showBirthDateDisplay() {
             birthDateInputGroup.classList.add('hidden');
             birthDateDisplay.classList.remove('hidden');
-            birthDateError.textContent = '';
+            birthDateError.textContent = ''; // Clear any previous error
 
             if (birthDate) {
-                birthDateStatus.firstChild.textContent = 'Birth Date Set ';
-                birthDateStatusIcon.innerHTML = TICK_ICON_SVG;
+                birthDateStatus.firstChild.textContent = 'Birth Date Set '; // Text node
+                birthDateStatusIcon.innerHTML = TICK_ICON_SVG; // Set icon
                 changeBirthDateBtn.textContent = 'Change Birth Date';
             } else {
-                birthDateStatus.firstChild.textContent = 'Birth Date Not Set ';
-                birthDateStatusIcon.innerHTML = CROSS_ICON_SVG;
+                birthDateStatus.firstChild.textContent = 'Birth Date Not Set '; // Text node
+                birthDateStatusIcon.innerHTML = CROSS_ICON_SVG; // Set icon
                 changeBirthDateBtn.textContent = 'Set Birth Date';
             }
         }
         function showBirthDateInput() {
             birthDateDisplay.classList.add('hidden');
             birthDateInputGroup.classList.remove('hidden');
-            birthDateInput.value = formatDateForInput(birthDate);
-            birthDateError.textContent = '';
+            birthDateInput.value = formatDateForInput(birthDate); // Pre-fill if date exists
+            birthDateError.textContent = ''; // Clear error
+            birthDateInput.focus(); // Focus the input field
         }
 
         // --- Core Update Functions ---
+
+        /**
+         * Updates the time displays, countdowns, and unit grids every second.
+         */
         function updateTimers() {
             const now = new Date();
             const currentActualYear = now.getFullYear();
             const currentMonth = now.getMonth(); // 0-11
             const currentHour = now.getHours(); // 0-23
+            const currentMinute = now.getMinutes(); // 0-59
+            const currentSecond = now.getSeconds(); // 0-59
+            const currentMillisecond = now.getMilliseconds(); // 0-999
 
+            // Format date and time strings
             const dateString = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
             const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
 
+            // Calculate time remaining in the year
             const endOfYear = new Date(currentActualYear, 11, 31, 23, 59, 59, 999);
             const msLeftYear = endOfYear - now;
-            const daysLeftY = Math.max(0, Math.ceil(msLeftYear / (1000 * 60 * 60 * 24)));
+            const daysLeftY = Math.max(0, Math.ceil(msLeftYear / MS_PER_DAY));
             const weeksLeftY = Math.max(0, Math.floor(daysLeftY / 7));
-            const monthsLeftY = 11 - currentMonth;
+            const monthsLeftY = 11 - currentMonth; // Full months remaining
 
+            // Calculate time remaining today
             const endOfDay = new Date(now);
             endOfDay.setHours(23, 59, 59, 999);
             const msLeftToday = endOfDay - now;
-            const hoursLeft = Math.max(0, Math.floor(msLeftToday / (1000 * 60 * 60)));
-            const minutesLeft = Math.max(0, Math.floor(msLeftToday / (1000 * 60)));
-            const secondsLeft = Math.max(0, Math.floor(msLeftToday / 1000));
+            const hoursLeft = Math.max(0, Math.floor(msLeftToday / MS_PER_HOUR));
+            const minutesLeft = Math.max(0, Math.floor(msLeftToday / MS_PER_MINUTE));
+            const secondsLeft = Math.max(0, Math.floor(msLeftToday / MS_PER_SECOND));
 
-            // Calculate remaining prime time (Years, Weeks, Months)
+            // Calculate remaining prime time (only if age is known)
             let primeYearsLeftVal = '--';
             let primeWeeksLeftVal = '--';
             let primeMonthsLeftVal = '--';
             let totalPrimeYears = 0; // Total years in the prime period
 
             if (currentAge !== null && birthDate instanceof Date && !isNaN(birthDate.getTime())) {
-                primeYearsLeftVal = Math.max(0, primeAgeTarget - currentAge); // Full years left
-                totalPrimeYears = primeYearsEnd - primeYearsStart; // Calculate total prime years
+                primeYearsLeftVal = Math.max(0, primeYearsEnd - currentAge); // Full years left until prime end age
+                totalPrimeYears = primeYearsEnd - primeYearsStart; // Calculate total prime years duration
 
                 try {
+                    // Calculate target date for end of prime years
                     const birthYear = birthDate.getFullYear();
                     const birthMonth = birthDate.getMonth();
                     const birthDay = birthDate.getDate();
-                    const targetPrimeBirthday = new Date(birthYear + primeAgeTarget, birthMonth, birthDay);
+                    const targetPrimeBirthday = new Date(birthYear + primeYearsEnd, birthMonth, birthDay);
 
                     if (!isNaN(targetPrimeBirthday.getTime())) {
                         if (now < targetPrimeBirthday) {
                             const msLeftPrime = targetPrimeBirthday - now;
-                            // Calculate weeks left
+                            // Calculate weeks left until prime end
                             primeWeeksLeftVal = Math.max(0, Math.floor(msLeftPrime / MS_PER_WEEK));
 
-                            // Calculate full months left
+                            // Calculate full months left until prime end
                             let yearsDiff = targetPrimeBirthday.getFullYear() - now.getFullYear();
                             let monthsDiff = targetPrimeBirthday.getMonth() - now.getMonth();
                             let daysDiff = targetPrimeBirthday.getDate() - now.getDate();
@@ -1368,7 +1330,8 @@
                             }
                             primeMonthsLeftVal = Math.max(0, totalMonths);
 
-                        } else {
+                        } else { // Prime period has ended
+                            primeYearsLeftVal = 0;
                             primeWeeksLeftVal = 0;
                             primeMonthsLeftVal = 0;
                         }
@@ -1380,7 +1343,40 @@
                 }
             }
 
+            // Calculate current awake slot index (1-based) using configurable hours
+            const totalAwakeSlots = Math.max(0, (awakeEndHour - awakeStartHour) * 2); // Calculate dynamically
+            let currentAwakeSlotIndex = null; // Null if outside awake hours
+            let remainingAwakeSlots = 0;
 
+            if (currentHour >= awakeStartHour && currentHour < awakeEndHour) {
+                const slotsPassedSinceStart = (currentHour - awakeStartHour) * 2 + (currentMinute >= 30 ? 1 : 0);
+                currentAwakeSlotIndex = slotsPassedSinceStart + 1;
+                remainingAwakeSlots = totalAwakeSlots - slotsPassedSinceStart;
+            } else if (currentHour < awakeStartHour) {
+                // Before awake start: All slots are remaining/future
+                currentAwakeSlotIndex = 0; // Indicate before start
+                remainingAwakeSlots = totalAwakeSlots;
+            } else { // After awake end
+                // awakeEndHour or later: All slots are completed/past
+                currentAwakeSlotIndex = totalAwakeSlots + 1; // Indicate after end
+                remainingAwakeSlots = 0;
+            }
+
+            // Calculate 30-minute slot countdown and slots passed today
+            const totalMinutesPassedToday = currentHour * 60 + currentMinute;
+            const slotsPassedToday = Math.floor(totalMinutesPassedToday / MINUTES_PER_SLOT);
+            const minutesIntoCurrentSlot = totalMinutesPassedToday % MINUTES_PER_SLOT;
+            const secondsIntoCurrentSlot = minutesIntoCurrentSlot * 60 + currentSecond;
+            const msIntoCurrentSlot = secondsIntoCurrentSlot * 1000 + currentMillisecond;
+            const msLeftInSlot = (MINUTES_PER_SLOT * MS_PER_MINUTE) - msIntoCurrentSlot;
+
+            const countdownMinutes = Math.max(0, Math.floor(msLeftInSlot / MS_PER_MINUTE));
+            const countdownSeconds = Math.max(0, Math.floor((msLeftInSlot % MS_PER_MINUTE) / MS_PER_SECOND));
+            const formattedCountdown = `${countdownMinutes.toString().padStart(2, '0')}:${countdownSeconds.toString().padStart(2, '0')}`;
+
+
+            // --- Update DOM Elements ---
+            // Only update if the element exists
             if (displayCurrentDateSpan) displayCurrentDateSpan.textContent = dateString;
             if (displayCurrentTimeSpan) displayCurrentTimeSpan.textContent = timeString;
             if (displayCurrentYearSpan) displayCurrentYearSpan.textContent = currentActualYear;
@@ -1394,10 +1390,16 @@
             if (hoursLeftDaySpan) hoursLeftDaySpan.textContent = hoursLeft;
             if (minutesLeftDaySpan) minutesLeftDaySpan.textContent = minutesLeft.toLocaleString();
             if (secondsLeftDaySpan) secondsLeftDaySpan.textContent = secondsLeft.toLocaleString();
+
             // Update Prime Time Left display
             if (primeYearsLeftSpan) primeYearsLeftSpan.textContent = primeYearsLeftVal;
             if (primeWeeksLeftSpan) primeWeeksLeftSpan.textContent = primeWeeksLeftVal !== '--' ? primeWeeksLeftVal.toLocaleString() : '--';
             if (primeMonthsLeftSpan) primeMonthsLeftSpan.textContent = primeMonthsLeftVal !== '--' ? primeMonthsLeftVal.toLocaleString() : '--';
+
+            // Update 30-Min Slot Tile
+            if (slotCountdownSpan) slotCountdownSpan.textContent = formattedCountdown;
+            if (slotsPassedTodaySpan) slotsPassedTodaySpan.textContent = `${slotsPassedToday} slots passed today`;
+
 
             // --- Render Unit Contribution Grids ---
             // Ensure counts are valid numbers before passing
@@ -1405,146 +1407,207 @@
             const validMonthsLeftY = typeof monthsLeftY === 'number' && !isNaN(monthsLeftY) ? monthsLeftY : 0;
             const validHoursLeft = typeof hoursLeft === 'number' && !isNaN(hoursLeft) ? hoursLeft : 0;
             const validPrimeYearsLeft = typeof primeYearsLeftVal === 'number' && !isNaN(primeYearsLeftVal) ? primeYearsLeftVal : 0;
+            const validRemainingAwakeSlots = typeof remainingAwakeSlots === 'number' && !isNaN(remainingAwakeSlots) ? remainingAwakeSlots : 0;
 
-            // Calls to renderUnitGrid with unitType and currentHourIndex
+
+            // Calls to renderUnitGrid with unitType and currentHourIndex/currentAwakeSlotIndex (using optimized function)
             renderUnitGrid('yearWeeksContribGrid', WEEKS_IN_YEAR_APPROX, validWeeksLeftY, 'Week', 'week');
             renderUnitGrid('yearMonthsContribGrid', MONTHS_IN_YEAR, validMonthsLeftY, 'Month', 'month');
             renderUnitGrid('todayHoursContribGrid', HOURS_IN_DAY, validHoursLeft, 'Hour', 'hour', currentHour + 1); // Pass current hour (1-24)
             renderUnitGrid('primeYearsContribGrid', totalPrimeYears, validPrimeYearsLeft, 'Prime Year', 'primeYear');
+            renderUnitGrid('awakeSlotsContribGrid', totalAwakeSlots, validRemainingAwakeSlots, 'Slot', 'awakeSlot', currentAwakeSlotIndex); // Pass dynamic total slots
 
-             // Update count spans
+
+             // Update count spans for unit grids
              if (yearWeeksCountSpan) yearWeeksCountSpan.textContent = `(${validWeeksLeftY}/${WEEKS_IN_YEAR_APPROX})`;
              if (yearMonthsCountSpan) yearMonthsCountSpan.textContent = `(${validMonthsLeftY}/${MONTHS_IN_YEAR})`;
              if (todayHoursCountSpan) todayHoursCountSpan.textContent = `(${validHoursLeft}/${HOURS_IN_DAY})`;
              // Update Prime Years Count Span
              if (primeYearsCountSpan) primeYearsCountSpan.textContent = `(${validPrimeYearsLeft}/${totalPrimeYears > 0 ? totalPrimeYears : '--'})`; // Handle zero totalPrimeYears
+             // Update Awake Slots Count Span
+             if (awakeSlotsCountSpan) awakeSlotsCountSpan.textContent = `(${validRemainingAwakeSlots}/${totalAwakeSlots > 0 ? totalAwakeSlots : '--'})`; // Use dynamic total
         }
 
         /**
          * Updates user info (age, months passed, contribution grids, percentages) based on the birth date and current settings.
+         * Called on initialization, after setting birth date, or after changing settings.
          */
         function updateUserInfo() {
-            let percentLifespan = 0;
+            let percentLifespanMonth = 0;
+            let percentLifespanYear = 0; // NEW
             let percentPrime = 0;
             monthsPassed = 0; // Reset months passed
 
             if (birthDate instanceof Date && !isNaN(birthDate.getTime())) {
                 currentAge = calculateAge(birthDate);
-                monthsPassed = calculateMonthsPassed(birthDate); // Calculate months passed
+                monthsPassed = calculateMonthsPassed(birthDate); // Calculate total full months passed
                 currentAgeSpan.textContent = currentAge !== null ? `${currentAge} years old` : '--';
 
                 if (currentAge !== null) {
-                    // Calculate percentages based on months
+                    // Calculate percentages based on months passed
                     const totalLifespanMonths = maxLifeYears * MONTHS_IN_YEAR;
                     const totalPrimeMonths = (primeYearsEnd - primeYearsStart) * MONTHS_IN_YEAR; // primeYearsStart is 0
 
-                    percentLifespan = totalLifespanMonths > 0 ? Math.max(0, Math.min(100, Math.round((monthsPassed / totalLifespanMonths) * 100))) : 0;
+                    // Calculate lifespan percentage (Months)
+                    percentLifespanMonth = totalLifespanMonths > 0
+                        ? Math.max(0, Math.min(100, Math.round((monthsPassed / totalLifespanMonths) * 100)))
+                        : 0;
 
-                    const completedPrimeMonths = Math.max(0, Math.min(totalPrimeMonths, monthsPassed)); // Prime starts from month 0
-                    percentPrime = totalPrimeMonths > 0 ? Math.max(0, Math.min(100, Math.round((completedPrimeMonths / totalPrimeMonths) * 100))) : 0;
+                    // Calculate lifespan percentage (Years) - NEW
+                    percentLifespanYear = maxLifeYears > 0
+                        ? Math.max(0, Math.min(100, Math.round((currentAge / maxLifeYears) * 100)))
+                        : 0;
 
-                } else {
-                    percentLifespan = 0;
+                    // Calculate prime years percentage (Months)
+                    const completedPrimeMonths = Math.max(0, Math.min(totalPrimeMonths, monthsPassed)); // Months passed within prime period
+                    percentPrime = totalPrimeMonths > 0
+                        ? Math.max(0, Math.min(100, Math.round((completedPrimeMonths / totalPrimeMonths) * 100)))
+                        : 0;
+
+                } else { // Should not happen if birthDate is valid, but good fallback
+                    percentLifespanMonth = 0;
+                    percentLifespanYear = 0; // NEW
                     percentPrime = 0;
                 }
-            } else {
+            } else { // No valid birth date set
                 currentAgeSpan.textContent = '--';
                 currentAge = null;
-                percentLifespan = 0;
+                percentLifespanMonth = 0;
+                percentLifespanYear = 0; // NEW
                 percentPrime = 0;
-                 monthsPassed = 0;
+                monthsPassed = 0;
             }
 
-             // Update Percentage Text
-             if (lifespanPercentText) lifespanPercentText.textContent = `${percentLifespan}%`;
+             // Update Percentage Text display
+             if (lifespanPercentText) lifespanPercentText.textContent = `${percentLifespanMonth}%`;
+             if (lifespanYearPercentText) lifespanYearPercentText.textContent = `${percentLifespanYear}%`; // NEW
              if (primePercentText) primePercentText.textContent = `${percentPrime}%`;
 
-
-            // Render Contribution Grids (now uses monthsPassed)
+            // Render the main progress Contribution Grids (uses optimized function)
             renderContributionGrids();
 
-            // Re-render the main lifespan grid and reset selection
-            renderLifespanGrid();
-            if (previouslySelectedTile) {
-                previouslySelectedTile.classList.remove('selected-tile');
-                previouslySelectedTile = null;
-            }
-            selectedYearForNotes = null; // Reset selected year for notes
-            notesSection.classList.add('hidden'); // Hide notes section
-
-            // Update timers (this will also update unit grids)
+            // Update timers and unit grids immediately (don't wait for next interval)
             updateTimers();
         }
 
         // --- Rendering Functions ---
 
         /**
-         * Renders the GitHub-style contribution grids for overall life and prime years progress.
+         * Renders the GitHub-style contribution grids for overall life (months & years) and prime years progress.
+         * Optimized using DocumentFragment to minimize DOM reflows.
          */
         function renderContributionGrids() {
-            if (!lifespanContribGrid || !primeContribGrid) {
-                console.error("Contribution grid DOM elements not found");
+            // Check if all grid elements exist
+            if (!lifespanContribGrid || !primeContribGrid || !lifespanYearContribGrid) {
+                console.error("One or more contribution grid DOM elements not found");
                 return;
             }
-            lifespanContribGrid.innerHTML = ''; // Clear existing grid
-            primeContribGrid.innerHTML = '';   // Clear existing grid
 
             const totalLifespanMonths = maxLifeYears * MONTHS_IN_YEAR;
             const totalPrimeMonths = (primeYearsEnd - primeYearsStart) * MONTHS_IN_YEAR; // primeYearsStart is 0
+            const totalLifespanYears = maxLifeYears; // NEW
 
-            // --- Render Lifespan Contribution Grid ---
+            // --- Render Lifespan Contribution Grid (Months) ---
+            const lifespanMonthFragment = document.createDocumentFragment();
             for (let month = 1; month <= totalLifespanMonths; month++) {
                 const square = document.createElement('div');
                 square.classList.add('contrib-square');
                 square.setAttribute('title', `Month ${month}`);
 
-                if (monthsPassed > 0) { // Only color if birth date is set
+                if (monthsPassed > 0) { // Only color if birth date is set and months have passed
                     if (month <= monthsPassed) {
-                        // Calculate recency in months (how many months ago this month was)
                         const recencyMonths = monthsPassed - month;
-                        let fillLevel = 0; // 0 means default background
-
-                        // Determine fill level based on monthly recency (20 levels)
-                        if (recencyMonths === 0) fillLevel = 20;     // Current month
-                        else if (recencyMonths === 1) fillLevel = 19;    // 1 month ago
-                        else if (recencyMonths === 2) fillLevel = 18;    // 2 months ago
-                        else if (recencyMonths === 3) fillLevel = 17;    // 3 months ago
-                        else if (recencyMonths <= 6) fillLevel = 16;     // <= 6 months ago
-                        else if (recencyMonths <= 9) fillLevel = 15;     // <= 9 months ago
-                        else if (recencyMonths <= 12) fillLevel = 14;    // <= 1 year ago
-                        else if (recencyMonths <= 18) fillLevel = 13;    // <= 1.5 years ago
-                        else if (recencyMonths <= 24) fillLevel = 12;    // <= 2 years ago
-                        else if (recencyMonths <= 36) fillLevel = 11;    // <= 3 years ago
-                        else if (recencyMonths <= 48) fillLevel = 10;    // <= 4 years ago
-                        else if (recencyMonths <= 60) fillLevel = 9;     // <= 5 years ago
-                        else if (recencyMonths <= 84) fillLevel = 8;     // <= 7 years ago
-                        else if (recencyMonths <= 120) fillLevel = 7;    // <= 10 years ago
-                        else if (recencyMonths <= 180) fillLevel = 6;    // <= 15 years ago
-                        else if (recencyMonths <= 240) fillLevel = 5;    // <= 20 years ago
-                        else if (recencyMonths <= 300) fillLevel = 4;    // <= 25 years ago
-                        else if (recencyMonths <= 360) fillLevel = 3;    // <= 30 years ago
-                        else if (recencyMonths <= 480) fillLevel = 2;    // <= 40 years ago
-                        else fillLevel = 1;                              // > 40 years ago
+                        let fillLevel = 0;
+                        if (recencyMonths === 0) fillLevel = 20;
+                        else if (recencyMonths === 1) fillLevel = 19;
+                        else if (recencyMonths === 2) fillLevel = 18;
+                        else if (recencyMonths === 3) fillLevel = 17;
+                        else if (recencyMonths <= 6) fillLevel = 16;
+                        else if (recencyMonths <= 9) fillLevel = 15;
+                        else if (recencyMonths <= 12) fillLevel = 14;
+                        else if (recencyMonths <= 18) fillLevel = 13;
+                        else if (recencyMonths <= 24) fillLevel = 12;
+                        else if (recencyMonths <= 36) fillLevel = 11;
+                        else if (recencyMonths <= 48) fillLevel = 10;
+                        else if (recencyMonths <= 60) fillLevel = 9;
+                        else if (recencyMonths <= 84) fillLevel = 8;
+                        else if (recencyMonths <= 120) fillLevel = 7;
+                        else if (recencyMonths <= 180) fillLevel = 6;
+                        else if (recencyMonths <= 240) fillLevel = 5;
+                        else if (recencyMonths <= 300) fillLevel = 4;
+                        else if (recencyMonths <= 360) fillLevel = 3;
+                        else if (recencyMonths <= 480) fillLevel = 2;
+                        else fillLevel = 1;
 
                         if (fillLevel > 0) {
                             square.classList.add(`lifespan-fill-level-${fillLevel}`);
                         }
                     }
                     if (month === monthsPassed) {
-                        square.classList.add('current'); // Highlight current month in overall progress
+                        square.classList.add('current');
                     }
                 }
-                lifespanContribGrid.appendChild(square);
+                lifespanMonthFragment.appendChild(square);
             }
+            lifespanContribGrid.innerHTML = '';
+            lifespanContribGrid.appendChild(lifespanMonthFragment);
 
-            // --- Render Prime Years Contribution Grid ---
+            // --- Render Lifespan Contribution Grid (Years) - NEW ---
+            const lifespanYearFragment = document.createDocumentFragment();
+            for (let year = 1; year <= totalLifespanYears; year++) {
+                const square = document.createElement('div');
+                square.classList.add('contrib-square');
+                square.setAttribute('title', `Year ${year}`);
+
+                if (currentAge !== null) { // Only color if age is known
+                    if (year <= currentAge) { // Check if the year has been completed
+                        const recencyYears = currentAge - year; // How many years ago this year was
+                        let fillLevel = 0;
+                        // Determine fill level based on yearly recency (20 levels)
+                        if (recencyYears === 0) fillLevel = 20;     // Current year
+                        else if (recencyYears === 1) fillLevel = 19;    // 1 year ago
+                        else if (recencyYears === 2) fillLevel = 18;    // 2 years ago
+                        else if (recencyYears === 3) fillLevel = 17;    // 3 years ago
+                        else if (recencyYears === 4) fillLevel = 16;    // 4 years ago
+                        else if (recencyYears === 5) fillLevel = 15;    // 5 years ago
+                        else if (recencyYears <= 7) fillLevel = 14;     // <= 7 years ago
+                        else if (recencyYears <= 10) fillLevel = 13;    // <= 10 years ago
+                        else if (recencyYears <= 12) fillLevel = 12;    // <= 12 years ago
+                        else if (recencyYears <= 15) fillLevel = 11;    // <= 15 years ago
+                        else if (recencyYears <= 18) fillLevel = 10;    // <= 18 years ago
+                        else if (recencyYears <= 20) fillLevel = 9;     // <= 20 years ago
+                        else if (recencyYears <= 25) fillLevel = 8;     // <= 25 years ago
+                        else if (recencyYears <= 30) fillLevel = 7;     // <= 30 years ago
+                        else if (recencyYears <= 35) fillLevel = 6;     // <= 35 years ago
+                        else if (recencyYears <= 40) fillLevel = 5;     // <= 40 years ago
+                        else if (recencyYears <= 45) fillLevel = 4;     // <= 45 years ago
+                        else if (recencyYears <= 50) fillLevel = 3;     // <= 50 years ago
+                        else if (recencyYears <= 60) fillLevel = 2;     // <= 60 years ago
+                        else fillLevel = 1;                              // > 60 years ago
+
+                        if (fillLevel > 0) {
+                            square.classList.add(`lifespan-fill-level-${fillLevel}`);
+                        }
+                    }
+                    // Highlight the square representing the current age (current year of life)
+                    if (year === currentAge) {
+                        square.classList.add('current');
+                    }
+                }
+                lifespanYearFragment.appendChild(square);
+            }
+            lifespanYearContribGrid.innerHTML = '';
+            lifespanYearContribGrid.appendChild(lifespanYearFragment);
+
+            // --- Render Prime Years Contribution Grid (Months) ---
+            const primeFragment = document.createDocumentFragment();
             if (totalPrimeMonths > 0) {
                 for (let month = 1; month <= totalPrimeMonths; month++) {
                     const square = document.createElement('div');
                     square.classList.add('contrib-square');
                     square.setAttribute('title', `Prime Month ${month}`);
 
-                    if (monthsPassed > 0) { // Only color if birth date is set
+                    if (monthsPassed > 0) {
                         if (month <= monthsPassed) {
                              const recencyMonths = monthsPassed - month;
                              let fillLevel = 0;
@@ -1574,11 +1637,13 @@
                              }
                         }
                          if (month === monthsPassed) {
-                             square.classList.add('current'); // Highlight current month in prime progress
+                             square.classList.add('current');
                          }
                     }
-                    primeContribGrid.appendChild(square);
+                    primeFragment.appendChild(square);
                 }
+                primeContribGrid.innerHTML = '';
+                primeContribGrid.appendChild(primeFragment);
             } else {
                  primeContribGrid.innerHTML = '<p class="text-xs text-center col-span-full" style="color: var(--text-muted-color);">Prime period ends at age 0.</p>';
             }
@@ -1586,108 +1651,14 @@
 
 
         /**
-         * Renders the main grid of year tiles (Life Map).
-         */
-        function renderLifespanGrid() {
-            if (!lifespanGrid) {
-                console.error("lifespanGrid DOM element not found");
-                return;
-            }
-            lifespanGrid.innerHTML = ''; // Clear existing grid
-            const birthYear = birthDate ? birthDate.getFullYear() : null;
-            const currentActualYear = new Date().getFullYear();
-
-            // Add Birth Tile if birth date is set
-            if (birthYear !== null) {
-                const birthTile = document.createElement('div');
-                birthTile.classList.add('tile', 'birth-tile', 'lifespan-tile');
-                birthTile.setAttribute('title', `Birth Year: ${birthYear}`);
-                birthTile.innerHTML = `<div class="age">Birth</div><div class="year">${birthYear}</div>`;
-                if (bodyElement.classList.contains('colorful-mode')) {
-                    const emojiSpan = document.createElement('span');
-                    emojiSpan.classList.add('emoji-icon');
-                    emojiSpan.textContent = '🎂';
-                    birthTile.appendChild(emojiSpan);
-                }
-                lifespanGrid.appendChild(birthTile);
-            }
-
-            // Add Year Tiles (1 to maxLifeYears variable)
-            for (let age = 1; age <= maxLifeYears; age++) {
-                const tile = document.createElement('div');
-                tile.classList.add('tile', 'lifespan-tile');
-                const yearForCell = birthYear ? birthYear + age : null;
-                let timeClass = '';
-                let hoverTitle = `Age: ${age}`;
-
-                if (birthYear !== null && yearForCell !== null) {
-                    if (yearForCell < currentActualYear) { timeClass = 'past'; hoverTitle += `, Year: ${yearForCell} (Past)`; }
-                    else if (yearForCell === currentActualYear) { timeClass = 'current'; hoverTitle += `, Year: ${yearForCell} (Current)`; }
-                    else if (yearForCell > currentActualYear && yearForCell <= currentActualYear + 3) { timeClass = 'upcoming'; hoverTitle += `, Year: ${yearForCell} (Upcoming)`; }
-                    else { timeClass = 'future'; hoverTitle += `, Year: ${yearForCell} (Future)`; }
-
-                    tile.classList.add('clickable');
-                    tile.addEventListener('click', () => handleYearClick(yearForCell, tile));
-                } else {
-                    tile.classList.add('bg-gray-100', 'text-gray-400', 'border-gray-200'); // Simplified style for unset birth date
-                    tile.style.cursor = 'default';
-                    hoverTitle += ` (Set birth date to see year)`;
-                }
-                // Check against primeYearsStart (now 0) and primeYearsEnd
-                if (age >= primeYearsStart && age <= primeYearsEnd) {
-                    hoverTitle += ' - Prime Year';
-                }
-
-                tile.setAttribute('title', hoverTitle);
-
-                if (timeClass) { tile.classList.add(timeClass); }
-
-                // Apply prime year glow effect
-                if (age >= primeYearsStart && age <= primeYearsEnd && timeClass !== 'past' && timeClass !== 'current') {
-                     tile.classList.add('prime-year-glow');
-                }
-
-
-                tile.dataset.year = yearForCell;
-                tile.dataset.age = age;
-                tile.innerHTML = `<div class="age">${age}</div><div class="year">${yearForCell !== null ? yearForCell : '----'}</div>`;
-
-                if (bodyElement.classList.contains('colorful-mode') && yearForCell !== null) {
-                    const emojiSpan = document.createElement('span');
-                    emojiSpan.classList.add('emoji-icon');
-                    let emoji = '🎈'; // Default future
-                    if (timeClass === 'current') emoji = '⭐';
-                    else if (timeClass === 'past') emoji = '✅';
-                    else if (age >= primeYearsStart && age <= primeYearsEnd && (timeClass === 'upcoming' || timeClass === 'future')) emoji = '🚀'; // Prime future/upcoming
-                    emojiSpan.textContent = emoji;
-                    tile.appendChild(emojiSpan);
-                }
-
-                lifespanGrid.appendChild(tile);
-            }
-
-            // Re-select the tile if one was previously selected
-            if(selectedYearForNotes && previouslySelectedTile) {
-                 const newSelectedTile = lifespanGrid.querySelector(`.tile[data-year="${selectedYearForNotes}"]`);
-                 if (newSelectedTile && !newSelectedTile.classList.contains('birth-tile')) {
-                     newSelectedTile.classList.add('selected-tile');
-                     previouslySelectedTile = newSelectedTile;
-                 } else {
-                     previouslySelectedTile = null;
-                     selectedYearForNotes = null;
-                     notesSection.classList.add('hidden');
-                 }
-            }
-        }
-
-        /**
          * Renders a GitHub-style contribution grid for remaining time units with gradients.
+         * Optimized using DocumentFragment.
          * @param {string} containerId - The ID of the div element to render into.
-         * @param {number} totalUnits - The total number of units in the period (e.g., 52 weeks, 24 hours).
-         * @param {number} remainingUnits - The number of units remaining (to be colored with gradient).
-         * @param {string} unitLabel - A base label for the unit (e.g., "Week", "Hour").
-         * @param {string} unitType - The type of unit ('week', 'month', 'hour', 'primeYear') for CSS class selection.
-         * @param {number|null} [currentUnitIndex=null] - The 1-based index of the current unit (only used for 'hour').
+         * @param {number} totalUnits - The total number of units in the period (e.g., 52 weeks, 24 hours, 30 slots).
+         * @param {number} remainingUnits - The number of units remaining (used for gradient calculation).
+         * @param {string} unitLabel - A base label for the unit (e.g., "Week", "Hour", "Slot").
+         * @param {string} unitType - The type of unit ('week', 'month', 'hour', 'primeYear', 'awakeSlot') for CSS class selection.
+         * @param {number|null} [currentUnitIndex=null] - The 1-based index of the current unit (e.g., current hour, current slot). Used to determine past/current/future. For non-time-based units, this might represent the first upcoming unit. Boundary values (0, total+1) can indicate before/after the period.
          */
         function renderUnitGrid(containerId, totalUnits, remainingUnits, unitLabel, unitType, currentUnitIndex = null) {
             const container = document.getElementById(containerId);
@@ -1695,223 +1666,181 @@
                 console.error(`Unit grid container with ID "${containerId}" not found.`);
                 return;
             }
-            container.innerHTML = ''; // Clear existing grid
 
             // Ensure counts are valid numbers
             const validTotal = Math.max(0, Math.floor(totalUnits || 0));
             const validRemaining = Math.max(0, Math.floor(remainingUnits || 0));
-            const validCurrentIndex = currentUnitIndex !== null ? Math.max(1, Math.floor(currentUnitIndex)) : null;
+            const validCurrentIndex = currentUnitIndex !== null ? Math.floor(currentUnitIndex) : null; // Allow 0 or total+1
 
-            if (validTotal === 0) return; // Don't render if total is zero
+            if (validTotal === 0) {
+                container.innerHTML = '<p class="text-xs text-center col-span-full" style="color: var(--text-muted-color);">No units to display.</p>'; // Clear if total is zero and show message
+                return;
+            }
 
             const completedUnits = validTotal - validRemaining;
+            const fragment = document.createDocumentFragment(); // Use fragment
 
             for (let i = 1; i <= validTotal; i++) {
                 const square = document.createElement('div');
                 square.classList.add('contrib-square');
                 let titleText = `${unitLabel} ${i}`; // Base title
+                let status = ''; // 'past', 'current', 'future'
 
-                if (unitType === 'hour' && validCurrentIndex !== null) {
-                    // --- Hour Grid Logic ---
+                // --- Determine Status (Past, Current, Future) ---
+                if (validCurrentIndex !== null) {
                     if (i < validCurrentIndex) {
-                        // Past hour: Default background
-                        titleText += ' (Past)';
+                        status = 'past';
                     } else if (i === validCurrentIndex) {
-                        // Current hour: Highlight using unit-current style
-                        square.classList.add('unit-current');
-                        titleText += ' (Current)';
+                        status = 'current';
                     } else {
-                        // Future hour: Apply gradient
-                        const relativeIndex = i - validCurrentIndex; // 1-based index within remaining hours
-                        if (validRemaining > 0) { // Avoid division by zero
-                            const gradientLevel = Math.max(1, Math.min(NUM_GRADIENT_STEPS, Math.ceil(relativeIndex / validRemaining * NUM_GRADIENT_STEPS)));
-                            square.classList.add(`unit-${unitType}-fill-${gradientLevel}`);
-                        }
-                        titleText += ' (Future)';
+                        status = 'future';
+                    }
+                    // Handle boundary cases for awake slots
+                    if (unitType === 'awakeSlot') {
+                        if (validCurrentIndex === 0) status = 'future'; // Before awake start
+                        if (validCurrentIndex > validTotal) status = 'past'; // After awake end
                     }
                 } else {
-                    // --- Other Unit Grids Logic (Weeks, Months, Prime Years) ---
-                    if (i > completedUnits) {
-                        // Remaining unit: Apply gradient
-                        const relativeIndex = i - completedUnits; // 1-based index within remaining units
-                         if (validRemaining > 0) { // Avoid division by zero
-                            const gradientLevel = Math.max(1, Math.min(NUM_GRADIENT_STEPS, Math.ceil(relativeIndex / validRemaining * NUM_GRADIENT_STEPS)));
-                            square.classList.add(`unit-${unitType}-fill-${gradientLevel}`);
-                         }
-                        titleText += ' (Remaining)';
-
-                        // **** UPDATED: Highlight the first remaining unit using unit-current style ****
-                        if (i === completedUnits + 1) {
-                            square.classList.add('unit-current'); // Apply the same style as current hour
-                            titleText += ' - Upcoming'; // Keep tooltip text clear
-                        }
+                    // Default logic for grids without a specific 'current' index (like weeks, months, prime years)
+                    // Highlight the first *remaining* unit as 'current' (upcoming)
+                    if (i <= completedUnits) {
+                        status = 'past';
+                    } else if (i === completedUnits + 1) {
+                        status = 'current'; // Treat the first future unit as 'current' for highlighting
                     } else {
-                         // Completed unit: Default background
-                         titleText += ' (Completed)';
+                        status = 'future';
                     }
                 }
+
+                // --- Apply Styles and Title ---
+                if (status === 'past') {
+                    // Default background (no extra class needed for basic past)
+                    titleText += ' (Completed)';
+                    if (unitType === 'hour') titleText = `Hour ${i-1}:00-${i}:00 (Past)`; // Adjust hour title
+                    if (unitType === 'awakeSlot') {
+                         // Use global awakeStartHour for calculation
+                         const slotStartHour = awakeStartHour + Math.floor((i - 1) / 2);
+                         const slotStartMin = (i - 1) % 2 === 0 ? '00' : '30';
+                         const slotEndHour = slotStartMin === '30' ? slotStartHour + 1 : slotStartHour;
+                         const slotEndMin = slotStartMin === '30' ? '00' : '30';
+                         titleText = `Slot ${i} (${formatHourAMPM(slotStartHour)}:${slotStartMin}-${formatHourAMPM(slotEndHour)}:${slotEndMin}) (Past)`;
+                    }
+
+                } else if (status === 'current') {
+                    square.classList.add('unit-current'); // Highlight style
+                    titleText += ' (Current)';
+                     if (unitType === 'hour') titleText = `Hour ${i-1}:00-${i}:00 (Current)`;
+                     if (unitType === 'awakeSlot') {
+                         // Use global awakeStartHour for calculation
+                         const slotStartHour = awakeStartHour + Math.floor((i - 1) / 2);
+                         const slotStartMin = (i - 1) % 2 === 0 ? '00' : '30';
+                         const slotEndHour = slotStartMin === '30' ? slotStartHour + 1 : slotStartHour;
+                         const slotEndMin = slotStartMin === '30' ? '00' : '30';
+                         titleText = `Slot ${i} (${formatHourAMPM(slotStartHour)}:${slotStartMin}-${formatHourAMPM(slotEndHour)}:${slotEndMin}) (Current)`;
+                     }
+                     if (unitType === 'week' || unitType === 'month' || unitType === 'primeYear') {
+                         titleText += ' - Upcoming'; // Clarify for non-time based units
+                     }
+
+                } else { // Future
+                    // Apply gradient fill
+                    const relativeIndex = i - completedUnits; // 1-based index within remaining units
+                    if (validRemaining > 0) { // Avoid division by zero
+                        const gradientLevel = Math.max(1, Math.min(NUM_GRADIENT_STEPS, Math.ceil(relativeIndex / validRemaining * NUM_GRADIENT_STEPS)));
+                        square.classList.add(`unit-${unitType}-fill-${gradientLevel}`);
+                    }
+                    titleText += ' (Future)';
+                    if (unitType === 'hour') titleText = `Hour ${i-1}:00-${i}:00 (Future)`;
+                    if (unitType === 'awakeSlot') {
+                         // Use global awakeStartHour for calculation
+                         const slotStartHour = awakeStartHour + Math.floor((i - 1) / 2);
+                         const slotStartMin = (i - 1) % 2 === 0 ? '00' : '30';
+                         const slotEndHour = slotStartMin === '30' ? slotStartHour + 1 : slotStartHour;
+                         const slotEndMin = slotStartMin === '30' ? '00' : '30';
+                         titleText = `Slot ${i} (${formatHourAMPM(slotStartHour)}:${slotStartMin}-${formatHourAMPM(slotEndHour)}:${slotEndMin}) (Future)`;
+                    }
+                }
+
                 square.setAttribute('title', titleText); // Set the final title
-                container.appendChild(square);
-            }
-        }
-
-
-        // --- Notes Handling (Updated for Quill) ---
-        /**
-         * Handles clicking on a year tile in the Life Map grid.
-         */
-        function handleYearClick(year, tileElement) {
-            if (year === null || tileElement.classList.contains('birth-tile') || !quillEditor) return;
-
-            selectedYearForNotes = year;
-
-            // Update tile selection visual
-            if (previouslySelectedTile) {
-                previouslySelectedTile.classList.remove('selected-tile');
-            }
-            tileElement.classList.add('selected-tile');
-            previouslySelectedTile = tileElement;
-
-            // Update notes section title and save button text
-            notesTitle.textContent = `Notes for Year ${year}`;
-            saveNotesYear.textContent = year;
-
-            // Load notes from local storage into Quill
-            loadNotesForYear(year);
-
-            // Show the notes section and clear status
-            notesSection.classList.remove('hidden');
-            saveStatus.textContent = '';
-            quillEditor.focus();
-        }
-
-        /**
-         * Loads notes (HTML) for a specific year from localStorage and sets Quill editor content.
-         */
-         function loadNotesForYear(year) {
-            if (!quillEditor) return;
-
-            const notesKey = `${NOTES_STORAGE_PREFIX}${year}`;
-            let savedHTML = '';
-
-            try {
-                savedHTML = localStorage.getItem(notesKey) || '';
-            } catch (e) {
-                console.error(`Error reading notes for year ${year}:`, e);
+                fragment.appendChild(square); // Append to fragment
             }
 
-            quillEditor.clipboard.dangerouslyPasteHTML(0, savedHTML);
-            quillEditor.setSelection(0, 0);
-         }
-
-
-        /**
-         * Saves the HTML content from the Quill editor for the currently selected year to localStorage.
-         */
-        function saveNotes() {
-            if (selectedYearForNotes !== null && quillEditor) {
-                const notesHTML = quillEditor.root.innerHTML;
-                const notesKey = `${NOTES_STORAGE_PREFIX}${selectedYearForNotes}`;
-
-                try {
-                    // Consider empty editor content as clearing notes
-                    if (notesHTML === '<p><br></p>' || notesHTML === '') {
-                         localStorage.removeItem(notesKey);
-                         saveStatus.textContent = 'Notes cleared.';
-                    } else {
-                        localStorage.setItem(notesKey, notesHTML);
-                        saveStatus.textContent = 'Notes saved!';
-                    }
-
-                    saveStatus.style.color = 'var(--icon-tick-color)';
-                    setTimeout(() => { saveStatus.textContent = ''; }, 3000);
-                } catch (e) {
-                    console.error(`Error saving notes for year ${selectedYearForNotes}:`, e);
-                    saveStatus.textContent = 'Error saving notes.';
-                     saveStatus.style.color = 'var(--icon-cross-color)';
-                    setTimeout(() => { saveStatus.textContent = ''; }, 5000);
-                }
-            } else {
-                console.error("Save button clicked but no year is selected or editor not ready.");
-                saveStatus.textContent = 'Error: No year selected or editor not ready.';
-                saveStatus.style.color = 'var(--icon-cross-color)';
-                setTimeout(() => { saveStatus.textContent = ''; }, 3000);
-            }
+            container.innerHTML = ''; // Clear existing grid content efficiently
+            container.appendChild(fragment); // Append fragment once
         }
 
         // --- Theme Switching Logic ---
         function applyTheme(themeName) {
-            bodyElement.classList.remove('dark-mode', 'colorful-mode');
+            bodyElement.classList.remove('dark-mode', 'colorful-mode'); // Remove existing theme classes
             if (themeName === 'dark') {
                 bodyElement.classList.add('dark-mode');
             } else if (themeName === 'colorful') {
                 bodyElement.classList.add('colorful-mode');
             }
+            // 'light' theme is the default (no class added)
 
+            // Update active state on theme buttons
             themeButtons.forEach(button => {
                 button.classList.toggle('active', button.dataset.theme === themeName);
             });
 
-            currentTheme = themeName;
+            currentTheme = themeName; // Store current theme
+            // Save theme preference to local storage
             try {
                 localStorage.setItem(THEME_STORAGE_KEY, themeName);
             } catch (e) {
                 console.error("Could not save theme preference to local storage:", e);
             }
-            // Re-render grids to apply theme changes
-            renderLifespanGrid();
-            renderContributionGrids();
-            updateTimers(); // Re-render unit grids with new theme colors
         }
 
         function loadThemePreference() {
-            let savedTheme = 'light';
+            let savedTheme = 'light'; // Default theme
             try {
                 savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'light';
             } catch (e) {
                 console.error("Could not load theme preference from local storage:", e);
-                savedTheme = 'light';
+                savedTheme = 'light'; // Fallback on error
             }
+            // Validate loaded theme
             if (!['light', 'dark', 'colorful'].includes(savedTheme)) {
                 savedTheme = 'light';
             }
-            applyTheme(savedTheme);
+            applyTheme(savedTheme); // Apply the loaded or default theme
         }
 
         // --- Event Listeners ---
         changeBirthDateBtn.addEventListener('click', showBirthDateInput);
+
         saveBirthDateBtn.addEventListener('click', () => {
             const dateValue = birthDateInput.value;
-            birthDateError.textContent = '';
+            birthDateError.textContent = ''; // Clear previous error
 
             if (dateValue) {
-                const potentialBirthDate = new Date(dateValue + 'T00:00:00'); // Add time to avoid timezone issues
+                // Attempt to parse the date, adding T00:00:00 to avoid timezone interpretation issues
+                const potentialBirthDate = new Date(dateValue + 'T00:00:00');
+                // Validate the date
                 if (!isNaN(potentialBirthDate.getTime()) && potentialBirthDate <= new Date()) {
-                    birthDate = potentialBirthDate;
-                    localStorage.setItem('birthDate', dateValue);
-                    updateUserInfo();
-                    showBirthDateDisplay();
+                    birthDate = potentialBirthDate; // Update state
+                    localStorage.setItem('birthDate', dateValue); // Save valid date string
+                    updateUserInfo(); // Update calculations and UI
+                    showBirthDateDisplay(); // Switch back to display mode
                 } else if (potentialBirthDate > new Date()) {
                     birthDateError.textContent = 'Birth date cannot be in the future.';
-                } else {
+                } else { // Invalid date format or value
                     console.error("Invalid date selected:", dateValue);
                     birthDateError.textContent = 'Please select a valid date.';
                 }
-            } else {
-                birthDate = null;
-                localStorage.removeItem('birthDate');
-                updateUserInfo();
-                showBirthDateDisplay();
+            } else { // Input was cleared
+                birthDate = null; // Clear state
+                localStorage.removeItem('birthDate'); // Remove from storage
+                updateUserInfo(); // Update calculations and UI
+                showBirthDateDisplay(); // Switch back to display mode
             }
         });
+
         cancelBirthDateBtn.addEventListener('click', showBirthDateDisplay);
 
-        if (saveNotesBtn) {
-            saveNotesBtn.addEventListener('click', saveNotes);
-        } else {
-            console.error("saveNotesBtn DOM element not found");
-        }
-
+        // Theme switcher button listeners
         themeButtons.forEach(button => {
             button.addEventListener('click', () => {
                 applyTheme(button.dataset.theme);
@@ -1921,65 +1850,56 @@
         // Settings Modal Listeners
         if (settingsIconBtn) settingsIconBtn.addEventListener('click', openSettingsModal);
         if (closeSettingsModalBtn) closeSettingsModalBtn.addEventListener('click', closeSettingsModal);
-        if (modalOverlay) modalOverlay.addEventListener('click', closeSettingsModal);
+        if (modalOverlay) modalOverlay.addEventListener('click', closeSettingsModal); // Close on overlay click
         if (saveSettingsBtn) saveSettingsBtn.addEventListener('click', saveSettings);
 
-        /**
-         * Initializes the Quill Editor
-         */
-        function initializeQuillEditor() {
-             const toolbarOptions = [
-                [{ 'header': [1, 2, 3, false] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'indent': '-1'}, { 'indent': '+1' }],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'align': [] }],
-                ['link', 'image', 'blockquote', 'code-block'],
-                ['clean']
-            ];
-
-             quillEditor = new Quill('#notesEditorContainer', {
-                modules: { toolbar: toolbarOptions },
-                theme: 'snow',
-                placeholder: 'Add your notes, reflections, and memories for this year...'
-            });
-        }
+        // Close modal on Escape key press
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !settingsModal.classList.contains('hidden')) {
+                closeSettingsModal();
+            }
+        });
 
 
         // --- Initialization ---
         function initialize() {
-            // 1. Load Settings
+            // 1. Load Settings first as they might affect calculations
             loadSettings();
 
             // 2. Load saved birth date or use default
             const savedBirthDate = localStorage.getItem('birthDate');
             const initialDateValue = savedBirthDate || DEFAULT_BIRTH_DATE;
-            birthDate = new Date(initialDateValue + 'T00:00:00');
+            const potentialInitialDate = new Date(initialDateValue + 'T00:00:00');
 
-            if (isNaN(birthDate.getTime())) {
+            // Validate the loaded/default date before setting it
+            if (!isNaN(potentialInitialDate.getTime())) {
+                 birthDate = potentialInitialDate;
+                 // If using default, save it back
+                 if (!savedBirthDate) {
+                     try {
+                         localStorage.setItem('birthDate', initialDateValue);
+                     } catch(e) { console.error("Could not save default birth date:", e); }
+                 }
+            } else {
                 console.error("Invalid initial date found/used:", initialDateValue);
-                birthDate = null;
-                localStorage.removeItem('birthDate');
-            } else if (!savedBirthDate) {
-                localStorage.setItem('birthDate', initialDateValue);
+                birthDate = null; // Start without a valid date
+                localStorage.removeItem('birthDate'); // Remove invalid stored date
             }
 
-            // 3. Initialize Quill Editor
-            initializeQuillEditor();
 
-            // 4. Load Theme
+            // 3. Load Theme preference
             loadThemePreference();
 
-            // 5. Update UI based on loaded data
-            showBirthDateDisplay();
-            updateUserInfo(); // Calculate age, render grids etc.
+            // 4. Update UI based on loaded data (birth date, settings)
+            showBirthDateDisplay(); // Show correct state of birth date tile
+            updateUserInfo(); // Calculate age, render grids etc. (this calls updateTimers initially)
 
-            // 6. Start Timers
-            updateTimers(); // Initial call (renders initial unit grids)
-            setInterval(updateTimers, 1000); // Update every second
+            // 5. Start the main timer interval
+            if (timerIntervalId) clearInterval(timerIntervalId); // Clear any existing interval
+            timerIntervalId = setInterval(updateTimers, MS_PER_SECOND); // Update every second
         }
 
+        // Run initialization when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', initialize);
 
     </script>
