@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Grid - Visualize Your Time (Stacked)</title>
+    <title>Life Grid - Visualize Your Time</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1368,7 +1368,7 @@
              // Update Awake Slots label and tooltip
              const awakeStartAMPM = formatHourAMPM(awakeStartHour);
              const awakeEndAMPM = formatHourAMPM(awakeEndHour);
-             if (awakeSlotsGridLabel) awakeSlotsGridLabel.textContent = `Awake Time Slots (${awakeStartAMPM} - ${awakeEndAMPM})`;
+             if (awakeSlotsGridLabel) awakeSlotsGridLabel.textContent = `Active Hours (${awakeStartAMPM} - ${awakeEndAMPM})`;
              if (awakeSlotsGridWrapper) awakeSlotsGridWrapper.title = `Visual representation of 30-minute slots from ${awakeStartAMPM} to ${awakeEndAMPM}. Past slots are dim, current slot is highlighted, future slots use a gradient.`;
 
              // NEW: Update Day Slots Grid Tooltip
