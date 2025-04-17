@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Grid - Visualize Your Time</title>
+    <title>Life Grid - Visualize Your Time (Stacked)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,7 +93,7 @@
             --unit-current-bg: var(--tile-current-bg);
             --unit-current-border: var(--tile-current-border);
         }
-
+            
         body.dark-mode {
             /* --- Dark Theme Variables --- */
             --bg-color: #111827; --text-color: #d1d5db; --text-muted-color: #9ca3af; --heading-color: #f9fafb; --link-color: #60a5fa; --link-hover-color: #93c5fd; --tile-bg: #1f2937; --tile-border: #374151; --tile-shadow: rgba(0,0,0,0.2); --tile-hover-shadow: rgba(0,0,0,0.3); --tile-label-color: #9ca3af; --tile-value-color: #60a5fa; --tile-past-bg: #4b5563; --tile-past-text: #f3f4f6; --tile-past-border: #374151; --tile-current-bg: #2563eb; --tile-current-text: #ffffff; --tile-current-border: #1d4ed8; --tile-upcoming-bg: #451a03; --tile-upcoming-text: #fef3c7; --tile-upcoming-border: #78350f; --tile-future-bg: #1e3a8a; --tile-future-text: #dbeafe; --tile-future-border: #1e40af;
@@ -237,7 +237,172 @@
             --unit-current-bg: var(--tile-current-bg);
             --unit-current-border: var(--tile-current-border);
         }
+        /* --- ADD THESE 7 THEME BLOCKS BELOW --- */
 
+/* --- Dark Variant 1: Dark Ocean --- */
+body.dark-ocean-mode {
+    /* --- !!! REPLACE ALL COLORS BELOW FOR THIS THEME !!! --- */
+    --bg-color: #0b132b; --text-color: #d1d5db; --text-muted-color: #9ca3af; --heading-color: #6fffe9; --link-color: #60a5fa; --link-hover-color: #93c5fd; --tile-bg: #1c2541; --tile-border: #3a506b; --tile-shadow: rgba(0,0,0,0.2); --tile-hover-shadow: rgba(0,0,0,0.3); --tile-label-color: #9ca3af; --tile-value-color: #6fffe9; --tile-past-bg: #4b5563; --tile-past-text: #f3f4f6; --tile-past-border: #374151; --tile-current-bg: #2563eb; --tile-current-text: #ffffff; --tile-current-border: #1d4ed8; --tile-upcoming-bg: #451a03; --tile-upcoming-text: #fef3c7; --tile-upcoming-border: #78350f; --tile-future-bg: #1e3a8a; --tile-future-text: #dbeafe; --tile-future-border: #1e40af;
+    --progress-text-prime: #fca5a5;
+    --contrib-square-bg: #374151; --contrib-square-border: #4b5563; --contrib-current-border: #60a5fa; --progress-text-lifespan: #a5b4fc; --button-bg: #3b82f6; --button-text: #ffffff; --button-hover-bg: #60a5fa; --button-cancel-bg: #374151; --button-cancel-text: #d1d5db; --button-cancel-hover-bg: #4b5563; --input-border: #4b5563; --input-focus-ring: #60a5fa; --input-text: #f3f4f6; --input-bg: #1f2937; --icon-color: #60a5fa; --section-bg: #1f2937; --section-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2); --theme-button-bg: #374151; --theme-button-icon-color: #d1d5db; --theme-button-hover-bg: #4b5563; --theme-button-active-bg: #6b7280; --theme-button-active-icon-color: #ffffff; --theme-button-active-outline: #818cf8; --icon-tick-color: #34d399; --icon-cross-color: #f87171; --modal-bg: #1f2937; --modal-overlay-bg: rgba(0, 0, 0, 0.7); --modal-border: #374151; --modal-close-icon-color: #9ca3af; --modal-close-icon-hover-bg: #374151; --settings-icon-color: #9ca3af; --settings-icon-hover-bg: #374151;
+    /* --- GRADIENTS (Replace with theme-specific colors) --- */
+    --contrib-lifespan-fill-1: #0c4a6e; --contrib-lifespan-fill-2: #075985; --contrib-lifespan-fill-3: #0369a1; --contrib-lifespan-fill-4: #0284c7; --contrib-lifespan-fill-5: #1e3a8a; --contrib-lifespan-fill-6: #1e40af; --contrib-lifespan-fill-7: #1d4ed8; --contrib-lifespan-fill-8: #312e81; --contrib-lifespan-fill-9: #3730a3; --contrib-lifespan-fill-10: #4338ca; --contrib-lifespan-fill-11: #5b21b6; --contrib-lifespan-fill-12: #6d28d9; --contrib-lifespan-fill-13: #7c3aed; --contrib-lifespan-fill-14: #a21caf; --contrib-lifespan-fill-15: #be185d; --contrib-lifespan-fill-16: #db2777; --contrib-lifespan-fill-17: #be123c; --contrib-lifespan-fill-18: #e11d48; --contrib-lifespan-fill-19: #f43f5e; --contrib-lifespan-fill-20: #fb7185;
+    --contrib-prime-fill-1: #713f12; --contrib-prime-fill-2: #854d0e; --contrib-prime-fill-3: #a16207; --contrib-prime-fill-4: #ca8a04; --contrib-prime-fill-5: #eab308; --contrib-prime-fill-6: #7c2d12; --contrib-prime-fill-7: #9a3412; --contrib-prime-fill-8: #b45309; --contrib-prime-fill-9: #d97706; --contrib-prime-fill-10: #ea580c; --contrib-prime-fill-11: #991b1b; --contrib-prime-fill-12: #b91c1c; --contrib-prime-fill-13: #dc2626; --contrib-prime-fill-14: #ef4444; --contrib-prime-fill-15: #f87171; --contrib-prime-fill-16: #fca5a5; --contrib-prime-fill-17: #fecaca; --contrib-prime-fill-18: #fee2e2; --contrib-prime-fill-19: #ffedd5; --contrib-prime-fill-20: #fef3c7;
+    --unit-week-fill-1: #0c4a6e; --unit-week-fill-2: #075985; --unit-week-fill-3: #0369a1; --unit-week-fill-4: #0284c7; --unit-week-fill-5: #0ea5e9; --unit-week-fill-6: #38bdf8; --unit-week-fill-7: #7dd3fc; --unit-week-fill-8: #bae6fd; --unit-week-fill-9: #e0f2fe; --unit-week-fill-10: #f0f9ff; --unit-week-fill-11: #f0f9ff; --unit-week-fill-12: #f0f9ff; --unit-week-fill-13: #f0f9ff; --unit-week-fill-14: #f0f9ff; --unit-week-fill-15: #f0f9ff;
+    --unit-month-fill-1: #134e4a; --unit-month-fill-2: #115e59; --unit-month-fill-3: #0f766e; --unit-month-fill-4: #0d9488; --unit-month-fill-5: #14b8a6; --unit-month-fill-6: #2dd4bf; --unit-month-fill-7: #5eead4; --unit-month-fill-8: #99f6e4; --unit-month-fill-9: #ccfbf1; --unit-month-fill-10: #f0fdfa; --unit-month-fill-11: #f0fdfa; --unit-month-fill-12: #f0fdfa; --unit-month-fill-13: #f0fdfa; --unit-month-fill-14: #f0fdfa; --unit-month-fill-15: #f0fdfa;
+    --unit-hour-fill-1: #78350f; --unit-hour-fill-2: #92400e; --unit-hour-fill-3: #a16207; --unit-hour-fill-4: #b45309; --unit-hour-fill-5: #ca8a04; --unit-hour-fill-6: #d97706; --unit-hour-fill-7: #eab308; --unit-hour-fill-8: #f59e0b; --unit-hour-fill-9: #facc15; --unit-hour-fill-10: #fbbf24; --unit-hour-fill-11: #fcd34d; --unit-hour-fill-12: #fde68a; --unit-hour-fill-13: #fef3c7; --unit-hour-fill-14: #fef9c3; --unit-hour-fill-15: #fffbeb;
+    --unit-primeYear-fill-1: #312e81; --unit-primeYear-fill-2: #3730a3; --unit-primeYear-fill-3: #4338ca; --unit-primeYear-fill-4: #4f46e5; --unit-primeYear-fill-5: #6366f1; --unit-primeYear-fill-6: #818cf8; --unit-primeYear-fill-7: #a5b4fc; --unit-primeYear-fill-8: #c7d2fe; --unit-primeYear-fill-9: #e0e7ff; --unit-primeYear-fill-10: #eef2ff; --unit-primeYear-fill-11: #eef2ff; --unit-primeYear-fill-12: #eef2ff; --unit-primeYear-fill-13: #eef2ff; --unit-primeYear-fill-14: #eef2ff; --unit-primeYear-fill-15: #eef2ff;
+    --unit-awakeSlot-fill-1: #064e3b; --unit-awakeSlot-fill-2: #065f46; --unit-awakeSlot-fill-3: #047857; --unit-awakeSlot-fill-4: #059669; --unit-awakeSlot-fill-5: #10b981; --unit-awakeSlot-fill-6: #34d399; --unit-awakeSlot-fill-7: #6ee7b7; --unit-awakeSlot-fill-8: #a7f3d0; --unit-awakeSlot-fill-9: #d1fae5; --unit-awakeSlot-fill-10: #ecfdf5; --unit-awakeSlot-fill-11: #ecfdf5; --unit-awakeSlot-fill-12: #ecfdf5; --unit-awakeSlot-fill-13: #ecfdf5; --unit-awakeSlot-fill-14: #ecfdf5; --unit-awakeSlot-fill-15: #ecfdf5;
+    --unit-daySlot-fill-1: #3730a3; --unit-daySlot-fill-2: #4338ca; --unit-daySlot-fill-3: #4f46e5; --unit-daySlot-fill-4: #6366f1; --unit-daySlot-fill-5: #818cf8; --unit-daySlot-fill-6: #a5b4fc; --unit-daySlot-fill-7: #c7d2fe; --unit-daySlot-fill-8: #e0e7ff; --unit-daySlot-fill-9: #eef2ff; --unit-daySlot-fill-10: #eef2ff; --unit-daySlot-fill-11: #eef2ff; --unit-daySlot-fill-12: #eef2ff; --unit-daySlot-fill-13: #eef2ff; --unit-daySlot-fill-14: #eef2ff; --unit-daySlot-fill-15: #eef2ff;
+    --unit-current-bg: var(--tile-current-bg);
+    --unit-current-border: var(--tile-current-border);
+    --dot-color: rgba(255, 255, 255, 0.04); /* Optional: Adjust dot color */
+}
+
+/* --- Dark Variant 2: Dark Forest --- */
+body.dark-forest-mode {
+    /* --- !!! REPLACE ALL COLORS BELOW FOR THIS THEME !!! --- */
+    --bg-color: #1a2e05; --text-color: #d1d5db; --text-muted-color: #9ca3af; --heading-color: #bef264; --link-color: #60a5fa; --link-hover-color: #93c5fd; --tile-bg: #365314; --tile-border: #4d7c0f; --tile-shadow: rgba(0,0,0,0.2); --tile-hover-shadow: rgba(0,0,0,0.3); --tile-label-color: #9ca3af; --tile-value-color: #bef264; --tile-past-bg: #4b5563; --tile-past-text: #f3f4f6; --tile-past-border: #374151; --tile-current-bg: #22c55e; --tile-current-text: #ffffff; --tile-current-border: #16a34a; --tile-upcoming-bg: #451a03; --tile-upcoming-text: #fef3c7; --tile-upcoming-border: #78350f; --tile-future-bg: #1e3a8a; --tile-future-text: #dbeafe; --tile-future-border: #1e40af;
+    --progress-text-prime: #fca5a5;
+    --contrib-square-bg: #374151; --contrib-square-border: #4b5563; --contrib-current-border: #60a5fa; --progress-text-lifespan: #a5b4fc; --button-bg: #3b82f6; --button-text: #ffffff; --button-hover-bg: #60a5fa; --button-cancel-bg: #374151; --button-cancel-text: #d1d5db; --button-cancel-hover-bg: #4b5563; --input-border: #4b5563; --input-focus-ring: #60a5fa; --input-text: #f3f4f6; --input-bg: #1f2937; --icon-color: #60a5fa; --section-bg: #1f2937; --section-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2); --theme-button-bg: #374151; --theme-button-icon-color: #d1d5db; --theme-button-hover-bg: #4b5563; --theme-button-active-bg: #6b7280; --theme-button-active-icon-color: #ffffff; --theme-button-active-outline: #818cf8; --icon-tick-color: #34d399; --icon-cross-color: #f87171; --modal-bg: #1f2937; --modal-overlay-bg: rgba(0, 0, 0, 0.7); --modal-border: #374151; --modal-close-icon-color: #9ca3af; --modal-close-icon-hover-bg: #374151; --settings-icon-color: #9ca3af; --settings-icon-hover-bg: #374151;
+    /* --- GRADIENTS (Replace with theme-specific colors) --- */
+    --contrib-lifespan-fill-1: #0c4a6e; --contrib-lifespan-fill-2: #075985; --contrib-lifespan-fill-3: #0369a1; --contrib-lifespan-fill-4: #0284c7; --contrib-lifespan-fill-5: #1e3a8a; --contrib-lifespan-fill-6: #1e40af; --contrib-lifespan-fill-7: #1d4ed8; --contrib-lifespan-fill-8: #312e81; --contrib-lifespan-fill-9: #3730a3; --contrib-lifespan-fill-10: #4338ca; --contrib-lifespan-fill-11: #5b21b6; --contrib-lifespan-fill-12: #6d28d9; --contrib-lifespan-fill-13: #7c3aed; --contrib-lifespan-fill-14: #a21caf; --contrib-lifespan-fill-15: #be185d; --contrib-lifespan-fill-16: #db2777; --contrib-lifespan-fill-17: #be123c; --contrib-lifespan-fill-18: #e11d48; --contrib-lifespan-fill-19: #f43f5e; --contrib-lifespan-fill-20: #fb7185;
+    --contrib-prime-fill-1: #713f12; --contrib-prime-fill-2: #854d0e; --contrib-prime-fill-3: #a16207; --contrib-prime-fill-4: #ca8a04; --contrib-prime-fill-5: #eab308; --contrib-prime-fill-6: #7c2d12; --contrib-prime-fill-7: #9a3412; --contrib-prime-fill-8: #b45309; --contrib-prime-fill-9: #d97706; --contrib-prime-fill-10: #ea580c; --contrib-prime-fill-11: #991b1b; --contrib-prime-fill-12: #b91c1c; --contrib-prime-fill-13: #dc2626; --contrib-prime-fill-14: #ef4444; --contrib-prime-fill-15: #f87171; --contrib-prime-fill-16: #fca5a5; --contrib-prime-fill-17: #fecaca; --contrib-prime-fill-18: #fee2e2; --contrib-prime-fill-19: #ffedd5; --contrib-prime-fill-20: #fef3c7;
+    --unit-week-fill-1: #0c4a6e; --unit-week-fill-2: #075985; --unit-week-fill-3: #0369a1; --unit-week-fill-4: #0284c7; --unit-week-fill-5: #0ea5e9; --unit-week-fill-6: #38bdf8; --unit-week-fill-7: #7dd3fc; --unit-week-fill-8: #bae6fd; --unit-week-fill-9: #e0f2fe; --unit-week-fill-10: #f0f9ff; --unit-week-fill-11: #f0f9ff; --unit-week-fill-12: #f0f9ff; --unit-week-fill-13: #f0f9ff; --unit-week-fill-14: #f0f9ff; --unit-week-fill-15: #f0f9ff;
+    --unit-month-fill-1: #134e4a; --unit-month-fill-2: #115e59; --unit-month-fill-3: #0f766e; --unit-month-fill-4: #0d9488; --unit-month-fill-5: #14b8a6; --unit-month-fill-6: #2dd4bf; --unit-month-fill-7: #5eead4; --unit-month-fill-8: #99f6e4; --unit-month-fill-9: #ccfbf1; --unit-month-fill-10: #f0fdfa; --unit-month-fill-11: #f0fdfa; --unit-month-fill-12: #f0fdfa; --unit-month-fill-13: #f0fdfa; --unit-month-fill-14: #f0fdfa; --unit-month-fill-15: #f0fdfa;
+    --unit-hour-fill-1: #78350f; --unit-hour-fill-2: #92400e; --unit-hour-fill-3: #a16207; --unit-hour-fill-4: #b45309; --unit-hour-fill-5: #ca8a04; --unit-hour-fill-6: #d97706; --unit-hour-fill-7: #eab308; --unit-hour-fill-8: #f59e0b; --unit-hour-fill-9: #facc15; --unit-hour-fill-10: #fbbf24; --unit-hour-fill-11: #fcd34d; --unit-hour-fill-12: #fde68a; --unit-hour-fill-13: #fef3c7; --unit-hour-fill-14: #fef9c3; --unit-hour-fill-15: #fffbeb;
+    --unit-primeYear-fill-1: #312e81; --unit-primeYear-fill-2: #3730a3; --unit-primeYear-fill-3: #4338ca; --unit-primeYear-fill-4: #4f46e5; --unit-primeYear-fill-5: #6366f1; --unit-primeYear-fill-6: #818cf8; --unit-primeYear-fill-7: #a5b4fc; --unit-primeYear-fill-8: #c7d2fe; --unit-primeYear-fill-9: #e0e7ff; --unit-primeYear-fill-10: #eef2ff; --unit-primeYear-fill-11: #eef2ff; --unit-primeYear-fill-12: #eef2ff; --unit-primeYear-fill-13: #eef2ff; --unit-primeYear-fill-14: #eef2ff; --unit-primeYear-fill-15: #eef2ff;
+    --unit-awakeSlot-fill-1: #064e3b; --unit-awakeSlot-fill-2: #065f46; --unit-awakeSlot-fill-3: #047857; --unit-awakeSlot-fill-4: #059669; --unit-awakeSlot-fill-5: #10b981; --unit-awakeSlot-fill-6: #34d399; --unit-awakeSlot-fill-7: #6ee7b7; --unit-awakeSlot-fill-8: #a7f3d0; --unit-awakeSlot-fill-9: #d1fae5; --unit-awakeSlot-fill-10: #ecfdf5; --unit-awakeSlot-fill-11: #ecfdf5; --unit-awakeSlot-fill-12: #ecfdf5; --unit-awakeSlot-fill-13: #ecfdf5; --unit-awakeSlot-fill-14: #ecfdf5; --unit-awakeSlot-fill-15: #ecfdf5;
+    --unit-daySlot-fill-1: #3730a3; --unit-daySlot-fill-2: #4338ca; --unit-daySlot-fill-3: #4f46e5; --unit-daySlot-fill-4: #6366f1; --unit-daySlot-fill-5: #818cf8; --unit-daySlot-fill-6: #a5b4fc; --unit-daySlot-fill-7: #c7d2fe; --unit-daySlot-fill-8: #e0e7ff; --unit-daySlot-fill-9: #eef2ff; --unit-daySlot-fill-10: #eef2ff; --unit-daySlot-fill-11: #eef2ff; --unit-daySlot-fill-12: #eef2ff; --unit-daySlot-fill-13: #eef2ff; --unit-daySlot-fill-14: #eef2ff; --unit-daySlot-fill-15: #eef2ff;
+    --unit-current-bg: var(--tile-current-bg);
+    --unit-current-border: var(--tile-current-border);
+    --dot-color: rgba(255, 255, 255, 0.04); /* Optional: Adjust dot color */
+}
+
+/* --- Kids Variant 1: Kids Rainbow --- */
+body.kids-rainbow-mode {
+    /* --- !!! REPLACE ALL COLORS BELOW FOR THIS THEME !!! --- */
+    /* Example colors provided previously, adjust as needed */
+    --bg-color: #f0f9ff; --text-color: #374151; --text-muted-color: #6b7280; --heading-color: #ec4899; --link-color: #8b5cf6; --link-hover-color: #7c3aed; --tile-bg: #ffffff; --tile-border: #fde047; --tile-shadow: rgba(0,0,0,0.05); --tile-hover-shadow: rgba(0,0,0,0.1); --tile-label-color: #64748b; --tile-value-color: #8b5cf6; --tile-past-bg: #fda4af; --tile-past-text: #881337; --tile-past-border: #fb7185; --tile-current-bg: #fde047; --tile-current-text: #854d0e; --tile-current-border: #facc15; --tile-upcoming-bg: #a7f3d0; --tile-upcoming-text: #065f46; --tile-upcoming-border: #6ee7b7; --tile-future-bg: #c4b5fd; --tile-future-text: #4c1d95; --tile-future-border: #a78bfa;
+    --progress-text-prime: #ef4444;
+    --contrib-square-bg: #e0f2fe; --contrib-square-border: #bae6fd; --contrib-current-border: #fde047; --progress-text-lifespan: #d946ef; --button-bg: #34d399; --button-text: #064e3b; --button-hover-bg: #6ee7b7; --button-cancel-bg: #fda4af; --button-cancel-text: #881337; --button-cancel-hover-bg: #fb7185; --input-border: #a5b4fc; --input-focus-ring: #818cf8; --input-text: #312e81; --input-bg: #ffffff; --icon-color: #6d28d9; --section-bg: #ffffff; --section-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); --theme-button-bg: #fde047; --theme-button-icon-color: #854d0e; --theme-button-hover-bg: #facc15; --theme-button-active-bg: #fb923c; --theme-button-active-icon-color: #ffffff; --theme-button-active-outline: #16a34a; --icon-tick-color: #059669; --icon-cross-color: #e11d48; --modal-bg: #ecfdf5; --modal-overlay-bg: rgba(6, 78, 59, 0.6); --modal-border: #6ee7b7; --modal-close-icon-color: #065f46; --modal-close-icon-hover-bg: #a7f3d0; --settings-icon-color: #0e7490; --settings-icon-hover-bg: #a5f3fc;
+    /* --- GRADIENTS (Use bright rainbow colors) --- */
+    --contrib-lifespan-fill-1: #fecaca; --contrib-lifespan-fill-2: #fed7aa; --contrib-lifespan-fill-3: #fef08a; --contrib-lifespan-fill-4: #d9f99d; --contrib-lifespan-fill-5: #a7f3d0; --contrib-lifespan-fill-6: #a5f3fc; --contrib-lifespan-fill-7: #bae6fd; --contrib-lifespan-fill-8: #c7d2fe; --contrib-lifespan-fill-9: #ddd6fe; --contrib-lifespan-fill-10: #e9d5ff; --contrib-lifespan-fill-11: #f5d0fe; --contrib-lifespan-fill-12: #fbcfe8; --contrib-lifespan-fill-13: #fecaca; --contrib-lifespan-fill-14: #fed7aa; --contrib-lifespan-fill-15: #fef08a; --contrib-lifespan-fill-16: #d9f99d; --contrib-lifespan-fill-17: #a7f3d0; --contrib-lifespan-fill-18: #a5f3fc; --contrib-lifespan-fill-19: #bae6fd; --contrib-lifespan-fill-20: #c7d2fe;
+    --contrib-prime-fill-1: #ef4444; --contrib-prime-fill-2: #f97316; --contrib-prime-fill-3: #f59e0b; --contrib-prime-fill-4: #eab308; --contrib-prime-fill-5: #84cc16; --contrib-prime-fill-6: #22c55e; --contrib-prime-fill-7: #10b981; --contrib-prime-fill-8: #06b6d4; --contrib-prime-fill-9: #0ea5e9; --contrib-prime-fill-10: #3b82f6; --contrib-prime-fill-11: #6366f1; --contrib-prime-fill-12: #8b5cf6; --contrib-prime-fill-13: #a855f7; --contrib-prime-fill-14: #d946ef; --contrib-prime-fill-15: #ec4899; --contrib-prime-fill-16: #f43f5e; --contrib-prime-fill-17: #ef4444; --contrib-prime-fill-18: #f97316; --contrib-prime-fill-19: #f59e0b; --contrib-prime-fill-20: #eab308;
+    --unit-week-fill-1: #f7fee7; --unit-week-fill-2: #ecfccb; --unit-week-fill-3: #d9f99d; --unit-week-fill-4: #bef264; --unit-week-fill-5: #a3e635; --unit-week-fill-6: #84cc16; --unit-week-fill-7: #65a30d; --unit-week-fill-8: #4d7c0f; --unit-week-fill-9: #3f6212; --unit-week-fill-10: #365314; --unit-week-fill-11: #1a2e05; --unit-week-fill-12: #1a2e05; --unit-week-fill-13: #1a2e05; --unit-week-fill-14: #1a2e05; --unit-week-fill-15: #1a2e05;
+    --unit-month-fill-1: #ecfdf5; --unit-month-fill-2: #d1fae5; --unit-month-fill-3: #a7f3d0; --unit-month-fill-4: #6ee7b7; --unit-month-fill-5: #34d399; --unit-month-fill-6: #10b981; --unit-month-fill-7: #059669; --unit-month-fill-8: #047857; --unit-month-fill-9: #065f46; --unit-month-fill-10: #064e3b; --unit-month-fill-11: #022c22; --unit-month-fill-12: #022c22; --unit-month-fill-13: #022c22; --unit-month-fill-14: #022c22; --unit-month-fill-15: #022c22;
+    --unit-hour-fill-1: #fdf2f8; --unit-hour-fill-2: #fce7f3; --unit-hour-fill-3: #fbcfe8; --unit-hour-fill-4: #f9a8d4; --unit-hour-fill-5: #f472b6; --unit-hour-fill-6: #ec4899; --unit-hour-fill-7: #db2777; --unit-hour-fill-8: #be185d; --unit-hour-fill-9: #9d174d; --unit-hour-fill-10: #831843; --unit-hour-fill-11: #500724; --unit-hour-fill-12: #500724; --unit-hour-fill-13: #500724; --unit-hour-fill-14: #500724; --unit-hour-fill-15: #500724;
+    --unit-primeYear-fill-1: #f5f3ff; --unit-primeYear-fill-2: #ede9fe; --unit-primeYear-fill-3: #ddd6fe; --unit-primeYear-fill-4: #c4b5fd; --unit-primeYear-fill-5: #a78bfa; --unit-primeYear-fill-6: #8b5cf6; --unit-primeYear-fill-7: #7c3aed; --unit-primeYear-fill-8: #6d28d9; --unit-primeYear-fill-9: #5b21b6; --unit-primeYear-fill-10: #4c1d95; --unit-primeYear-fill-11: #2e1065; --unit-primeYear-fill-12: #2e1065; --unit-primeYear-fill-13: #2e1065; --unit-primeYear-fill-14: #2e1065; --unit-primeYear-fill-15: #2e1065;
+    --unit-awakeSlot-fill-1: #eff6ff; --unit-awakeSlot-fill-2: #dbeafe; --unit-awakeSlot-fill-3: #bfdbfe; --unit-awakeSlot-fill-4: #93c5fd; --unit-awakeSlot-fill-5: #60a5fa; --unit-awakeSlot-fill-6: #3b82f6; --unit-awakeSlot-fill-7: #2563eb; --unit-awakeSlot-fill-8: #1d4ed8; --unit-awakeSlot-fill-9: #1e40af; --unit-awakeSlot-fill-10: #1e3a8a; --unit-awakeSlot-fill-11: #172554; --unit-awakeSlot-fill-12: #172554; --unit-awakeSlot-fill-13: #172554; --unit-awakeSlot-fill-14: #172554; --unit-awakeSlot-fill-15: #172554;
+    --unit-daySlot-fill-1: #f0fdfa; --unit-daySlot-fill-2: #ccfbf1; --unit-daySlot-fill-3: #99f6e4; --unit-daySlot-fill-4: #5eead4; --unit-daySlot-fill-5: #2dd4bf; --unit-daySlot-fill-6: #14b8a6; --unit-daySlot-fill-7: #0d9488; --unit-daySlot-fill-8: #0f766e; --unit-daySlot-fill-9: #115e59; --unit-daySlot-fill-10: #134e4a; --unit-daySlot-fill-11: #042f2e; --unit-daySlot-fill-12: #042f2e; --unit-daySlot-fill-13: #042f2e; --unit-daySlot-fill-14: #042f2e; --unit-daySlot-fill-15: #042f2e;
+    --unit-current-bg: var(--tile-current-bg);
+    --unit-current-border: var(--tile-current-border);
+    --dot-color: rgba(6, 182, 212, 0.1); /* Optional: Adjust dot color */
+    font-family: 'Fredoka One', cursive; /* Apply fun font */
+}
+/* Reset font for specific elements in kids mode */
+body.kids-rainbow-mode .contrib-grid-label,
+body.kids-rainbow-mode .progress-percent-text,
+body.kids-rainbow-mode input,
+body.kids-rainbow-mode label,
+body.kids-rainbow-mode p,
+body.kids-rainbow-mode .birthdate-status,
+body.kids-rainbow-mode #slotCountdown,
+body.kids-rainbow-mode .tile .label {
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- Kids Variant 2: Kids Space --- */
+body.kids-space-mode {
+    /* --- !!! REPLACE ALL COLORS BELOW FOR THIS THEME !!! --- */
+    --bg-color: #0f172a; --text-color: #e2e8f0; --text-muted-color: #94a3b8; --heading-color: #fef08a; --link-color: #7dd3fc; --link-hover-color: #e0f2fe; --tile-bg: #1e293b; --tile-border: #475569; --tile-shadow: rgba(0,0,0,0.2); --tile-hover-shadow: rgba(0,0,0,0.3); --tile-label-color: #94a3b8; --tile-value-color: #fef08a; --tile-past-bg: #4b5563; --tile-past-text: #f3f4f6; --tile-past-border: #374151; --tile-current-bg: #7c3aed; --tile-current-text: #ffffff; --tile-current-border: #6d28d9; --tile-upcoming-bg: #451a03; --tile-upcoming-text: #fef3c7; --tile-upcoming-border: #78350f; --tile-future-bg: #1e3a8a; --tile-future-text: #dbeafe; --tile-future-border: #1e40af;
+    --progress-text-prime: #fca5a5;
+    --contrib-square-bg: #334155; --contrib-square-border: #475569; --contrib-current-border: #7c3aed; --progress-text-lifespan: #a5b4fc; --button-bg: #3b82f6; --button-text: #ffffff; --button-hover-bg: #60a5fa; --button-cancel-bg: #334155; --button-cancel-text: #e2e8f0; --button-cancel-hover-bg: #475569; --input-border: #475569; --input-focus-ring: #7c3aed; --input-text: #e2e8f0; --input-bg: #1e293b; --icon-color: #7dd3fc; --section-bg: #1e293b; --section-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2); --theme-button-bg: #334155; --theme-button-icon-color: #e2e8f0; --theme-button-hover-bg: #475569; --theme-button-active-bg: #6b7280; --theme-button-active-icon-color: #ffffff; --theme-button-active-outline: #818cf8; --icon-tick-color: #34d399; --icon-cross-color: #f87171; --modal-bg: #1e293b; --modal-overlay-bg: rgba(0, 0, 0, 0.7); --modal-border: #475569; --modal-close-icon-color: #94a3b8; --modal-close-icon-hover-bg: #334155; --settings-icon-color: #94a3b8; --settings-icon-hover-bg: #334155;
+    /* --- GRADIENTS (Replace with theme-specific colors - e.g., deep blues, purples, yellows) --- */
+    --contrib-lifespan-fill-1: #0c4a6e; --contrib-lifespan-fill-2: #075985; --contrib-lifespan-fill-3: #0369a1; --contrib-lifespan-fill-4: #0284c7; --contrib-lifespan-fill-5: #1e3a8a; --contrib-lifespan-fill-6: #1e40af; --contrib-lifespan-fill-7: #1d4ed8; --contrib-lifespan-fill-8: #312e81; --contrib-lifespan-fill-9: #3730a3; --contrib-lifespan-fill-10: #4338ca; --contrib-lifespan-fill-11: #5b21b6; --contrib-lifespan-fill-12: #6d28d9; --contrib-lifespan-fill-13: #7c3aed; --contrib-lifespan-fill-14: #a21caf; --contrib-lifespan-fill-15: #be185d; --contrib-lifespan-fill-16: #db2777; --contrib-lifespan-fill-17: #be123c; --contrib-lifespan-fill-18: #e11d48; --contrib-lifespan-fill-19: #f43f5e; --contrib-lifespan-fill-20: #fb7185;
+    --contrib-prime-fill-1: #713f12; --contrib-prime-fill-2: #854d0e; --contrib-prime-fill-3: #a16207; --contrib-prime-fill-4: #ca8a04; --contrib-prime-fill-5: #eab308; --contrib-prime-fill-6: #7c2d12; --contrib-prime-fill-7: #9a3412; --contrib-prime-fill-8: #b45309; --contrib-prime-fill-9: #d97706; --contrib-prime-fill-10: #ea580c; --contrib-prime-fill-11: #991b1b; --contrib-prime-fill-12: #b91c1c; --contrib-prime-fill-13: #dc2626; --contrib-prime-fill-14: #ef4444; --contrib-prime-fill-15: #f87171; --contrib-prime-fill-16: #fca5a5; --contrib-prime-fill-17: #fecaca; --contrib-prime-fill-18: #fee2e2; --contrib-prime-fill-19: #ffedd5; --contrib-prime-fill-20: #fef3c7;
+    --unit-week-fill-1: #0c4a6e; --unit-week-fill-2: #075985; --unit-week-fill-3: #0369a1; --unit-week-fill-4: #0284c7; --unit-week-fill-5: #0ea5e9; --unit-week-fill-6: #38bdf8; --unit-week-fill-7: #7dd3fc; --unit-week-fill-8: #bae6fd; --unit-week-fill-9: #e0f2fe; --unit-week-fill-10: #f0f9ff; --unit-week-fill-11: #f0f9ff; --unit-week-fill-12: #f0f9ff; --unit-week-fill-13: #f0f9ff; --unit-week-fill-14: #f0f9ff; --unit-week-fill-15: #f0f9ff;
+    --unit-month-fill-1: #134e4a; --unit-month-fill-2: #115e59; --unit-month-fill-3: #0f766e; --unit-month-fill-4: #0d9488; --unit-month-fill-5: #14b8a6; --unit-month-fill-6: #2dd4bf; --unit-month-fill-7: #5eead4; --unit-month-fill-8: #99f6e4; --unit-month-fill-9: #ccfbf1; --unit-month-fill-10: #f0fdfa; --unit-month-fill-11: #f0fdfa; --unit-month-fill-12: #f0fdfa; --unit-month-fill-13: #f0fdfa; --unit-month-fill-14: #f0fdfa; --unit-month-fill-15: #f0fdfa;
+    --unit-hour-fill-1: #78350f; --unit-hour-fill-2: #92400e; --unit-hour-fill-3: #a16207; --unit-hour-fill-4: #b45309; --unit-hour-fill-5: #ca8a04; --unit-hour-fill-6: #d97706; --unit-hour-fill-7: #eab308; --unit-hour-fill-8: #f59e0b; --unit-hour-fill-9: #facc15; --unit-hour-fill-10: #fbbf24; --unit-hour-fill-11: #fcd34d; --unit-hour-fill-12: #fde68a; --unit-hour-fill-13: #fef3c7; --unit-hour-fill-14: #fef9c3; --unit-hour-fill-15: #fffbeb;
+    --unit-primeYear-fill-1: #312e81; --unit-primeYear-fill-2: #3730a3; --unit-primeYear-fill-3: #4338ca; --unit-primeYear-fill-4: #4f46e5; --unit-primeYear-fill-5: #6366f1; --unit-primeYear-fill-6: #818cf8; --unit-primeYear-fill-7: #a5b4fc; --unit-primeYear-fill-8: #c7d2fe; --unit-primeYear-fill-9: #e0e7ff; --unit-primeYear-fill-10: #eef2ff; --unit-primeYear-fill-11: #eef2ff; --unit-primeYear-fill-12: #eef2ff; --unit-primeYear-fill-13: #eef2ff; --unit-primeYear-fill-14: #eef2ff; --unit-primeYear-fill-15: #eef2ff;
+    --unit-awakeSlot-fill-1: #064e3b; --unit-awakeSlot-fill-2: #065f46; --unit-awakeSlot-fill-3: #047857; --unit-awakeSlot-fill-4: #059669; --unit-awakeSlot-fill-5: #10b981; --unit-awakeSlot-fill-6: #34d399; --unit-awakeSlot-fill-7: #6ee7b7; --unit-awakeSlot-fill-8: #a7f3d0; --unit-awakeSlot-fill-9: #d1fae5; --unit-awakeSlot-fill-10: #ecfdf5; --unit-awakeSlot-fill-11: #ecfdf5; --unit-awakeSlot-fill-12: #ecfdf5; --unit-awakeSlot-fill-13: #ecfdf5; --unit-awakeSlot-fill-14: #ecfdf5; --unit-awakeSlot-fill-15: #ecfdf5;
+    --unit-daySlot-fill-1: #3730a3; --unit-daySlot-fill-2: #4338ca; --unit-daySlot-fill-3: #4f46e5; --unit-daySlot-fill-4: #6366f1; --unit-daySlot-fill-5: #818cf8; --unit-daySlot-fill-6: #a5b4fc; --unit-daySlot-fill-7: #c7d2fe; --unit-daySlot-fill-8: #e0e7ff; --unit-daySlot-fill-9: #eef2ff; --unit-daySlot-fill-10: #eef2ff; --unit-daySlot-fill-11: #eef2ff; --unit-daySlot-fill-12: #eef2ff; --unit-daySlot-fill-13: #eef2ff; --unit-daySlot-fill-14: #eef2ff; --unit-daySlot-fill-15: #eef2ff;
+    --unit-current-bg: var(--tile-current-bg);
+    --unit-current-border: var(--tile-current-border);
+    --dot-color: rgba(255, 255, 255, 0.04); /* Optional: Adjust dot color */
+     font-family: 'Fredoka One', cursive; /* Apply fun font */
+}
+ /* Reset font for specific elements in kids mode */
+ body.kids-space-mode .contrib-grid-label,
+ body.kids-space-mode .progress-percent-text,
+ body.kids-space-mode input,
+ body.kids-space-mode label,
+ body.kids-space-mode p,
+ body.kids-space-mode .birthdate-status,
+ body.kids-space-mode #slotCountdown,
+ body.kids-space-mode .tile .label {
+     font-family: 'Inter', sans-serif;
+ }
+
+/* --- Twilight Mode 1: Twilight Dusk --- */
+body.twilight-dusk-mode {
+    /* --- !!! REPLACE ALL COLORS BELOW FOR THIS THEME !!! --- */
+    --bg-color: #2d3748; --text-color: #e2e8f0; --text-muted-color: #a0aec0; --heading-color: #f6ad55; --link-color: #f6ad55; --link-hover-color: #fbd38d; --tile-bg: #4a5568; --tile-border: #718096; --tile-shadow: rgba(0,0,0,0.2); --tile-hover-shadow: rgba(0,0,0,0.3); --tile-label-color: #a0aec0; --tile-value-color: #f6ad55; --tile-past-bg: #4b5563; --tile-past-text: #f3f4f6; --tile-past-border: #374151; --tile-current-bg: #9f7aea; --tile-current-text: #ffffff; --tile-current-border: #805ad5; --tile-upcoming-bg: #451a03; --tile-upcoming-text: #fef3c7; --tile-upcoming-border: #78350f; --tile-future-bg: #1e3a8a; --tile-future-text: #dbeafe; --tile-future-border: #1e40af;
+    --progress-text-prime: #fca5a5;
+    --contrib-square-bg: #718096; --contrib-square-border: #a0aec0; --contrib-current-border: #9f7aea; --progress-text-lifespan: #a5b4fc; --button-bg: #ed8936; --button-text: #ffffff; --button-hover-bg: #f6ad55; --button-cancel-bg: #718096; --button-cancel-text: #e2e8f0; --button-cancel-hover-bg: #a0aec0; --input-border: #718096; --input-focus-ring: #9f7aea; --input-text: #e2e8f0; --input-bg: #4a5568; --icon-color: #f6ad55; --section-bg: #4a5568; --section-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2); --theme-button-bg: #718096; --theme-button-icon-color: #e2e8f0; --theme-button-hover-bg: #a0aec0; --theme-button-active-bg: #6b7280; --theme-button-active-icon-color: #ffffff; --theme-button-active-outline: #818cf8; --icon-tick-color: #34d399; --icon-cross-color: #f87171; --modal-bg: #4a5568; --modal-overlay-bg: rgba(0, 0, 0, 0.7); --modal-border: #718096; --modal-close-icon-color: #a0aec0; --modal-close-icon-hover-bg: #718096; --settings-icon-color: #a0aec0; --settings-icon-hover-bg: #718096;
+    /* --- GRADIENTS (Replace with theme-specific colors - e.g., oranges, purples, deep blues) --- */
+    --contrib-lifespan-fill-1: #4c1d95; --contrib-lifespan-fill-2: #5b21b6; --contrib-lifespan-fill-3: #6d28d9; --contrib-lifespan-fill-4: #7c3aed; --contrib-lifespan-fill-5: #8b5cf6; --contrib-lifespan-fill-6: #a78bfa; --contrib-lifespan-fill-7: #c4b5fd; --contrib-lifespan-fill-8: #ddd6fe; --contrib-lifespan-fill-9: #e9d5ff; --contrib-lifespan-fill-10: #f3e8ff; --contrib-lifespan-fill-11: #fed7aa; --contrib-lifespan-fill-12: #fdbb74; --contrib-lifespan-fill-13: #fb923c; --contrib-lifespan-fill-14: #f97316; --contrib-lifespan-fill-15: #ea580c; --contrib-lifespan-fill-16: #c2410c; --contrib-lifespan-fill-17: #9a3412; --contrib-lifespan-fill-18: #7c2d12; --contrib-lifespan-fill-19: #451a03; --contrib-lifespan-fill-20: #2d3748;
+    --contrib-prime-fill-1: #713f12; --contrib-prime-fill-2: #854d0e; --contrib-prime-fill-3: #a16207; --contrib-prime-fill-4: #ca8a04; --contrib-prime-fill-5: #eab308; --contrib-prime-fill-6: #7c2d12; --contrib-prime-fill-7: #9a3412; --contrib-prime-fill-8: #b45309; --contrib-prime-fill-9: #d97706; --contrib-prime-fill-10: #ea580c; --contrib-prime-fill-11: #991b1b; --contrib-prime-fill-12: #b91c1c; --contrib-prime-fill-13: #dc2626; --contrib-prime-fill-14: #ef4444; --contrib-prime-fill-15: #f87171; --contrib-prime-fill-16: #fca5a5; --contrib-prime-fill-17: #fecaca; --contrib-prime-fill-18: #fee2e2; --contrib-prime-fill-19: #ffedd5; --contrib-prime-fill-20: #fef3c7;
+    --unit-week-fill-1: #0c4a6e; --unit-week-fill-2: #075985; --unit-week-fill-3: #0369a1; --unit-week-fill-4: #0284c7; --unit-week-fill-5: #0ea5e9; --unit-week-fill-6: #38bdf8; --unit-week-fill-7: #7dd3fc; --unit-week-fill-8: #bae6fd; --unit-week-fill-9: #e0f2fe; --unit-week-fill-10: #f0f9ff; --unit-week-fill-11: #f0f9ff; --unit-week-fill-12: #f0f9ff; --unit-week-fill-13: #f0f9ff; --unit-week-fill-14: #f0f9ff; --unit-week-fill-15: #f0f9ff;
+    --unit-month-fill-1: #134e4a; --unit-month-fill-2: #115e59; --unit-month-fill-3: #0f766e; --unit-month-fill-4: #0d9488; --unit-month-fill-5: #14b8a6; --unit-month-fill-6: #2dd4bf; --unit-month-fill-7: #5eead4; --unit-month-fill-8: #99f6e4; --unit-month-fill-9: #ccfbf1; --unit-month-fill-10: #f0fdfa; --unit-month-fill-11: #f0fdfa; --unit-month-fill-12: #f0fdfa; --unit-month-fill-13: #f0fdfa; --unit-month-fill-14: #f0fdfa; --unit-month-fill-15: #f0fdfa;
+    --unit-hour-fill-1: #78350f; --unit-hour-fill-2: #92400e; --unit-hour-fill-3: #a16207; --unit-hour-fill-4: #b45309; --unit-hour-fill-5: #ca8a04; --unit-hour-fill-6: #d97706; --unit-hour-fill-7: #eab308; --unit-hour-fill-8: #f59e0b; --unit-hour-fill-9: #facc15; --unit-hour-fill-10: #fbbf24; --unit-hour-fill-11: #fcd34d; --unit-hour-fill-12: #fde68a; --unit-hour-fill-13: #fef3c7; --unit-hour-fill-14: #fef9c3; --unit-hour-fill-15: #fffbeb;
+    --unit-primeYear-fill-1: #312e81; --unit-primeYear-fill-2: #3730a3; --unit-primeYear-fill-3: #4338ca; --unit-primeYear-fill-4: #4f46e5; --unit-primeYear-fill-5: #6366f1; --unit-primeYear-fill-6: #818cf8; --unit-primeYear-fill-7: #a5b4fc; --unit-primeYear-fill-8: #c7d2fe; --unit-primeYear-fill-9: #e0e7ff; --unit-primeYear-fill-10: #eef2ff; --unit-primeYear-fill-11: #eef2ff; --unit-primeYear-fill-12: #eef2ff; --unit-primeYear-fill-13: #eef2ff; --unit-primeYear-fill-14: #eef2ff; --unit-primeYear-fill-15: #eef2ff;
+    --unit-awakeSlot-fill-1: #064e3b; --unit-awakeSlot-fill-2: #065f46; --unit-awakeSlot-fill-3: #047857; --unit-awakeSlot-fill-4: #059669; --unit-awakeSlot-fill-5: #10b981; --unit-awakeSlot-fill-6: #34d399; --unit-awakeSlot-fill-7: #6ee7b7; --unit-awakeSlot-fill-8: #a7f3d0; --unit-awakeSlot-fill-9: #d1fae5; --unit-awakeSlot-fill-10: #ecfdf5; --unit-awakeSlot-fill-11: #ecfdf5; --unit-awakeSlot-fill-12: #ecfdf5; --unit-awakeSlot-fill-13: #ecfdf5; --unit-awakeSlot-fill-14: #ecfdf5; --unit-awakeSlot-fill-15: #ecfdf5;
+    --unit-daySlot-fill-1: #3730a3; --unit-daySlot-fill-2: #4338ca; --unit-daySlot-fill-3: #4f46e5; --unit-daySlot-fill-4: #6366f1; --unit-daySlot-fill-5: #818cf8; --unit-daySlot-fill-6: #a5b4fc; --unit-daySlot-fill-7: #c7d2fe; --unit-daySlot-fill-8: #e0e7ff; --unit-daySlot-fill-9: #eef2ff; --unit-daySlot-fill-10: #eef2ff; --unit-daySlot-fill-11: #eef2ff; --unit-daySlot-fill-12: #eef2ff; --unit-daySlot-fill-13: #eef2ff; --unit-daySlot-fill-14: #eef2ff; --unit-daySlot-fill-15: #eef2ff;
+    --unit-current-bg: var(--tile-current-bg);
+    --unit-current-border: var(--tile-current-border);
+    --dot-color: rgba(255, 255, 255, 0.04); /* Optional: Adjust dot color */
+}
+
+/* --- Twilight Mode 2: Twilight Dawn --- */
+body.twilight-dawn-mode {
+    /* --- !!! REPLACE ALL COLORS BELOW FOR THIS THEME !!! --- */
+    --bg-color: #fef3c7; --text-color: #422006; --text-muted-color: #7c2d12; --heading-color: #c2410c; --link-color: #f97316; --link-hover-color: #fb923c; --tile-bg: #fffbeb; --tile-border: #fde68a; --tile-shadow: rgba(0,0,0,0.05); --tile-hover-shadow: rgba(0,0,0,0.1); --tile-label-color: #7c2d12; --tile-value-color: #c2410c; --tile-past-bg: #4b5563; --tile-past-text: #ffffff; --tile-past-border: #374151; --tile-current-bg: #f472b6; --tile-current-text: #500724; --tile-current-border: #ec4899; --tile-upcoming-bg: #fef9c3; --tile-upcoming-text: #a16207; --tile-upcoming-border: #fde047; --tile-future-bg: #e0f2fe; --tile-future-text: #075985; --tile-future-border: #bae6fd;
+    --progress-text-prime: #9a3412;
+    --contrib-square-bg: #fde68a; --contrib-square-border: #fcd34d; --contrib-current-border: #f472b6; --progress-text-lifespan: #be185d; --button-bg: #f97316; --button-text: #ffffff; --button-hover-bg: #fb923c; --button-cancel-bg: #fde68a; --button-cancel-text: #7c2d12; --button-cancel-hover-bg: #fcd34d; --input-border: #fde68a; --input-focus-ring: #f472b6; --input-text: #422006; --input-bg: #fffbeb; --icon-color: #f97316; --section-bg: #fffbeb; --section-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); --theme-button-bg: #fde68a; --theme-button-icon-color: #7c2d12; --theme-button-hover-bg: #fcd34d; --theme-button-active-bg: #fbbf24; --theme-button-active-icon-color: #422006; --theme-button-active-outline: #f472b6; --icon-tick-color: #10b981; --icon-cross-color: #ef4444; --modal-bg: #fffbeb; --modal-overlay-bg: rgba(0, 0, 0, 0.5); --modal-border: #fde68a; --modal-close-icon-color: #7c2d12; --modal-close-icon-hover-bg: #fde68a; --settings-icon-color: #7c2d12; --settings-icon-hover-bg: #fde68a;
+    /* --- GRADIENTS (Replace with theme-specific colors - e.g., yellows, oranges, pinks) --- */
+    --contrib-lifespan-fill-1: #e0f2fe; --contrib-lifespan-fill-2: #bfdbfe; --contrib-lifespan-fill-3: #93c5fd; --contrib-lifespan-fill-4: #60a5fa; --contrib-lifespan-fill-5: #c7d2fe; --contrib-lifespan-fill-6: #a5b4fc; --contrib-lifespan-fill-7: #818cf8; --contrib-lifespan-fill-8: #ddd6fe; --contrib-lifespan-fill-9: #c4b5fd; --contrib-lifespan-fill-10: #a78bfa; --contrib-lifespan-fill-11: #f5d0fe; --contrib-lifespan-fill-12: #f0abfc; --contrib-lifespan-fill-13: #e879f9; --contrib-lifespan-fill-14: #fbcfe8; --contrib-lifespan-fill-15: #f9a8d4; --contrib-lifespan-fill-16: #f472b6; --contrib-lifespan-fill-17: #fed7aa; --contrib-lifespan-fill-18: #fdbb74; --contrib-lifespan-fill-19: #fb923c; --contrib-lifespan-fill-20: #f87171;
+    --contrib-prime-fill-1: #fef9c3; --contrib-prime-fill-2: #fef3c7; --contrib-prime-fill-3: #fde68a; --contrib-prime-fill-4: #fde047; --contrib-prime-fill-5: #facc15; --contrib-prime-fill-6: #fef3c7; --contrib-prime-fill-7: #fde68a; --contrib-prime-fill-8: #fcd34d; --contrib-prime-fill-9: #fbbf24; --contrib-prime-fill-10: #f59e0b; --contrib-prime-fill-11: #ffedd5; --contrib-prime-fill-12: #fed7aa; --contrib-prime-fill-13: #fdbb74; --contrib-prime-fill-14: #fb923c; --contrib-prime-fill-15: #f97316; --contrib-prime-fill-16: #fee2e2; --contrib-prime-fill-17: #fecaca; --contrib-prime-fill-18: #fca5a5; --contrib-prime-fill-19: #f87171; --contrib-prime-fill-20: #ef4444;
+    --unit-week-fill-1: #ecfeff; --unit-week-fill-2: #cffafe; --unit-week-fill-3: #a5f3fc; --unit-week-fill-4: #67e8f9; --unit-week-fill-5: #22d3ee; --unit-week-fill-6: #06b6d4; --unit-week-fill-7: #0891b2; --unit-week-fill-8: #0e7490; --unit-week-fill-9: #155e75; --unit-week-fill-10: #164e63; --unit-week-fill-11: #083344; --unit-week-fill-12: #083344; --unit-week-fill-13: #083344; --unit-week-fill-14: #083344; --unit-week-fill-15: #083344;
+    --unit-month-fill-1: #f0fdf4; --unit-month-fill-2: #dcfce7; --unit-month-fill-3: #bbf7d0; --unit-month-fill-4: #86efac; --unit-month-fill-5: #4ade80; --unit-month-fill-6: #22c55e; --unit-month-fill-7: #16a34a; --unit-month-fill-8: #15803d; --unit-month-fill-9: #166534; --unit-month-fill-10: #14532d; --unit-month-fill-11: #052e16; --unit-month-fill-12: #052e16; --unit-month-fill-13: #052e16; --unit-month-fill-14: #052e16; --unit-month-fill-15: #052e16;
+    --unit-hour-fill-1: #fff7ed; --unit-hour-fill-2: #ffedd5; --unit-hour-fill-3: #fed7aa; --unit-hour-fill-4: #fdbb74; --unit-hour-fill-5: #fb923c; --unit-hour-fill-6: #f97316; --unit-hour-fill-7: #ea580c; --unit-hour-fill-8: #c2410c; --unit-hour-fill-9: #9a3412; --unit-hour-fill-10: #7c2d12; --unit-hour-fill-11: #451a03; --unit-hour-fill-12: #451a03; --unit-hour-fill-13: #451a03; --unit-hour-fill-14: #451a03; --unit-hour-fill-15: #451a03;
+    --unit-primeYear-fill-1: #f5f3ff; --unit-primeYear-fill-2: #ede9fe; --unit-primeYear-fill-3: #ddd6fe; --unit-primeYear-fill-4: #c4b5fd; --unit-primeYear-fill-5: #a78bfa; --unit-primeYear-fill-6: #8b5cf6; --unit-primeYear-fill-7: #7c3aed; --unit-primeYear-fill-8: #6d28d9; --unit-primeYear-fill-9: #5b21b6; --unit-primeYear-fill-10: #4c1d95; --unit-primeYear-fill-11: #2e1065; --unit-primeYear-fill-12: #2e1065; --unit-primeYear-fill-13: #2e1065; --unit-primeYear-fill-14: #2e1065; --unit-primeYear-fill-15: #2e1065;
+    --unit-awakeSlot-fill-1: #f0fdf4; --unit-awakeSlot-fill-2: #dcfce7; --unit-awakeSlot-fill-3: #bbf7d0; --unit-awakeSlot-fill-4: #86efac; --unit-awakeSlot-fill-5: #4ade80; --unit-awakeSlot-fill-6: #22c55e; --unit-awakeSlot-fill-7: #16a34a; --unit-awakeSlot-fill-8: #15803d; --unit-awakeSlot-fill-9: #166534; --unit-awakeSlot-fill-10: #14532d; --unit-awakeSlot-fill-11: #052e16; --unit-awakeSlot-fill-12: #052e16; --unit-awakeSlot-fill-13: #052e16; --unit-awakeSlot-fill-14: #052e16; --unit-awakeSlot-fill-15: #052e16;
+    --unit-daySlot-fill-1: #f5f3ff; --unit-daySlot-fill-2: #ede9fe; --unit-daySlot-fill-3: #ddd6fe; --unit-daySlot-fill-4: #c4b5fd; --unit-daySlot-fill-5: #a78bfa; --unit-daySlot-fill-6: #8b5cf6; --unit-daySlot-fill-7: #7c3aed; --unit-daySlot-fill-8: #6d28d9; --unit-daySlot-fill-9: #5b21b6; --unit-daySlot-fill-10: #4c1d95; --unit-daySlot-fill-11: #3730a3; --unit-daySlot-fill-12: #312e81; --unit-daySlot-fill-13: #2e1065; --unit-daySlot-fill-14: #2e1065; --unit-daySlot-fill-15: #2e1065;
+    --unit-current-bg: var(--tile-current-bg);
+    --unit-current-border: var(--tile-current-border);
+    --dot-color: rgba(124, 45, 18, 0.1); /* Optional: Adjust dot color */
+}
+
+/* --- Cyberpunk Variant: Cyberpunk Neon --- */
+body.cyberpunk-neon-mode {
+    /* --- !!! REPLACE ALL COLORS BELOW FOR THIS THEME !!! --- */
+    --bg-color: #1a1a1a; --text-color: #00ff00; --text-muted-color: #a0a0a0; --heading-color: #ff00ff; --link-color: #00f0ff; --link-hover-color: #ffffff; --tile-bg: rgba(30, 30, 30, 0.8); --tile-border: #00ff00; --tile-shadow: 0 0 10px rgba(0, 255, 0, 0.5); --tile-hover-shadow: 0 0 15px rgba(0, 240, 255, 0.6); --tile-label-color: #a0a0a0; --tile-value-color: #ffff00; --tile-past-bg: #3d0f57; --tile-past-text: #a0a0c0; --tile-past-border: #5a189a; --tile-current-bg: #00f0ff; --tile-current-text: #0d0221; --tile-current-border: #ffffff; --tile-upcoming-bg: #5f0f40; --tile-upcoming-text: #ff80ff; --tile-upcoming-border: #9a031e; --tile-future-bg: #023047; --tile-future-text: #8ecae6; --tile-future-border: #219ebc;
+    --progress-text-prime: #f4ff00;
+    --contrib-square-bg: #1a1a3a; --contrib-square-border: #3a3a5a; --contrib-current-border: #00f0ff; --progress-text-lifespan: #00ff80; --button-bg: #ff00ff; --button-text: #ffffff; --button-hover-bg: #ff40ff; --button-cancel-bg: #4a4a6a; --button-cancel-text: #c0c0e0; --button-cancel-hover-bg: #6a6a8a; --input-border: #ff00ff; --input-focus-ring: #00f0ff; --input-text: #f0f0f0; --input-bg: #1a1a3a; --icon-color: #00f0ff; --section-bg: rgba(10, 10, 30, 0.7); --section-shadow: 0 0 15px rgba(0, 240, 255, 0.3); --theme-button-bg: #3a3a5a; --theme-button-icon-color: #c0c0e0; --theme-button-hover-bg: #4a4a6a; --theme-button-active-bg: #ff00ff; --theme-button-active-icon-color: #ffffff; --theme-button-active-outline: #00f0ff; --icon-tick-color: #00ff80; --icon-cross-color: #ff4040; --modal-bg: #0d0221; --modal-overlay-bg: rgba(0, 0, 20, 0.85); --modal-border: #ff00ff; --modal-close-icon-color: #a0a0c0; --modal-close-icon-hover-bg: #3a3a5a; --settings-icon-color: #a0a0c0; --settings-icon-hover-bg: #3a3a5a;
+    /* --- GRADIENTS (Use neon greens, yellows, cyans, magentas) --- */
+    --contrib-lifespan-fill-1: #003f5c; --contrib-lifespan-fill-2: #005f8c; --contrib-lifespan-fill-3: #007fbc; --contrib-lifespan-fill-4: #00a0ec; --contrib-lifespan-fill-5: #00c0ff; --contrib-lifespan-fill-6: #2a00ff; --contrib-lifespan-fill-7: #4a20ff; --contrib-lifespan-fill-8: #6a40ff; --contrib-lifespan-fill-9: #8a60ff; --contrib-lifespan-fill-10: #aa80ff; --contrib-lifespan-fill-11: #5a189a; --contrib-lifespan-fill-12: #7b2cbf; --contrib-lifespan-fill-13: #9d4edd; --contrib-lifespan-fill-14: #c77dff; --contrib-lifespan-fill-15: #e0aaff; --contrib-lifespan-fill-16: #ff00ff; --contrib-lifespan-fill-17: #ff40ff; --contrib-lifespan-fill-18: #ff80ff; --contrib-lifespan-fill-19: #ffbfff; --contrib-lifespan-fill-20: #ffffff;
+    --contrib-prime-fill-1: #ffbf00; --contrib-prime-fill-2: #ffd000; --contrib-prime-fill-3: #ffe000; --contrib-prime-fill-4: #fff000; --contrib-prime-fill-5: #ffff00; --contrib-prime-fill-6: #dfff00; --contrib-prime-fill-7: #bfff00; --contrib-prime-fill-8: #9fff00; --contrib-prime-fill-9: #80ff00; --contrib-prime-fill-10: #60ff00; --contrib-prime-fill-11: #40ff00; --contrib-prime-fill-12: #20ff00; --contrib-prime-fill-13: #00ff00; --contrib-prime-fill-14: #00ff40; --contrib-prime-fill-15: #00ff80; --contrib-prime-fill-16: #00ffbf; --contrib-prime-fill-17: #00ffff; --contrib-prime-fill-18: #40ffff; --contrib-prime-fill-19: #80ffff; --contrib-prime-fill-20: #bffff;
+    --unit-week-fill-1: #003049; --unit-week-fill-2: #004c73; --unit-week-fill-3: #00679d; --unit-week-fill-4: #0083c7; --unit-week-fill-5: #009ef1; --unit-week-fill-6: #00baff; --unit-week-fill-7: #40c7ff; --unit-week-fill-8: #60d4ff; --unit-week-fill-9: #80e1ff; --unit-week-fill-10: #a0eeff; --unit-week-fill-11: #b0f4ff; --unit-week-fill-12: #c0faff; --unit-week-fill-13: #d0fcff; --unit-week-fill-14: #e0feff; --unit-week-fill-15: #f0ffff;
+    --unit-month-fill-1: #004b23; --unit-month-fill-2: #006430; --unit-month-fill-3: #007f3d; --unit-month-fill-4: #009a4a; --unit-month-fill-5: #00b557; --unit-month-fill-6: #00d064; --unit-month-fill-7: #00eb71; --unit-month-fill-8: #00ff80; --unit-month-fill-9: #30ff90; --unit-month-fill-10: #60ffa0; --unit-month-fill-11: #80ffb0; --unit-month-fill-12: #a0ffc0; --unit-month-fill-13: #b0ffd0; --unit-month-fill-14: #c0ffe0; --unit-month-fill-15: #d0fff0;
+    --unit-hour-fill-1: #7a0177; --unit-hour-fill-2: #9c118b; --unit-hour-fill-3: #be219f; --unit-hour-fill-4: #e031b3; --unit-hour-fill-5: #f746c1; --unit-hour-fill-6: #ff5bcd; --unit-hour-fill-7: #ff70d9; --unit-hour-fill-8: #ff85e5; --unit-hour-fill-9: #ff9af1; --unit-hour-fill-10: #ffaffd; --unit-hour-fill-11: #ffc4ff; --unit-hour-fill-12: #ffd9ff; --unit-hour-fill-13: #ffeaff; --unit-hour-fill-14: #fff5ff; --unit-hour-fill-15: #ffffff;
+    --unit-primeYear-fill-1: #ffaa00; --unit-primeYear-fill-2: #ffb800; --unit-primeYear-fill-3: #ffc600; --unit-primeYear-fill-4: #ffd400; --unit-primeYear-fill-5: #ffe200; --unit-primeYear-fill-6: #fff000; --unit-primeYear-fill-7: #ffff30; --unit-primeYear-fill-8: #ffff60; --unit-primeYear-fill-9: #ffff80; --unit-primeYear-fill-10: #ffffa0; --unit-primeYear-fill-11: #ffffb0; --unit-primeYear-fill-12: #ffffc0; --unit-primeYear-fill-13: #ffffd0; --unit-primeYear-fill-14: #ffffe0; --unit-primeYear-fill-15: #fffff0;
+    --unit-awakeSlot-fill-1: #008080; --unit-awakeSlot-fill-2: #009a9a; --unit-awakeSlot-fill-3: #00b4b4; --unit-awakeSlot-fill-4: #00cece; --unit-awakeSlot-fill-5: #00e8e8; --unit-awakeSlot-fill-6: #00ffff; --unit-awakeSlot-fill-7: #30ffff; --unit-awakeSlot-fill-8: #60ffff; --unit-awakeSlot-fill-9: #80ffff; --unit-awakeSlot-fill-10: #a0ffff; --unit-awakeSlot-fill-11: #b0ffff; --unit-awakeSlot-fill-12: #c0ffff; --unit-awakeSlot-fill-13: #d0ffff; --unit-awakeSlot-fill-14: #e0ffff; --unit-awakeSlot-fill-15: #f0ffff;
+    --unit-daySlot-fill-1: #3a0ca3; --unit-daySlot-fill-2: #4a1fa7; --unit-daySlot-fill-3: #5a32ab; --unit-daySlot-fill-4: #6a45af; --unit-daySlot-fill-5: #7a58b3; --unit-daySlot-fill-6: #8a6bb7; --unit-daySlot-fill-7: #9a7ebb; --unit-daySlot-fill-8: #aa91bf; --unit-daySlot-fill-9: #baa4c3; --unit-daySlot-fill-10: #cab7c7; --unit-daySlot-fill-11: #dacacb; --unit-daySlot-fill-12: #eadcdf; --unit-daySlot-fill-13: #faeef3; --unit-daySlot-fill-14: #fbf5f7; --unit-daySlot-fill-15: #ffffff;
+    --unit-current-bg: var(--tile-current-bg);
+    --unit-current-border: var(--tile-current-border);
+    --dot-color: rgba(255, 0, 255, 0.1); /* Optional: Adjust dot color */
+}
 
         /* --- Base Styles using Variables --- */
         body {
@@ -429,8 +594,13 @@
          }
          /* Specific style for the full day slot grid */
          #daySlotsContribGrid {
-             max-height: none; /* Allow full day grid to show all slots */
+             max-height: 40px; /* Allow full day grid to show all slots */
              overflow-y: visible;
+             overflow-x: hidden
+             border: none;
+             background-color: transparent;
+             padding: 0;
+             box-shadow: none;
          }
 
         .contrib-square {
@@ -813,6 +983,50 @@
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                 </svg>
             </button>
+            <button id="themeBtnDarkOcean" class="theme-button" data-theme="dark-ocean" aria-label="Switch to Dark Ocean Theme" title="Dark Ocean Theme">
+    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75c0 8.284 6.716 15 15 15h1.5" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12c0 4.97 4.03 9 9 9h1.5" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 17.25c0 2.76 2.24 5 5 5h1.5" />
+    </svg>
+</button>
+
+<button id="themeBtnDarkForest" class="theme-button" data-theme="dark-forest" aria-label="Switch to Dark Forest Theme" title="Dark Forest Theme">
+    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.402 17.162a2.25 2.25 0 01-2.804 0l-4.006-4.006a2.25 2.25 0 010-3.182l4.006-4.006a2.25 2.25 0 012.804 0l4.006 4.006a2.25 2.25 0 010 3.182l-4.006 4.006zM8.601 4.138a2.25 2.25 0 012.804 0l4.006 4.006a2.25 2.25 0 010 3.182l-4.006 4.006a2.25 2.25 0 01-2.804 0l-4.006-4.006a2.25 2.25 0 010-3.182l4.006-4.006z" />
+    </svg>
+</button>
+
+<button id="themeBtnKidsRainbow" class="theme-button" data-theme="kids-rainbow" aria-label="Switch to Kids Rainbow Theme" title="Kids Rainbow Theme">
+    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.31h5.418a.563.563 0 01.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 21.07a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988h5.418a.563.563 0 00.475-.31L11.48 3.5z" />
+    </svg>
+</button>
+
+<button id="themeBtnKidsSpace" class="theme-button" data-theme="kids-space" aria-label="Switch to Kids Space Theme" title="Kids Space Theme">
+    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 7.5c-.412 0-.82.066-1.215.19a8.94 8.94 0 00-4.07 0A8.963 8.963 0 008.25 7.5c-.412 0-.82.066-1.215.19M12 15.75a8.94 8.94 0 014.5-1.185M7.785 15.94a8.963 8.963 0 014.215-.19m-4.215.19c.412 0 .82-.066 1.215-.19" />
+    </svg>
+</button>
+
+<button id="themeBtnTwilightDusk" class="theme-button" data-theme="twilight-dusk" aria-label="Switch to Twilight Dusk Theme" title="Twilight Dusk Theme">
+    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clip-rule="evenodd" />
+    </svg>
+</button>
+
+<button id="themeBtnTwilightDawn" class="theme-button" data-theme="twilight-dawn" aria-label="Switch to Twilight Dawn Theme" title="Twilight Dawn Theme">
+    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+    </svg>
+</button>
+
+<button id="themeBtnCyberpunkNeon" class="theme-button" data-theme="cyberpunk-neon" aria-label="Switch to Cyberpunk Neon Theme" title="Cyberpunk Neon Theme">
+    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V8.25a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 8.25v7.5a2.25 2.25 0 002.25 2.25z" />
+    </svg>
+</button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
@@ -847,7 +1061,10 @@
                      <div class="label">Current 30-Min Slot</div>
                      <div id="slotCountdown" class="value text-2xl">--:--</div>
                      <p id="slotsPassedToday" class="text-xs" style="color: var(--text-muted-color);">-- slots passed today</p>
+                     
                  </div>
+                
+        <!--</div>-->
             </div>
             <div class="tile p-4" title="Shows the current date and time, updated every second.">
                  <div class="info-tile-content flex flex-col justify-center items-center w-full h-full gap-3">
@@ -865,15 +1082,6 @@
                      </div>
                  </div>
             </div>
-        </div>
-
-        <div class="contrib-grid-wrapper mt-4" title="Visual representation of all 48 half-hour slots today. Past slots are dim, current slot is highlighted, future slots use a gradient.">
-            <div class="contrib-grid-header">
-                <h3 id="daySlotsGridLabel" class="contrib-grid-label">Today's 30-Min Slots</h3>
-                <span id="daySlotsCount" class="progress-percent-text">Slot -- of 48</span>
-            </div>
-            <div id="daySlotsContribGrid" class="contrib-grid">
-                </div>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-6 justify-between items-start mt-4">
@@ -915,7 +1123,7 @@
                 </div>
                 <div id="awakeSlotsGridWrapper" class="contrib-grid-wrapper" title="Visual representation of 30-minute slots from {awakeStartHour}:00 to {awakeEndHour}:00. Past slots are dim, current slot is highlighted, future slots use a gradient.">
                      <div class="contrib-grid-header">
-                        <h4 id="awakeSlotsGridLabel" class="contrib-grid-label text-xs">Awake Time Slots (-- AM - -- PM)</h4>
+                        <h4 id="awakeSlotsGridLabel" class="contrib-grid-label text-xs">Active Hours (-- AM - -- PM)</h4>
                          <span id="awakeSlotsCount" class="progress-percent-text text-xs">(--/--)</span>
                     </div>
                     <div id="awakeSlotsContribGrid" class="contrib-grid unit-grid"></div>
@@ -1368,7 +1576,7 @@
              // Update Awake Slots label and tooltip
              const awakeStartAMPM = formatHourAMPM(awakeStartHour);
              const awakeEndAMPM = formatHourAMPM(awakeEndHour);
-             if (awakeSlotsGridLabel) awakeSlotsGridLabel.textContent = `Active Hours (${awakeStartAMPM} - ${awakeEndAMPM})`;
+             if (awakeSlotsGridLabel) awakeSlotsGridLabel.textContent = `Awake Time Slots (${awakeStartAMPM} - ${awakeEndAMPM})`;
              if (awakeSlotsGridWrapper) awakeSlotsGridWrapper.title = `Visual representation of 30-minute slots from ${awakeStartAMPM} to ${awakeEndAMPM}. Past slots are dim, current slot is highlighted, future slots use a gradient.`;
 
              // NEW: Update Day Slots Grid Tooltip
@@ -1932,7 +2140,13 @@
         // --- Theme Switching Logic ---
         function applyTheme(themeName) {
             // Remove all potential theme classes
-            bodyElement.classList.remove('dark-mode', 'colorful-mode', 'cyberpunk-mode');
+            bodyElement.classList.remove('dark-mode', 'colorful-mode', 'cyberpunk-mode', 'dark-ocean-mode',
+        'dark-forest-mode',
+        'kids-rainbow-mode',
+        'kids-space-mode',
+        'twilight-dusk-mode',
+        'twilight-dawn-mode',
+        'cyberpunk-neon-mode');
 
             // Add the specific theme class
             if (themeName === 'dark') {
@@ -1941,7 +2155,21 @@
                 bodyElement.classList.add('colorful-mode');
             } else if (themeName === 'cyberpunk') { // NEW: Handle cyberpunk
                 bodyElement.classList.add('cyberpunk-mode');
-            }
+            } else if (themeName === 'dark-ocean') {
+         bodyElement.classList.add('dark-ocean-mode');
+    } else if (themeName === 'dark-forest') {
+         bodyElement.classList.add('dark-forest-mode');
+    } else if (themeName === 'kids-rainbow') {
+         bodyElement.classList.add('kids-rainbow-mode');
+    } else if (themeName === 'kids-space') {
+         bodyElement.classList.add('kids-space-mode');
+    } else if (themeName === 'twilight-dusk') {
+         bodyElement.classList.add('twilight-dusk-mode');
+    } else if (themeName === 'twilight-dawn') {
+         bodyElement.classList.add('twilight-dawn-mode');
+    } else if (themeName === 'cyberpunk-neon') {
+         bodyElement.classList.add('cyberpunk-neon-mode');
+    }
             // 'light' theme is the default (no class added)
 
             // Update active state on theme buttons
@@ -1967,7 +2195,13 @@
                 savedTheme = 'light'; // Fallback on error
             }
             // Validate loaded theme (including cyberpunk)
-            if (!['light', 'dark', 'colorful', 'cyberpunk'].includes(savedTheme)) {
+            if (!['light', 'dark', 'colorful', 'cyberpunk','dark-ocean',
+        'dark-forest',
+        'kids-rainbow',
+        'kids-space',
+        'twilight-dusk',
+        'twilight-dawn',
+        'cyberpunk-neon'].includes(savedTheme)) {
                 savedTheme = 'light';
             }
             applyTheme(savedTheme); // Apply the loaded or default theme
